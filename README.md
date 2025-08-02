@@ -104,6 +104,10 @@ This project can be easily run in Google Colab:
     Open the notebook with Google Colaboratory.
 
     Navigate to Runtime > Run all to execute all the cells and reproduce the results.
+<img width="580" height="456" alt="Untitled" src="https://github.com/user-attachments/assets/b8b83ccf-8a50-4fb1-bd90-d9cfdbbd3701" />
+<img width="476" height="456" alt="Untitled" src="https://github.com/user-attachments/assets/1bb906cf-48fc-4b22-8c6a-de41bd1df1d9" />
+
+
 
 Dependencies
 
