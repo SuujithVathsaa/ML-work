@@ -7,6 +7,9 @@
 // RETURNS    { code, token, message, customerCode, customerKey, userKey,
 //              accounts[], refreshToken }
 // TOKEN LIFE 24 hours
+// STATUSES   200 token | 300 Account Required | 400 bad request
+//            401 unauthorized OR MFA code required | 403 forbidden/inactive
+//            429 rate limited | 500 server error
 //
 // *** CRITICAL — READ BEFORE RUNNING ***
 // This endpoint is HEAVILY rate limited and the penalty ESCALATES
@@ -29,7 +32,8 @@
 //      set Password > Done.
 //   SUCCESS -> a long string starting "eyJ..."  = your token. COPY IT.
 //   429      -> wait the stated seconds, run once more.
-//   401      -> wrong password/region, or you need `Account`.
+//   401      -> wrong password/region, or an MFA code is required.
+//   300      -> your login spans several accounts; set `Account`.
 //   Returns a list of account names -> your login is in several accounts:
 //            put one of them in Account below and run again.
 // =====================================================================
@@ -52,22 +56,43 @@ let
         Headers              = [ #"Content-Type" = "application/json",
                                  Accept          = "application/json" ],
         Content              = Json.FromValue(bodyRec),
-        ManualStatusHandling = {400, 401, 403, 404, 429, 500}
+        // 300 "Account Required" IS a documented response of this endpoint.
+        // It MUST be handled, otherwise Web.Contents throws and Power BI
+        // shows a misleading "couldn't authenticate" credential dialog.
+        ManualStatusHandling = {300, 400, 401, 403, 404, 429, 500, 502, 503}
     ]),
 
     status = Value.Metadata(resp)[Response.Status],
     json   = try Json.Document(resp) otherwise null,
 
     // ---------------- RESULT ----------------
+    // accounts[] may be returned so you know which value to put in Account
+    accountList =
+        if json <> null and Record.HasFields(json, "accounts") and json[accounts] <> null
+        then Text.Combine(List.Transform(json[accounts], Text.From), ", ")
+        else "(none returned)",
+
     result =
-        if status = 200 and json <> null then
-            // if the login spans several accounts, show them instead
-            if Record.HasFields(json, "accounts")
-               and json[accounts] <> null
-               and List.Count(json[accounts]) > 1
-            then "MULTIPLE ACCOUNTS - set Account to one of: "
-                 & Text.Combine(List.Transform(json[accounts], Text.From), ", ")
-            else json[token]
+        // ---- success ----
+        if status = 200 and json <> null and Record.HasFields(json, "token") then
+            json[token]
+
+        // ---- 300: this login belongs to more than one account ----
+        else if status = 300 then
+            "ACCOUNT REQUIRED - set Account to one of: " & accountList
+
+        // ---- 401: bad credentials, or MFA needed ----
+        else if status = 401 then
+            "HTTP 401 - wrong username/password, wrong Region, or an MFA code "
+            & "is required (add  code = ""123456""  to bodyRec). Server said: "
+            & Text.FromBinary(resp)
+
+        // ---- 429: throttled; the message states how long to wait ----
+        else if status = 429 then
+            "HTTP 429 RATE LIMITED - wait the number of seconds stated below, "
+            & "then run this query ONCE. Every retry restarts the timer. "
+            & Text.FromBinary(resp)
+
         else
             "HTTP " & Text.From(status) & " - " & Text.FromBinary(resp)
 in
