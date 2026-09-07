@@ -56,44 +56,62 @@ let
         Headers              = [ #"Content-Type" = "application/json",
                                  Accept          = "application/json" ],
         Content              = Json.FromValue(bodyRec),
-        // 300 "Account Required" IS a documented response of this endpoint.
-        // It MUST be handled, otherwise Web.Contents throws and Power BI
-        // shows a misleading "couldn't authenticate" credential dialog.
-        ManualStatusHandling = {300, 400, 401, 403, 404, 429, 500, 502, 503}
+        // NOTE: ManualStatusHandling accepts 4xx/5xx ONLY. Power Query
+        // rejects 3xx codes ("'300' is not supported"), because it handles
+        // redirects itself. The documented 300 "Account Required" response
+        // is therefore caught with `try` below instead of listed here.
+        ManualStatusHandling = {400, 401, 403, 404, 429, 500, 502, 503}
     ]),
 
-    status = Value.Metadata(resp)[Response.Status],
-    json   = try Json.Document(resp) otherwise null,
+    // Read the response ONCE as text, then parse. Avoids consuming the
+    // binary twice and lets us parse the body even on error statuses.
+    probe = try [ st = Value.Metadata(resp)[Response.Status],
+                  txt = Text.FromBinary(resp) ],
 
     // ---------------- RESULT ----------------
-    // accounts[] may be returned so you know which value to put in Account
-    accountList =
-        if json <> null and Record.HasFields(json, "accounts") and json[accounts] <> null
-        then Text.Combine(List.Transform(json[accounts], Text.From), ", ")
-        else "(none returned)",
-
     result =
-        // ---- success ----
-        if status = 200 and json <> null and Record.HasFields(json, "token") then
-            json[token]
-
-        // ---- 300: this login belongs to more than one account ----
-        else if status = 300 then
-            "ACCOUNT REQUIRED - set Account to one of: " & accountList
-
-        // ---- 401: bad credentials, or MFA needed ----
-        else if status = 401 then
-            "HTTP 401 - wrong username/password, wrong Region, or an MFA code "
-            & "is required (add  code = ""123456""  to bodyRec). Server said: "
-            & Text.FromBinary(resp)
-
-        // ---- 429: throttled; the message states how long to wait ----
-        else if status = 429 then
-            "HTTP 429 RATE LIMITED - wait the number of seconds stated below, "
-            & "then run this query ONCE. Every retry restarts the timer. "
-            & Text.FromBinary(resp)
-
+        if probe[HasError] then
+            // A 300 "Account Required" lands here, because Power Query will
+            // not let us handle 3xx manually.
+            "REQUEST ERROR - Power Query could not complete the call." & "#(lf)"
+            & "The most likely cause is HTTP 300 'Account Required': your login "
+            & "belongs to more than one doForms account, so you must set the "
+            & "Account value at the top of this query." & "#(lf)"
+            & "Details: " & probe[Error][Message]
         else
-            "HTTP " & Text.From(status) & " - " & Text.FromBinary(resp)
+            let
+                status = probe[Value][st],
+                txt    = probe[Value][txt],
+                json   = try Json.Document(txt) otherwise null,
+
+                accountList =
+                    if json <> null and Record.HasFields(json, "accounts")
+                       and json[accounts] <> null
+                    then Text.Combine(List.Transform(json[accounts], Text.From), ", ")
+                    else "(none returned)"
+            in
+                // ---- success ----
+                if status = 200 and json <> null and Record.HasFields(json, "token") then
+                    json[token]
+
+                // ---- 200 but no token: account selection needed ----
+                else if status = 200 then
+                    "NO TOKEN RETURNED - set Account to one of: " & accountList
+                    & " | body: " & txt
+
+                // ---- 401: bad credentials, or MFA needed ----
+                else if status = 401 then
+                    "HTTP 401 - wrong username/password, wrong Region, or an MFA "
+                    & "code is required (add  code = ""123456""  to bodyRec). "
+                    & "Server said: " & txt
+
+                // ---- 429: throttled; the message states how long to wait ----
+                else if status = 429 then
+                    "HTTP 429 RATE LIMITED - wait the number of seconds stated "
+                    & "below, then run this query ONCE. Every retry restarts the "
+                    & "timer. " & txt
+
+                else
+                    "HTTP " & Text.From(status) & " - " & txt
 in
     result
