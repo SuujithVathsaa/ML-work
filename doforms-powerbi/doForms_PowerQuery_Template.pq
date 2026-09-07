@@ -40,6 +40,7 @@
 
 // ---- If NOT using real Parameters, set literals here for testing: ----
 // (delete these once real Parameters exist, or they will shadow them)
+let
 Region         = "eu",
 Username       = "REPLACE_OR_USE_PARAMETER",
 Password       = "REPLACE_OR_USE_PARAMETER",
@@ -61,9 +62,12 @@ BaseUrl =
 // Rolling window in UTC ISO-8601 (use Z so no "+" URL-encoding needed).
 // receiveTimeBegin is inclusive, receiveTimeEnd is exclusive.
 NowUtc   = DateTimeZone.RemoveZone(DateTimeZone.UtcNow()),
-ToDate   = DateTime.ToText(NowUtc, [Format="yyyy-MM-ddTHH:mm:ss.000Z", Culture="en-US"]),
-FromDate = DateTime.ToText(NowUtc - #duration(30*MonthsBack,0,0,0),
-                           [Format="yyyy-MM-ddT00:00:00.000Z", Culture="en-US"]),
+StartUtc = NowUtc - #duration(30*MonthsBack, 0, 0, 0),
+// Build ISO-8601 by concatenation so no stray format letters (T/Z) are needed.
+FmtDate  = (dt) => Date.ToText(Date.From(dt), [Format="yyyy-MM-dd", Culture="en-US"]),
+FmtTime  = (dt) => Time.ToText(Time.From(dt), [Format="HH:mm:ss", Culture="en-US"]),
+FromDate = FmtDate(StartUtc) & "T00:00:00.000Z",                       // inclusive
+ToDate   = FmtDate(NowUtc) & "T" & FmtTime(NowUtc) & ".000Z",          // exclusive
 
 
 // =====================================================================
