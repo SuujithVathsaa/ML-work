@@ -2,9 +2,10 @@
 // DOC 2 of 2 — GET THE DATA USING THE TOKEN
 // Verified against doForms REST API OpenAPI v2.5.2
 // ---------------------------------------------------------------------
-// This query NEVER calls the login endpoint. Paste the token from
-// DOC 1 (1_GetToken.pq) into `Token` below. Tokens last 24 hours;
-// when it expires, re-run DOC 1 once and paste the new one.
+// TOKEN: by default this pulls the token automatically from the query
+// named "GetToken" (from 1_GetToken.pq), buffered so it runs ONCE per
+// refresh. Set ManualToken to a pasted token to skip the login call
+// entirely while developing. Tokens last 24 hours.
 //
 // CALL SEQUENCE (all GET, all Bearer-authorised):
 //   1. GET api/v2/forms
@@ -31,13 +32,39 @@
 let
     // ================= SETTINGS =================
     Region         = "eu",     // "eu" = UK/Europe.  "" = USA.
-    Token          = "PASTE-THE-TOKEN-FROM-DOC-1-HERE",
     MonthsBack     = 6,        // rolling window, recomputed each refresh
     FormNameFilter = "",       // "" = every form; else comma-separated exact names
+
+    // ---- TOKEN ----
+    // Leave ManualToken = "" to pull the token AUTOMATICALLY from the
+    // query named "GetToken" (created from 1_GetToken.pq). In M, another
+    // query's name is just an identifier, so we can reference it directly.
+    //
+    // It is wrapped in List.Buffer so GetToken runs ONCE per refresh. A
+    // plain reference would be re-evaluated for every single API call,
+    // which would hammer the rate-limited login endpoint (HTTP 429).
+    //
+    // Paste a token into ManualToken to skip the login call entirely --
+    // useful while developing, when you refresh many times.
+    ManualToken    = "",
 
     // ================= CONSTANTS =================
     BaseUrl = if Region = "" then "https://api.mydoforms.com"
               else "https://api." & Region & ".mydoforms.com",
+
+    // Fetch once per refresh, then reuse.
+    TokenOnce = List.Buffer({ if ManualToken <> "" then ManualToken else GetToken }),
+    RawToken  = TokenOnce{0},
+
+    // GetToken returns a readable message instead of a token when the
+    // login fails; surface that clearly rather than sending a junk header.
+    Token =
+        if RawToken = null then
+            error Error.Record("doForms token error", "GetToken returned nothing.")
+        else if Text.StartsWith(RawToken, "HTTP") or Text.StartsWith(RawToken, "MULTIPLE") then
+            error Error.Record("doForms token error", RawToken)
+        else
+            RawToken,
 
     AuthHeader = [ Authorization = "Bearer " & Token, Accept = "application/json" ],
 
@@ -67,7 +94,9 @@ let
                         if st = 200 then
                             Json.Document(resp)
                         else if n < 4 then
-                            Function.InvokeAfter(() => Attempt(n + 1), #duration(0, 0, 0, 10 * n))
+                            // @ is REQUIRED: a let binding cannot call itself
+                            // without the self-reference operator.
+                            Function.InvokeAfter(() => @Attempt(n + 1), #duration(0, 0, 0, 10 * n))
                         else
                             error Error.Record(
                                 "doForms API error",
