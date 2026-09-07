@@ -45,6 +45,11 @@ Region         = "eu",
 Username       = "REPLACE_OR_USE_PARAMETER",
 Password       = "REPLACE_OR_USE_PARAMETER",
 Account        = "",              // usually blank
+// DEV SHORTCUT: paste a token here (from the GetToken helper) to SKIP the
+// /tokens/user login call entirely. The token endpoint is heavily rate
+// limited (HTTP 429), so during development fetch a token ONCE and paste it
+// here. Tokens last 24h. Leave "" to have the query fetch one automatically.
+ManualToken    = "",
 MonthsBack     = 6,
 FormNameFilter = "",              // "" = every form in the account
 
@@ -93,7 +98,10 @@ TokenOnce = List.Buffer({
     in
         json[token]
 }),
-Token = TokenOnce{0},
+// Use the pasted ManualToken if given (skips the login call, avoiding 429);
+// otherwise fetch one. TokenOnce is lazy, so it is NOT evaluated when a
+// ManualToken is supplied.
+Token = if ManualToken <> "" and ManualToken <> null then ManualToken else TokenOnce{0},
 
 AuthHeader = [ Authorization = "Bearer " & Token, Accept = "application/json" ],
 
