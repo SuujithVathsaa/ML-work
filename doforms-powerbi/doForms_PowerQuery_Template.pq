@@ -74,7 +74,12 @@ ToDate   = FmtDate(NowUtc) & "T" & FmtTime(NowUtc) & ".000Z",          // exclus
 // (2) AUTH — POST /api/v2/tokens/user  -> bearer token (24h)
 // =====================================================================
 
-Token =
+// IMPORTANT: the token is fetched ONCE and memoized with List.Buffer.
+// A plain `let` value in M is re-evaluated on every reference, which would
+// POST to /tokens/user dozens of times per refresh and trip the endpoint's
+// rate limit (HTTP 429 RateLimitException). List.Buffer forces a single
+// evaluation whose result is reused everywhere.
+TokenOnce = List.Buffer({
     let
         bodyRec =
             [ username = Username, password = Password ]
@@ -86,7 +91,9 @@ Token =
         ]),
         json = Json.Document(resp)
     in
-        json[token],
+        json[token]
+}),
+Token = TokenOnce{0},
 
 AuthHeader = [ Authorization = "Bearer " & Token, Accept = "application/json" ],
 
