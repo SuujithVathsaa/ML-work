@@ -47,9 +47,33 @@ Rolling **last 6 months**, recomputed on every refresh (`MonthsBack = 6`).
 
 | File | Purpose |
 |---|---|
+| `3_GetData_StaticToken.pq` | **RECOMMENDED.** Uses a static web service token. No login call, no expiry, no rate limit. |
 | `Step1_RegisterAnonymous.pq` | Run **once** if the credential dialog loops. A GET that lets Power BI store the Anonymous credential for the domain. |
-| `1_GetToken.pq` | Run **once** to obtain a 24h bearer token. Copy the token. |
-| `2_GetData.pq` | Paste the token, pull all form data. This is the real pipeline. |
+| `1_GetToken.pq` | Fallback: user-token login. Rate limited, expires in 24h. |
+| `2_GetData.pq` | Fallback: pulls data using a user token from `1_GetToken.pq`. |
+
+## Recommended approach: static web service token
+
+The spec's `WebserviceTokenAuthentication` scheme documents an alternative
+to logging in at all:
+
+> Build a static token by combining a web service ID and web service
+> password separated by a colon.
+> ID `acmeinc$$1234$$Published$$5678` + password `mypassword`
+> -> `Authorization: Bearer acmeinc$$1234$$Published$$5678:mypassword`
+
+This avoids every problem with the user-token route:
+
+| Problem with `POST /tokens/user` | Static token |
+|---|---|
+| POST-only, so Power BI's GET credential probe loops | Only GETs -- Anonymous works |
+| Escalating rate limit (33s -> 958s observed) | Login endpoint never called |
+| Token expires after 24h | Never expires |
+
+A web service token is scoped to one project + form, so create one web
+service per form (Manage > Integrations > Web Services) and list all six in
+the `WebServices` table. With web service auth, `/submissions` does not need
+`projectKey`/`formKey` -- the token already identifies them.
 
 ## Setup steps (Power BI Desktop)
 
