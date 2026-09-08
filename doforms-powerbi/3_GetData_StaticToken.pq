@@ -111,20 +111,25 @@ let
 
     // ================= 2. SUBMISSION KEYS IN WINDOW (paged) =================
     PageSize = 1000,   // API maximum
+    // NOTE: the loop variable is deliberately NOT called "skip". Reusing the
+    // same symbol name in nested scopes triggers a Power Query compiler bug:
+    // "We found one or more unbound names when recompiling a function
+    // internally ... The unbound names were: skip".
     GetSubmissionKeys = (auth as record) as list =>
         let
-            FetchPage = (skip as number) as list =>
+            FetchPage = (pageOffset as number) as list =>
                 GetJson(auth, "api/v2/submissions", [
                     receiveTimeBegin = FromDate,
                     receiveTimeEnd   = ToDate,
                     limit            = Text.From(PageSize),
-                    skip             = Text.From(skip)
+                    skip             = Text.From(pageOffset)
                 ]),
             pages = List.Generate(
-                () => [items = FetchPage(0), skip = 0],
-                each List.Count([items]) > 0,
-                each [ skip = [skip] + PageSize, items = FetchPage([skip] + PageSize) ],
-                each [items]
+                () => [ pageItems = FetchPage(0), pageOffset = 0 ],
+                each List.Count([pageItems]) > 0,
+                each [ pageOffset = [pageOffset] + PageSize,
+                       pageItems  = FetchPage([pageOffset] + PageSize) ],
+                each [pageItems]
             )
         in
             List.Transform(List.Combine(pages), each _[key]),
@@ -136,14 +141,19 @@ let
     // ================= ORCHESTRATE =================
     WithAuth    = Table.AddColumn(WebServices, "auth",
                       each MakeAuth([WsId], [WsPassword]), type record),
-    WithFormKey = Table.AddColumn(WithAuth, "formKey", each GetFormKey([auth]), type text),
-    OnlyForms   = Table.SelectRows(WithFormKey, each [formKey] <> null),
+    // `try ... otherwise null` keeps one bad web service from failing the lot.
+    // Filter with `is text`: `<> null` on a null-typed column yields null,
+    // which Table.SelectRows rejects ("cannot convert null to type Logical").
+    WithFormKey = Table.AddColumn(WithAuth, "formKey", each try GetFormKey([auth]) otherwise null),
+    OnlyForms   = Table.SelectRows(WithFormKey, each [formKey] is text),
     WithKeys    = Table.AddColumn(OnlyForms, "recordKeys",
-                      each GetSubmissionKeys([auth]), type list),
-    Expanded    = Table.ExpandListColumn(WithKeys, "recordKeys"),
-    OnlyKeys    = Table.SelectRows(Expanded, each [recordKeys] <> null),
+                      each try GetSubmissionKeys([auth]) otherwise null),
+    // only expand rows whose key fetch actually returned a list
+    OnlyLists   = Table.SelectRows(WithKeys, each [recordKeys] is list),
+    Expanded    = Table.ExpandListColumn(OnlyLists, "recordKeys"),
+    OnlyKeys    = Table.SelectRows(Expanded, each [recordKeys] is text),
     WithRecord  = Table.AddColumn(OnlyKeys, "Record",
-                      each GetRecord([auth], [formKey], [recordKeys]), type record),
+                      each try GetRecord([auth], [formKey], [recordKeys]) otherwise null),
 
     // drop the secrets before they reach the model
     Trimmed = Table.RemoveColumns(WithRecord, {"WsId", "WsPassword", "auth"}),

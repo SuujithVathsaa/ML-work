@@ -125,20 +125,23 @@ let
     PageSize = 1000,   // API maximum
     GetSubmissionKeys = (projectKey as text, formKey as text) as list =>
         let
-            FetchPage = (skip as number) as list =>
+            // loop variable must NOT be named "skip" -- see the compiler-bug
+            // note in 3_GetData_StaticToken.pq.
+            FetchPage = (pageOffset as number) as list =>
                 GetJson("api/v2/submissions", [
                     projectKey       = projectKey,
                     formKey          = formKey,
                     receiveTimeBegin = FromDate,
                     receiveTimeEnd   = ToDate,
                     limit            = Text.From(PageSize),
-                    skip             = Text.From(skip)
+                    skip             = Text.From(pageOffset)
                 ]),
             pages = List.Generate(
-                () => [items = FetchPage(0), skip = 0],
-                each List.Count([items]) > 0,
-                each [ skip = [skip] + PageSize, items = FetchPage([skip] + PageSize) ],
-                each [items]
+                () => [ pageItems = FetchPage(0), pageOffset = 0 ],
+                each List.Count([pageItems]) > 0,
+                each [ pageOffset = [pageOffset] + PageSize,
+                       pageItems  = FetchPage([pageOffset] + PageSize) ],
+                each [pageItems]
             )
         in
             List.Transform(List.Combine(pages), each _[key]),
@@ -148,12 +151,13 @@ let
         GetJson("api/v2/forms/" & formKey & "/data/" & recordKey),
 
     // ================= ORCHESTRATE =================
-    WithProject  = Table.AddColumn(FormsTable, "projectKey", each GetProjectKey([key]), type text),
-    OnlyProjects = Table.SelectRows(WithProject, each [projectKey] <> null),
+    WithProject  = Table.AddColumn(FormsTable, "projectKey", each try GetProjectKey([key]) otherwise null),
+    OnlyProjects = Table.SelectRows(WithProject, each [projectKey] is text),
     WithKeys     = Table.AddColumn(OnlyProjects, "recordKeys",
                        each GetSubmissionKeys([projectKey], [key]), type list),
-    ExpandedKeys = Table.ExpandListColumn(WithKeys, "recordKeys"),
-    OnlyWithKeys = Table.SelectRows(ExpandedKeys, each [recordKeys] <> null),
+    OnlyLists    = Table.SelectRows(WithKeys, each [recordKeys] is list),
+    ExpandedKeys = Table.ExpandListColumn(OnlyLists, "recordKeys"),
+    OnlyWithKeys = Table.SelectRows(ExpandedKeys, each [recordKeys] is text),
     WithRecord   = Table.AddColumn(OnlyWithKeys, "Record",
                        each GetRecord([key], [recordKeys]), type record),
 
