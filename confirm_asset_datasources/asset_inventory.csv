@@ -1,0 +1,275 @@
+asset_code,asset_name,item_kind,item_code,item_name,required
+AA,Arboricultural Asset,Measurement,NO,Number Of,YES
+AA,Arboricultural Asset,Attribute,TALO,Tree Asset Likeley Owner,YES
+AA,Arboricultural Asset,Observation,WC,Work Completed,NO
+AA,Arboricultural Asset,Attribute,TAT,Tree Asset Type,YES
+AA,Arboricultural Asset,Observation,TAH,Tree Asset Height,YES
+AA,Arboricultural Asset,Observation,TAG,Tree Asset Girth,YES
+AA,Arboricultural Asset,Observation,TACS,Tree Asset Crown Spread,YES
+AA,Arboricultural Asset,Observation,TAOC,Tree Asset Overall Condition,YES
+AA,Arboricultural Asset,Observation,TAM,Tree Asset Maturity,YES
+DATS,Drainage Asset - Trash Screen,Measurement,NO,Number Of,NO
+DATS,Drainage Asset - Trash Screen,Attribute,DAFD,Drainage - Direction of Flow,YES
+DATS,Drainage Asset - Trash Screen,Observation,WCON,Weather Condition,NO
+DATS,Drainage Asset - Trash Screen,Attribute,DOWN,Drainage - Likely Ownership,YES
+DATS,Drainage Asset - Trash Screen,Observation,SH02,Confined Space,YES
+DATS,Drainage Asset - Trash Screen,Attribute,TMR,Traffic Management Requirement,YES
+DATS,Drainage Asset - Trash Screen,Observation,SH04,Deep Water,YES
+DATS,Drainage Asset - Trash Screen,Observation,SH05,Difficult Access,YES
+DATS,Drainage Asset - Trash Screen,Observation,GCI,Asset Condition Information,YES
+DATS,Drainage Asset - Trash Screen,Observation,SLOA,Silt Level On Arrival,YES
+DATS,Drainage Asset - Trash Screen,Observation,GCON,Gully Containments,YES
+DAGA,Drainage Asset - Gully,Measurement,NO,Number Of,NO
+DAGA,Drainage Asset - Gully,Attribute,GAT,Gully Asset Type,YES
+DAGA,Drainage Asset - Gully,Observation,GCI,Asset Condition Information,YES
+DAGA,Drainage Asset - Gully,Attribute,TMR,Traffic Management Requirement,YES
+DAGA,Drainage Asset - Gully,Observation,GACC,Accessibility,YES
+DAGA,Drainage Asset - Gully,Observation,SLOA,Silt Level On Arrival,YES
+DAGA,Drainage Asset - Gully,Observation,ACT,Action Taken,YES
+DAGA,Drainage Asset - Gully,Observation,GSOD,State On Departure,YES
+DAGA,Drainage Asset - Gully,Observation,GCON,Gully Containments,YES
+STBR,ST:Bridges & Culverts,Measurement,NO,Number Of,NO
+STBR,ST:Bridges & Culverts,Attribute,ENST,TK:Environmentally Sensitive,NO
+STBR,ST:Bridges & Culverts,Observation,SH01,Anti-Social Environment,NO
+STBR,ST:Bridges & Culverts,Measurement,S001,S:Skew (P),NO
+STBR,ST:Bridges & Culverts,Attribute,HERG,TK:Heritage,NO
+STBR,ST:Bridges & Culverts,Observation,SH02,Confined Space,NO
+STBR,ST:Bridges & Culverts,Measurement,S002,S:Width Between Parapets,NO
+STBR,ST:Bridges & Culverts,Attribute,LOC1,TK:Location Type,NO
+STBR,ST:Bridges & Culverts,Observation,SH03,Dangerous Structure,NO
+STBR,ST:Bridges & Culverts,Measurement,S003,S:Carriageway Width,YES
+STBR,ST:Bridges & Culverts,Attribute,OBC1,TK:Obstacle Crossed,NO
+STBR,ST:Bridges & Culverts,Observation,SH04,Deep Water,NO
+STBR,ST:Bridges & Culverts,Measurement,S004,S:Length,YES
+STBR,ST:Bridges & Culverts,Attribute,OBCS,TK:Obstacle Crossed Salted,NO
+STBR,ST:Bridges & Culverts,Observation,SH05,Difficult Access,NO
+STBR,ST:Bridges & Culverts,Measurement,S005,S:Headroom,NO
+STBR,ST:Bridges & Culverts,Attribute,ROSA,TK:Route Salted,NO
+STBR,ST:Bridges & Culverts,Observation,SH06,Gated Access,NO
+STBR,ST:Bridges & Culverts,Measurement,S006,S:No. Of Spans,NO
+STBR,ST:Bridges & Culverts,Attribute,RTL1,TK:Route Traffic Level,NO
+STBR,ST:Bridges & Culverts,Observation,SH07,Habitat,NO
+STBR,ST:Bridges & Culverts,Measurement,S007,S:No. Of Construction Spans,YES
+STBR,ST:Bridges & Culverts,Attribute,RTS1,TK:Route Type Supported,NO
+STBR,ST:Bridges & Culverts,Observation,SH08,Hazardous Environment,NO
+STBR,ST:Bridges & Culverts,Measurement,STCA,TK:Average Critical Headroom,YES
+STBR,ST:Bridges & Culverts,Attribute,S006,S:Parish,NO
+STBR,ST:Bridges & Culverts,Observation,SH09,No Footway / Verge,NO
+STBR,ST:Bridges & Culverts,Attribute,S008,S:Ancient Monument,NO
+STBR,ST:Bridges & Culverts,Observation,SH10,Parking,NO
+STBR,ST:Bridges & Culverts,Attribute,S009,TK:Planning Conservation Area,NO
+STBR,ST:Bridges & Culverts,Observation,SH11,Soft Silt,NO
+STBR,ST:Bridges & Culverts,Attribute,S011,S:Listed Grade,NO
+STBR,ST:Bridges & Culverts,Observation,SH12,Trash Screen,NO
+STBR,ST:Bridges & Culverts,Attribute,S014,S:Prn,NO
+STBR,ST:Bridges & Culverts,Observation,SH13,Other,NO
+STBR,ST:Bridges & Culverts,Attribute,S015,S:Shn,NO
+STBR,ST:Bridges & Culverts,Observation,STEC,Engineer Comments,NO
+STBR,ST:Bridges & Culverts,Attribute,S017,S:Signed Weight Restriction,YES
+STBR,ST:Bridges & Culverts,Observation,STIC,Inspector Comments,NO
+STBR,ST:Bridges & Culverts,Attribute,S018,S:Abnormal Load Route,YES
+STBR,ST:Bridges & Culverts,Observation,STWR,Work Required,NO
+STBR,ST:Bridges & Culverts,Attribute,S019,S:Amenity Weight Restriction,NO
+STBR,ST:Bridges & Culverts,Attribute,S024,S:Caution,NO
+STBR,ST:Bridges & Culverts,Attribute,S040,S:Over,NO
+STBR,ST:Bridges & Culverts,Attribute,STSF,TK:Strategy to be Followed,NO
+STBR,ST:Bridges & Culverts,Attribute,SUST,TK:Substandard Structure,NO
+STBR,ST:Bridges & Culverts,Attribute,SWLS,TK:Walls,NO
+SRWP,ST:Retaining Wall Panel,Measurement,NO,Number Of,NO
+SRWP,ST:Retaining Wall Panel,Attribute,RWC1,S:RW-Structural Form,YES
+SRWP,ST:Retaining Wall Panel,Observation,WE20,20/Services,NO
+SRWP,ST:Retaining Wall Panel,Measurement,S009,S:Construction Length,YES
+SRWP,ST:Retaining Wall Panel,Attribute,RWC2,S:RW-Material Type,YES
+SRWP,ST:Retaining Wall Panel,Observation,WE21,21/Other,NO
+SRWP,ST:Retaining Wall Panel,Measurement,S012,S:Width,YES
+SRWP,ST:Retaining Wall Panel,Observation,WE22,22/Other,NO
+SRWP,ST:Retaining Wall Panel,Measurement,S013,S:Span Area,YES
+SRWP,ST:Retaining Wall Panel,Observation,WE23,23/Other,NO
+SRWP,ST:Retaining Wall Panel,Measurement,S014,S:No. Of Construction Forms,YES
+SRWP,ST:Retaining Wall Panel,Observation,WE24,24/Other,NO
+SRWP,ST:Retaining Wall Panel,Observation,BCIA,BCI Average,NO
+SRWP,ST:Retaining Wall Panel,Observation,BCIC,BCI Critical,NO
+SRWP,ST:Retaining Wall Panel,Observation,WE25,25/Retaining Wall,NO
+SRWP,ST:Retaining Wall Panel,Observation,WE26,26/Structural Earthworks,NO
+SRWP,ST:Retaining Wall Panel,Observation,WE01,01/Foundations,NO
+SRWP,ST:Retaining Wall Panel,Observation,WE02,02/Retaining Wall/Primary,NO
+SRWP,ST:Retaining Wall Panel,Observation,WE03,03/Retaining Wall/Secondary,NO
+SRWP,ST:Retaining Wall Panel,Observation,WE04,04/Parapet beam/plinth,NO
+SRWP,ST:Retaining Wall Panel,Observation,WE05,05/Drainage,NO
+SRWP,ST:Retaining Wall Panel,Observation,WE06,06/Movement/expansion joints,NO
+SRWP,ST:Retaining Wall Panel,Observation,WE07,07/Surface finishes:wall,NO
+SRWP,ST:Retaining Wall Panel,Observation,WE08,08/Surf.finishes:hrail/parapet,NO
+SRWP,ST:Retaining Wall Panel,Observation,WE09,09/Handrail/parapet/saf.fences,NO
+SRWP,ST:Retaining Wall Panel,Observation,WE10,10/Carriageway-Top of Wall,NO
+SRWP,ST:Retaining Wall Panel,Observation,WE11,11/Carriageway-Foot of Wall,NO
+SRWP,ST:Retaining Wall Panel,Observation,WE12,12/Footway/Verge-Top of Wall,NO
+SRWP,ST:Retaining Wall Panel,Observation,WE13,13/Footway/Verge-Foot of Wall,NO
+SRWP,ST:Retaining Wall Panel,Observation,WE14,14/Embankment-Top of Wall,NO
+SRWP,ST:Retaining Wall Panel,Observation,WE15,15/Embankment-Foot of Wall,NO
+SRWP,ST:Retaining Wall Panel,Observation,WE16,16/Invert/river bed,NO
+SRWP,ST:Retaining Wall Panel,Observation,WE17,17/Aprons,NO
+SRWP,ST:Retaining Wall Panel,Observation,WE18,18/Signs,NO
+SRWP,ST:Retaining Wall Panel,Observation,WE19,19/Lighting,NO
+STRW,ST:Retaining Wall,Measurement,NO,Number Of,NO
+STRW,ST:Retaining Wall,Attribute,ENST,TK:Environmentally Sensitive,NO
+STRW,ST:Retaining Wall,Observation,SH01,Anti-Social Environment,NO
+STRW,ST:Retaining Wall,Measurement,S015,S:CW Width Above Wall,YES
+STRW,ST:Retaining Wall,Attribute,HERG,TK:Heritage,NO
+STRW,ST:Retaining Wall,Observation,SH02,Confined Space,NO
+STRW,ST:Retaining Wall,Measurement,S016,S:Wall Length,YES
+STRW,ST:Retaining Wall,Attribute,LOC1,TK:Location Type,NO
+STRW,ST:Retaining Wall,Observation,SH03,Dangerous Structure,NO
+STRW,ST:Retaining Wall,Measurement,S017,S:Max Retained Height,YES
+STRW,ST:Retaining Wall,Attribute,ROSA,TK:Route Salted,NO
+STRW,ST:Retaining Wall,Observation,SH04,Deep Water,NO
+STRW,ST:Retaining Wall,Measurement,S018,S:No. Of Sections,YES
+STRW,ST:Retaining Wall,Attribute,RTAF,TK:Route Type Adjacent to foot,NO
+STRW,ST:Retaining Wall,Observation,SH05,Difficult Access,NO
+STRW,ST:Retaining Wall,Attribute,RTAT,TK:Route Type Adjacent to top,NO
+STRW,ST:Retaining Wall,Observation,SH06,Gated Access,NO
+STRW,ST:Retaining Wall,Attribute,RTFS,TK:Route Type Adj foot Salted,NO
+STRW,ST:Retaining Wall,Observation,SH07,Habitat,NO
+STRW,ST:Retaining Wall,Attribute,RTL1,TK:Route Traffic Level,NO
+STRW,ST:Retaining Wall,Observation,SH08,Hazardous Environment,NO
+STRW,ST:Retaining Wall,Attribute,S006,S:Parish,NO
+STRW,ST:Retaining Wall,Observation,SH09,No Footway / Verge,NO
+STRW,ST:Retaining Wall,Attribute,S008,S:Ancient Monument,NO
+STRW,ST:Retaining Wall,Observation,SH10,Parking,NO
+STRW,ST:Retaining Wall,Attribute,S009,TK:Planning Conservation Area,NO
+STRW,ST:Retaining Wall,Observation,SH11,Soft Silt,NO
+STRW,ST:Retaining Wall,Attribute,S011,S:Listed Grade,NO
+STRW,ST:Retaining Wall,Observation,SH13,Other,NO
+STRW,ST:Retaining Wall,Attribute,S014,S:Prn,NO
+STRW,ST:Retaining Wall,Observation,STEC,Engineer Comments,NO
+STRW,ST:Retaining Wall,Attribute,S015,S:Shn,NO
+STRW,ST:Retaining Wall,Observation,STIC,Inspector Comments,NO
+STRW,ST:Retaining Wall,Attribute,S018,S:Abnormal Load Route,NO
+STRW,ST:Retaining Wall,Observation,STWR,Work Required,NO
+STRW,ST:Retaining Wall,Attribute,S024,S:Caution,NO
+STRW,ST:Retaining Wall,Attribute,S040,S:Over,NO
+STRW,ST:Retaining Wall,Attribute,STSF,TK:Strategy to be Followed,NO
+STRW,ST:Retaining Wall,Attribute,SUST,TK:Substandard Structure,NO
+STRW,ST:Retaining Wall,Attribute,SWLS,TK:Walls,NO
+STDM,ST:Dam,Measurement,NO,Number Of,NO
+STDM,ST:Dam,Attribute,DCON,S: Date Constructed,YES
+STDM,ST:Dam,Measurement,OTWL,S: Overflow / Top Water Level,YES
+STDM,ST:Dam,Attribute,DESI,S: Designation,NO
+STDM,ST:Dam,Measurement,S009,S:Construction Length,YES
+STDM,ST:Dam,Attribute,FCAT,S: Flood Category,NO
+STDM,ST:Dam,Measurement,S017,S:Max Retained Height,YES
+STDM,ST:Dam,Attribute,RTAT,TK:Route Type Adjacent to top,NO
+STDM,ST:Dam,Measurement,SCAP,S: Storage Capacity,YES
+STDM,ST:Dam,Attribute,S006,S:Parish,NO
+STDM,ST:Dam,Attribute,S008,S:Ancient Monument,NO
+STDM,ST:Dam,Attribute,S011,S:Listed Grade,NO
+STDM,ST:Dam,Attribute,S031,S:Comments,NO
+STDM,ST:Dam,Attribute,S041,S:Construction,NO
+STDM,ST:Dam,Attribute,USE,S: Use,NO
+SPAN,ST:Structure Span,Measurement,NO,Number Of,NO
+SPAN,ST:Structure Span,Attribute,BTC1,S:BTC-Primary Deck Element,NO
+SPAN,ST:Structure Span,Observation,BCIA,BCI Average,NO
+SPAN,ST:Structure Span,Measurement,S008,S:Span No,YES
+SPAN,ST:Structure Span,Attribute,BTC2,S:BTC-Prim Deck Elem Material,NO
+SPAN,ST:Structure Span,Observation,BCIC,BCI Critical,NO
+SPAN,ST:Structure Span,Measurement,S009,S:Construction Length,YES
+SPAN,ST:Structure Span,Attribute,BTC3,S:BTC-Secondary Deck Element,NO
+SPAN,ST:Structure Span,Observation,BE43,43/Chamber/Cellar/Vault,NO
+SPAN,ST:Structure Span,Measurement,S010,S:Skew (C),NO
+SPAN,ST:Structure Span,Attribute,BTC4,S:BTC-Sec Deck Elem Material,NO
+SPAN,ST:Structure Span,Observation,BE44,44/Culvert,NO
+SPAN,ST:Structure Span,Measurement,S011,S:Square Span,YES
+SPAN,ST:Structure Span,Attribute,S045,S:Span Description,NO
+SPAN,ST:Structure Span,Observation,BE45,45/Subway: Pipe,NO
+SPAN,ST:Structure Span,Measurement,S012,S:Width,YES
+SPAN,ST:Structure Span,Attribute,S046,S:Span Number Description,NO
+SPAN,ST:Structure Span,Observation,BE01,01/Primary Deck Element,NO
+SPAN,ST:Structure Span,Measurement,S013,S:Span Area,YES
+SPAN,ST:Structure Span,Observation,BE02,02/Sec.Deck Elem/s Transv Beam,NO
+SPAN,ST:Structure Span,Observation,BE03,03/Sec.Deck Element/s Other,NO
+SPAN,ST:Structure Span,Observation,BE04,04/Half joints,NO
+SPAN,ST:Structure Span,Observation,BE05,05/Tie beam/rod,NO
+SPAN,ST:Structure Span,Observation,BE06,06/Parapet beam or cantilever,NO
+SPAN,ST:Structure Span,Observation,BE07,07/Deck bracing,NO
+SPAN,ST:Structure Span,Observation,BE08,08/Foundations,NO
+SPAN,ST:Structure Span,Observation,BE09,09/Abutments(inc.arch spring),NO
+SPAN,ST:Structure Span,Observation,BE10,10/Spandrel wall/head wall,NO
+SPAN,ST:Structure Span,Observation,BE11,11/Pier/column,NO
+SPAN,ST:Structure Span,Observation,BE12,12/Cross-head/capping beam,NO
+SPAN,ST:Structure Span,Observation,BE13,13/Bearings,NO
+SPAN,ST:Structure Span,Observation,BE14,14/Bearing plinth/shelf,NO
+SPAN,ST:Structure Span,Observation,BE15,15/Superstructure drainage,NO
+SPAN,ST:Structure Span,Observation,BE16,16/Substructure drainage,NO
+SPAN,ST:Structure Span,Observation,BE17,17/Water proofing,NO
+SPAN,ST:Structure Span,Observation,BE18,18/Movement/expansion joints,NO
+SPAN,ST:Structure Span,Observation,BE19,19/Finishes:deck elements,NO
+SPAN,ST:Structure Span,Observation,BE20,20/Finishes:substructure elem,NO
+SPAN,ST:Structure Span,Observation,BE21,21/Finishes:parapet/saf.fences,NO
+SPAN,ST:Structure Span,Observation,BE22,22/Access/walkways/gantries,NO
+SPAN,ST:Structure Span,Observation,BE23,23/Handrail/parapet/saf.fences,NO
+SPAN,ST:Structure Span,Observation,BE24,24/Carriageway surfacing,NO
+SPAN,ST:Structure Span,Observation,BE25,25/Fway/verge/fbrdge surfacing,NO
+SPAN,ST:Structure Span,Observation,BE26,26/Invert/river bed,NO
+SPAN,ST:Structure Span,Observation,BE27,27/Aprons,NO
+SPAN,ST:Structure Span,Observation,BE28,28/Fend/c-water/collisn protct,NO
+SPAN,ST:Structure Span,Observation,BE29,29/River training works,NO
+SPAN,ST:Structure Span,Observation,BE30,30/Revetment/batter paving,NO
+SPAN,ST:Structure Span,Observation,BE31,31/Wing walls,NO
+SPAN,ST:Structure Span,Observation,BE32,32/Retaining walls,NO
+SPAN,ST:Structure Span,Observation,BE33,33/Embankments,NO
+SPAN,ST:Structure Span,Observation,BE34,34/Machinery,NO
+SPAN,ST:Structure Span,Observation,BE35,35/Apprch rails/barriers/walls,NO
+SPAN,ST:Structure Span,Observation,BE36,36/Signs,NO
+SPAN,ST:Structure Span,Observation,BE37,37/Lighting,NO
+SPAN,ST:Structure Span,Observation,BE38,38/Services,NO
+SPAN,ST:Structure Span,Observation,BE39,39/Other,NO
+SPAN,ST:Structure Span,Observation,BE40,40/Other,NO
+SPAN,ST:Structure Span,Observation,BE41,41/Other,NO
+SPAN,ST:Structure Span,Observation,BE42,42/Other,NO
+WGBC,Winter Asset - Bin,Measurement,GRAD,Gradient (%),YES
+WGBC,Winter Asset - Bin,Attribute,KPA,Known Problem Area,YES
+WGBC,Winter Asset - Bin,Observation,GCI,Asset Condition Information,NO
+WGBC,Winter Asset - Bin,Measurement,NO,Number Of,NO
+WGBC,Winter Asset - Bin,Attribute,OAP,Only Access Point,YES
+WGBC,Winter Asset - Bin,Observation,SAOA,Stockpile Amount On Arrival,NO
+WGBC,Winter Asset - Bin,Measurement,VOL,Volume (m3),YES
+WGBC,Winter Asset - Bin,Attribute,PTRE,Persons Available To Treat,YES
+WGBC,Winter Asset - Bin,Attribute,PWA,Distance to Next Asset,YES
+WGBC,Winter Asset - Bin,Attribute,SLFB,Suitable Location For Asset,YES
+WGBC,Winter Asset - Bin,Attribute,SPR,Speed Of Road Assessed,YES
+WGBC,Winter Asset - Bin,Attribute,SRA,Speed Of Road Joining,YES
+WGBC,Winter Asset - Bin,Attribute,TRET,Is Road on treated Network,YES
+WGBC,Winter Asset - Bin,Attribute,WASL,Strategic Level,YES
+WGBC,Winter Asset - Bin,Attribute,WTA,Winter - Type of Asset,YES
+WGPC,Winter Asset - Pile,Measurement,GRAD,Gradient (%),YES
+WGPC,Winter Asset - Pile,Attribute,KPA,Known Problem Area,YES
+WGPC,Winter Asset - Pile,Observation,SAOA,Stockpile Amount On Arrival,NO
+WGPC,Winter Asset - Pile,Measurement,NO,Number Of,NO
+WGPC,Winter Asset - Pile,Attribute,OAP,Only Access Point,YES
+WGPC,Winter Asset - Pile,Measurement,VOL,Volume (m3),YES
+WGPC,Winter Asset - Pile,Attribute,PTRE,Persons Available To Treat,YES
+WGPC,Winter Asset - Pile,Attribute,PWA,Distance to Next Asset,YES
+WGPC,Winter Asset - Pile,Attribute,SLFB,Suitable Location For Asset,YES
+WGPC,Winter Asset - Pile,Attribute,SPR,Speed Of Road Assessed,YES
+WGPC,Winter Asset - Pile,Attribute,SRA,Speed Of Road Joining,YES
+WGPC,Winter Asset - Pile,Attribute,TRET,Is Road on treated Network,YES
+WGPC,Winter Asset - Pile,Attribute,WASL,Strategic Level,YES
+WGPC,Winter Asset - Pile,Attribute,WTA,Winter - Type of Asset,YES
+DAMA,Drainage Asset - Manholes,Measurement,DMDI,Manhole - Depth to Invert,YES
+DAMA,Drainage Asset - Manholes,Attribute,DACI,Drainage - Asset - Condition,YES
+DAMA,Drainage Asset - Manholes,Observation,SLOA,Silt Level On Arrival,NO
+DAMA,Drainage Asset - Manholes,Measurement,NO,Number Of,NO
+DAMA,Drainage Asset - Manholes,Attribute,DAFD,Drainage - Direction of Flow,YES
+DAMA,Drainage Asset - Manholes,Observation,ACT,Action Taken,NO
+DAMA,Drainage Asset - Manholes,Attribute,DMKR,Drainage - Manhole - Keys Req,YES
+DAMA,Drainage Asset - Manholes,Observation,GSOD,State On Departure,NO
+DAMA,Drainage Asset - Manholes,Attribute,DMTY,Drainage - Manhole - Type,YES
+DAMA,Drainage Asset - Manholes,Attribute,DOWN,Drainage - Likely Ownership,YES
+DAMA,Drainage Asset - Manholes,Attribute,DPIS,Drainage - Pipe Size - In,YES
+DAMA,Drainage Asset - Manholes,Attribute,DPOS,Drainage - Pipe Size - Out,YES
+DAMA,Drainage Asset - Manholes,Attribute,TMR,Traffic Management Requirement,YES
+DALA,Drainage Asset - Linear Asset,Measurement,NO,Number Of,YES
+DALA,Drainage Asset - Linear Asset,Attribute,DAFD,Drainage - Direction of Flow,YES
+DALA,Drainage Asset - Linear Asset,Attribute,DAOT,Drainage - Outfall Location,YES
+DALA,Drainage Asset - Linear Asset,Attribute,DLAT,Drainage - Linear Asset Type,YES
+DALA,Drainage Asset - Linear Asset,Attribute,DOWN,Drainage - Likely Ownership,YES
+DALA,Drainage Asset - Linear Asset,Attribute,DPIS,Drainage - Pipe Size - In,YES
