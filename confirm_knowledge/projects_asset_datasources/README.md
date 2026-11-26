@@ -3,6 +3,8 @@
 There is one Confirm data source for each asset type in `Confirm_Asset_Features_with_attributes.xlsx`, named
 `Information Team – Asset [Asset Name]`.
 
+> **Update:** the Reporting manual has since resolved most placeholders below. See `../01_schema_reference.md` (feat_measurement, feat_attrib_type, feat_cond_grade, feature centroid columns) and `../03_query_patterns.md`. The first asset query is `AA_arboricultural_asset.sql`; paste `AA_arboricultural_asset.paste.sql` into Confirm. D3 is answered by the manual: one batch holds many features, so join insp_condition on all three keys.
+
 **Status: checkpoint.** The asset inventory and the proposed join structure are ready for review. The per-asset SQL
 will be written once the schema questions below are answered. The reporting manual and the area-code workbook
 mentioned in the brief were not attached.
