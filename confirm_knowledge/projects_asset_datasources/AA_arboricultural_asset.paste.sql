@@ -22,17 +22,11 @@ SELECT
     attr.a_tat_tree_asset_type,
     attr.a_tat_tree_asset_type_text,
     obs.o_wc_work_completed,
-    obs.o_wc_work_completed_val,
     obs.o_tah_height,
-    obs.o_tah_height_val,
     obs.o_tag_girth,
-    obs.o_tag_girth_val,
     obs.o_tacs_crown_spread,
-    obs.o_tacs_crown_spread_val,
     obs.o_taoc_overall_condition,
-    obs.o_taoc_overall_condition_val,
-    obs.o_tam_maturity,
-    obs.o_tam_maturity_val
+    obs.o_tam_maturity
 FROM feature
     JOIN feature_type          ON feature_type.feature_type_code = feature.feature_type_code
     LEFT JOIN site             ON site.site_code = feature.site_code
@@ -60,17 +54,11 @@ FROM feature
     LEFT JOIN (
         SELECT c.site_code, c.plot_number,
                MAX(CASE WHEN ot.observe_type_code = 'WC'   THEN op.obs_parm_opt_name END) AS o_wc_work_completed,
-               MAX(CASE WHEN ot.observe_type_code = 'WC'   THEN c.survey_obs_value END)   AS o_wc_work_completed_val,
                MAX(CASE WHEN ot.observe_type_code = 'TAH'  THEN op.obs_parm_opt_name END) AS o_tah_height,
-               MAX(CASE WHEN ot.observe_type_code = 'TAH'  THEN c.survey_obs_value END)   AS o_tah_height_val,
                MAX(CASE WHEN ot.observe_type_code = 'TAG'  THEN op.obs_parm_opt_name END) AS o_tag_girth,
-               MAX(CASE WHEN ot.observe_type_code = 'TAG'  THEN c.survey_obs_value END)   AS o_tag_girth_val,
                MAX(CASE WHEN ot.observe_type_code = 'TACS' THEN op.obs_parm_opt_name END) AS o_tacs_crown_spread,
-               MAX(CASE WHEN ot.observe_type_code = 'TACS' THEN c.survey_obs_value END)   AS o_tacs_crown_spread_val,
                MAX(CASE WHEN ot.observe_type_code = 'TAOC' THEN op.obs_parm_opt_name END) AS o_taoc_overall_condition,
-               MAX(CASE WHEN ot.observe_type_code = 'TAOC' THEN c.survey_obs_value END)   AS o_taoc_overall_condition_val,
-               MAX(CASE WHEN ot.observe_type_code = 'TAM'  THEN op.obs_parm_opt_name END) AS o_tam_maturity,
-               MAX(CASE WHEN ot.observe_type_code = 'TAM'  THEN c.survey_obs_value END)   AS o_tam_maturity_val
+               MAX(CASE WHEN ot.observe_type_code = 'TAM'  THEN op.obs_parm_opt_name END) AS o_tam_maturity
         FROM feat_cond_grade c
             JOIN observe_type ot         ON ot.observe_type_key = c.observe_type_key
             LEFT JOIN observe_parm_opt op ON op.obs_parm_code = ot.obs_parm_code AND op.obs_parm_opt_code = c.grade_code
