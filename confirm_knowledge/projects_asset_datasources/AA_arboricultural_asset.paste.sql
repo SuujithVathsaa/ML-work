@@ -2,7 +2,7 @@ SELECT
     site.site_code,
     site.site_class_code,
     central_site.site_name,
-    central_site.display_address,
+    central_site.site_address,
     feature.feature_location,
     feature.feature_type_code,
     feature_type.feature_type_name,

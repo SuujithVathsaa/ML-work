@@ -13,7 +13,7 @@ PK = primary key. "→" = join. The tags are explained in `README.md`.
 | `ward` | `ward_code` | `ward_name` **[manual p.93, live]** |
 | `locality`, `town`, `county` | `locality_id`, `town_id`, `county_id` | names |
 
-- `central_site.display_address` is **[assumed]**. It's on the council's list but not in the v22 diagram.
+- `central_site.display_address` **does not exist [live]**: it raises ORA-00904. Use `central_site.site_address`.
 
 ## Features / assets (manual p.94 – Asset Register, p.107)
 

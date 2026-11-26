@@ -27,6 +27,8 @@ for writing Confirm Data Sources, proven query patterns, and live projects.
 - **[live]** The database is Oracle. The working reports use `SYSDATE`, `TRUNC` and `(+)`.
 - **[live]** The Data Source editor rejects SQL that doesn't start with `SELECT`, with the error "The entered SQL is
   not a SELECT statement", so `WITH` / CTEs are out.
+- **[live]** The request comes from Richard Leaning (Performance and Assurance) as a "Data Specification for Confirm GIS
+  Export", so every asset data source needs coordinates.
 - **[live]** Highways inspection officer codes `SGC0`–`SGC9` and `SGCA` are used for gully cleansing.
 - **[live]** In gully inspections, observation keys 130, 133 and 134 are Gully Accessibility, Action Taken and Gully
   State On Departure.
@@ -42,5 +44,5 @@ for writing Confirm Data Sources, proven query patterns, and live projects.
 - `sources/text/`: text extracted from the PDFs, ready for search or retrieval.
 - `sources/schema_diagrams/pNNN_<area>.png`: the schema diagrams at 200 dpi. Zoom into crops to read column names.
 
-The manual is v22; the live system may be newer. One known gap is `central_site.display_address`: it's in the
-council's column list but not in the v22 diagram.
+The manual is v22; the live system may be newer. The council's column list names `central_site.display_address`, but it doesn't exist (ORA-00904); `site_address` is
+used instead.
