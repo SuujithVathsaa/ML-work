@@ -44,7 +44,6 @@ SELECT
     feature.central_asset_id,
     feature.feat_cent_east                 AS easting,
     feature.feat_cent_north                AS northing,
-    meas.m_no_number_of,
     attr.a_dafd_direction_of_flow,
     attr.a_dafd_direction_of_flow_text,
     attr.a_down_likely_ownership,
@@ -63,13 +62,6 @@ FROM feature
     LEFT JOIN central_site     ON central_site.site_code = feature.site_code
     LEFT JOIN area             ON area.area_code = feature.area_code
     LEFT JOIN ward             ON ward.ward_code = feature.ward_code
-    LEFT JOIN (
-        SELECT m.site_code, m.plot_number,
-               MAX(m.feature_quantity) AS m_no_number_of
-        FROM feat_measurement m
-        WHERE m.measurement_code = 'NO'
-        GROUP BY m.site_code, m.plot_number
-    ) meas ON meas.site_code = feature.site_code AND meas.plot_number = feature.plot_number
     LEFT JOIN (
         SELECT a.site_code, a.plot_number,
                MAX(CASE WHEN a.attrib_type_code = 'DAFD' THEN av.attrib_value_name END) AS a_dafd_direction_of_flow,
