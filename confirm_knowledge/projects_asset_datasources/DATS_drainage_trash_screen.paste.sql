@@ -23,7 +23,6 @@ SELECT
     attr.a_down_likely_ownership_text,
     attr.a_tmr_traffic_management,
     attr.a_tmr_traffic_management_text,
-    obs.o_wcon_weather_condition,
     obs.o_sh02_confined_space,
     obs.o_sh04_deep_water,
     obs.o_sh05_difficult_access,
@@ -58,7 +57,6 @@ FROM feature
     ) attr ON attr.site_code = feature.site_code AND attr.plot_number = feature.plot_number
     LEFT JOIN (
         SELECT c.site_code, c.plot_number,
-               MAX(CASE WHEN ot.observe_type_code = 'WCON' THEN op.obs_parm_opt_name END) AS o_wcon_weather_condition,
                MAX(CASE WHEN ot.observe_type_code = 'SH02' THEN op.obs_parm_opt_name END) AS o_sh02_confined_space,
                MAX(CASE WHEN ot.observe_type_code = 'SH04' THEN op.obs_parm_opt_name END) AS o_sh04_deep_water,
                MAX(CASE WHEN ot.observe_type_code = 'SH05' THEN op.obs_parm_opt_name END) AS o_sh05_difficult_access,
@@ -68,7 +66,7 @@ FROM feature
         FROM feat_cond_grade c
             JOIN observe_type ot         ON ot.observe_type_key = c.observe_type_key
             LEFT JOIN observe_parm_opt op ON op.obs_parm_code = ot.obs_parm_code AND op.obs_parm_opt_code = c.grade_code
-        WHERE ot.observe_type_code IN ('WCON', 'SH02', 'SH04', 'SH05', 'GCI', 'SLOA', 'GCON')
+        WHERE ot.observe_type_code IN ('SH02', 'SH04', 'SH05', 'GCI', 'SLOA', 'GCON')
         GROUP BY c.site_code, c.plot_number
     ) obs ON obs.site_code = feature.site_code AND obs.plot_number = feature.plot_number
 WHERE feature_type.feature_group_code = 'DATS'
