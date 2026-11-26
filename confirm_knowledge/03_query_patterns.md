@@ -19,6 +19,10 @@ LEFT JOIN observe_parm_opt op_xx ON op_xx.obs_parm_code = ot_xx.obs_parm_code AN
   - attribute: `av_xx.attrib_value_name` (pick list) and `a_xx.feat_attrib_notes` (text)
   - observation: `op_xx.obs_parm_opt_name` (grade) and `c_xx.survey_obs_value` (number)
   - measurement: `m_xx.feature_quantity`
+- **Duplicates warning:** joining `observe_type ON observe_type_code = 'XX'` repeats every feature if that code is
+  on more than one `observe_type` row (open question Q3). The safe form, used in the AA worked example, pivots
+  each child table in an inline view with `MAX(CASE …)` and `GROUP BY site_code, plot_number`, joining
+  `observe_type` on `observe_type_key`. Each view then returns at most one row per feature.
 - **Filter by asset type:** use `feature_type.feature_group_code = '<group>'`, plus `feature.feature_deadflag = 'N'`.
 - **Worked example:** `projects_asset_datasources/AA_arboricultural_asset.sql`.
 
