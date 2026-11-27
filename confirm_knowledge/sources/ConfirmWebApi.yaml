@@ -1,0 +1,1019 @@
+openapi: 3.0.0
+info:
+  title: Confirm Web API
+  version: 1.0.0
+servers:
+  - url: '/api/{tenant}'
+    variables:
+      tenant:
+        default: ''
+security:
+  - oAuth: []
+  - basicAuth: []
+paths:
+  /centralEnquiries:
+    post:
+      tags:
+        - centralEnquiries
+      summary: Update a Central Enquiry in Confirm
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CentralEnquiry'
+            examples:
+              Document Upload:
+                value:
+                  enquiryNumber: 2000926
+                  centralDocLinks:
+                    - documentName: 'test.png'
+                      blobData: >-
+                        iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z/C/HgAGgwJ/lK3Q6wAAAABJRU5ErkJggg==
+                      documentNotes: 'Notes for test.png'
+                      documentDate: '2018-09-03T16:20:22'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/CentralEnquiry'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse'
+  /defects:
+    post:
+      tags:
+        - defects
+      summary: Create defects in Confirm
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Defect'
+            examples:
+              Central asset id:
+                value:
+                  feature:
+                    centralAssetId: '00104046'
+                  loggedDate: '2020-06-5T10:38:00'
+                  defectTypeCode: 'SDAM'
+                  officerCode: 'SBSC'
+                  job:
+                    preferredContractCode: 'WMES'
+                    items:
+                      - SORItemCode: 'VAT'
+                        quantity: 1
+                        depth: 1
+                        width: 1
+                        notes: 'Some notes'
+                  attributes:
+                    - paramTypeCode: 'C001'
+                      valueCode: 'RES'
+              Site code and plot number:
+                value:
+                  feature:
+                    siteCode: '47700134'
+                    plotNumber: 70000
+                  loggedDate: '2020-06-5T10:38:00'
+                  defectTypeCode: 'SDAM'
+                  officerCode: 'SBSC'
+                  job:
+                    preferredContractCode: 'WMES'
+                    items:
+                      - SORItemCode: 'VAT'
+                        quantity: 1
+                        depth: 1
+                        width: 1
+                        notes: 'Some notes'
+                  attributes:
+                    - paramTypeCode: 'BAC'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse'
+  /features:
+    summary: API to manage features in Confirm
+    post:
+      tags:
+        - features
+      summary: Create or update Feature in Confirm. This API currently supports
+        Feature Attributes, Measurements, Dates and Conditions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Feature'
+            examples:
+              Create Feature - Site Code and Feature Type Code:
+                value:
+                  featureId: 'BR/01'
+                  siteCode: '47700134'
+                  featureTypeCode: 'BBRI'
+                  location: 'Near roundabout bridge'
+                  classificationCode: 'NCA'
+                  notes: 'Feature notes.'
+                  geometry: 'POINT (153.056724 -26.684754)'
+                  featureConditions:
+                    - observationType:
+                        observeTypeCode: 'FWCD'
+                      conditionValue: 5
+                      conditionNotes: 'My condition notes.'
+                  attributes:
+                    - attributeTypeCode: 'BRTY'
+                      attributeValueCode: 'FOOT'
+                      notes: 'Foot bridge'
+                    - attributeTypeCode: 'BRCO'
+                      notes: 'This is a text.'
+                  measurements:
+                    - measurementTypeCode: 'BDWI'
+                      quantity: 100
+                  dates:
+                    - dateTypeCode: 'INDA'
+                      value: '2020-06-5T10:38:00'
+                      notes: 'Install Date'
+              Create Feature - Site Code, Plot Number and Feature Type Code:
+                value:
+                  featureId: 'BR/01'
+                  siteCode: '47700134'
+                  plotNumber: 70001
+                  featureTypeCode: 'BBRI'
+                  location: 'Near roundabout bridge'
+                  classificationCode: 'NCA'
+                  notes: 'Feature notes.'
+                  geometry: 'POINT (153.056724 -26.684754)'
+                  featureConditions:
+                    - observationType:
+                        observeTypeCode: 'FWCD'
+                      conditionValue: 5
+                      conditionNotes: 'My condition notes.'
+                  attributes:
+                    - attributeTypeCode: 'BRTY'
+                      attributeValueCode: 'FOOT'
+                      notes: 'Foot bridge'
+                    - attributeTypeCode: 'BRCO'
+                      notes: 'This is a text.'
+                  measurements:
+                    - measurementTypeCode: 'BDWI'
+                      quantity: 100
+                  dates:
+                    - dateTypeCode: 'INDA'
+                      value: '2020-06-5T10:38:00'
+                      notes: 'Install Date'
+              Create Feature - Coordinates:
+                value:
+                  featureId: 'BR/01'
+                  siteCode: '47700134'
+                  plotNumber: 70001
+                  featureTypeCode: 'BBRI'
+                  location: 'Near roundabout bridge'
+                  notes: 'Feature notes.'
+                  extentOneEasting: 276687.54
+                  extentOneNorthing: 189713.82
+                  extentTwoEasting: 276687.56
+                  extentTwoNorthing: 189713.84
+                  centroidEasting: 0
+                  centroidNorthing: 0
+                  featureConditions:
+                    - observationType:
+                        observeTypeCode: 'FWCD'
+                      conditionValue: 5
+                      conditionNotes: 'My condition notes.'
+                  attributes:
+                    - attributeTypeCode: 'BRTY'
+                      attributeValueCode: 'FOOT'
+                      notes: 'Foot bridge'
+                    - attributeTypeCode: 'BRCO'
+                      notes: 'This is a text.'
+                  measurements:
+                    - measurementTypeCode: 'BDWI'
+                      quantity: 100
+                  dates:
+                    - dateTypeCode: 'INDA'
+                      value: '2020-06-5T10:38:00'
+                      notes: 'Install Date'
+              Update Feature - Site Code and PlotNumber:
+                value:
+                  siteCode: '47700134'
+                  plotNumber: 70001
+                  featureTypeCode: 'BBRI'
+                  location: 'Near roundabout bridge'
+                  classificationCode: 'ND'
+                  notes: 'Feature notes.'
+                  geometry: 'POINT (153.056724 -26.684754)'
+                  featureConditions:
+                    - observationType:
+                        observeTypeCode: 'FWCD'
+                      conditionValue: 5
+                      conditionNotes: 'My condition notes.'
+                  attributes:
+                    - attributeTypeCode: 'BRTY'
+                      attributeValueCode: 'FOOT'
+                      notes: 'Foot bridge'
+                    - attributeTypeCode: 'BRCO'
+                      notes: 'This is a text.'
+                  measurements:
+                    - measurementTypeCode: 'BDWI'
+                      quantity: 100
+                  dates:
+                    - dateTypeCode: 'INDA'
+                      value: '2020-06-5T10:38:00'
+                      notes: 'Install Date'
+              Update Feature - Central Asset Id:
+                value:
+                  featureId: 'BR/01'
+                  centralAssetId: '47700134'
+                  location: 'Near roundabout bridge'
+                  notes: 'Feature notes.'
+                  geometry: 'POINT (153.056724 -26.684754)'
+                  featureConditions:
+                    - observationType:
+                        observeTypeCode: 'FWCD'
+                      conditionValue: 5
+                      conditionNotes: 'My condition notes.'
+                  attributes:
+                    - attributeTypeCode: 'BRTY'
+                      attributeValueCode: 'FOOT'
+                      notes: 'Foot bridge'
+                    - attributeTypeCode: 'BRCO'
+                      notes: 'This is a text.'
+                  measurements:
+                    - measurementTypeCode: 'BDWI'
+                      quantity: 100
+                  dates:
+                    - dateTypeCode: 'INDA'
+                      value: '2020-06-5T10:38:00'
+                      notes: 'Install Date'
+              Update Conditions/Attributes - Feature Id:
+                value:
+                  featureId: 'BR007'
+                  featureConditions:
+                    - observationType:
+                        observeTypeCode: 'FWCD'
+                      conditionValue: 5
+                      conditionNotes: 'My condition notes.'
+                  attributes:
+                    - attributeTypeCode: 'BRTY'
+                      attributeValueCode: 'FOOT'
+                      notes: 'Foot bridge'
+                    - attributeTypeCode: 'BRCO'
+                      notes: 'This is a text.'
+                  measurements:
+                    - measurementTypeCode: 'BDWI'
+                      quantity: 120
+                  dates:
+                    - dateTypeCode: 'INDA'
+                      value: '2020-06-5T10:38:00'
+                      notes: 'Install Date'
+              Update Conditions/Attributes - Site Code and Plot number:
+                value:
+                  siteCode: '47700134'
+                  plotNumber: 70000
+                  featureConditions:
+                    - observationType:
+                        observeTypeCode: 'FWCD'
+                      conditionValue: 5
+                      conditionNotes: 'My condition notes.'
+                  attributes:
+                    - attributeTypeCode: 'BRTY'
+                      attributeValueCode: 'FOOT'
+                      notes: 'Foot bridge'
+                    - attributeTypeCode: 'BRCO'
+                      notes: 'This is a text.'
+                  measurements:
+                    - measurementTypeCode: 'BDWI'
+                      quantity: 120
+                  dates:
+                    - dateTypeCode: 'INDA'
+                      value: '2020-06-5T10:38:00'
+                      notes: 'Install Date'
+              Update Conditions/Attributes - Central asset id:
+                value:
+                  centralAssetId: '00104046'
+                  featureConditions:
+                    - observationType:
+                        observeTypeCode: 'FWCD'
+                      conditionValue: 5
+                      conditionNotes: 'My condition notes.'
+                  attributes:
+                    - attributeTypeCode: 'BRTY'
+                      attributeValueCode: 'FOOT'
+                      notes: 'Foot bridge'
+                    - attributeTypeCode: 'BRCO'
+                      notes: 'This is a text.'
+                  measurements:
+                    - measurementTypeCode: 'BDWI'
+                      quantity: 120
+                  dates:
+                    - dateTypeCode: 'INDA'
+                      value: '2020-06-5T10:38:00'
+                      notes: 'Install Date'
+              Update Conditions/Attributes - Central asset id and Condition grade:
+                value:
+                  centralAssetId: '00104046'
+                  featureConditions:
+                    - observationType:
+                        observeTypeCode: 'FWCD'
+                      conditionGradeCode: '5'
+                      conditionNotes: 'My condition notes.'
+                  attributes:
+                    - attributeTypeCode: 'BRTY'
+                      attributeValueCode: 'FOOT'
+                      notes: 'Foot bridge'
+                    - attributeTypeCode: 'BRCO'
+                      notes: 'This is a text.'
+                  measurements:
+                    - measurementTypeCode: 'BDWI'
+                      quantity: 120
+                  dates:
+                    - dateTypeCode: 'INDA'
+                      value: '2020-06-5T10:38:00'
+                      notes: 'Install Date'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse'
+              examples:
+                Success:
+                  value:
+                    key: '105834'
+                    alternateKeys:
+                      siteCode: '47700134'
+                      plotNumber: 70001
+                      centralAssetId: '00105079'
+                Success with Warnings:
+                  value:
+                    key: '105834'
+                    alternateKeys:
+                      siteCode: '47700134'
+                      plotNumber: 70001
+                      centralAssetId: '00105079'
+                    warnings:
+                      - 'XYZ is not a valid site class code and will be auto assigned'
+                Errors:
+                  value:
+                    errors:
+                      - error_description: 'Missing mandatory parameter: Attribute: SLSL.'
+  /payments:
+    post:
+      tags:
+      - payments
+      summary: Create payments in Confirm
+      requestBody: 
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Payments'
+            examples:
+              Create:
+                value:
+                  ContractCode: "WMES"
+                  ContractAreaCode: "PT"
+                  FinancePeriodCode: "0221"
+                  PaymentDate: "2020-09-03T16:20:22"
+                  Notes: "Imported by WebAPI"
+                  ExternalRef: "EXTREF111"
+                  InvoiceNumber: "1"
+                  PaymentJobs: [
+                    {
+                      OrderJobNumber: "2000010",
+                      JobValue: 110,
+                      JobClosed: true
+                    }
+                  ]
+      responses: 
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /jobs:
+    post:
+      tags:
+        - jobs
+      summary: Update a Job in Confirm
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Job'
+            examples:
+              Commit:
+                value:
+                  key: '2000005'
+                  commit: 'true'
+              Create:
+                value:
+                  siteCode: '47715922'
+                  plotNumber: 12.00,
+                  description: 'Description text'
+                  location: 'Location text'
+                  jobTypeCode: 'DCDV'
+                  priorityCode: 'RED7'
+                  priceFactorCode: 'REAC'
+                  currentStatusLog:
+                    allocatedOfficerCode: 'SBS'
+              CreateAndCommit:
+                value:
+                  siteCode: '47715922'
+                  plotNumber: 12.00
+                  description: 'Description text'
+                  location: 'Location text'
+                  commit: 'true'
+                  currentStatusLog:
+                    allocatedOfficerCode: 'SBS'
+                  items:
+                    - code: '100.001'
+              Status Update:
+                value:
+                  key: '2000988'
+                  currentStatusLog:
+                    effectiveDate: '2019-08-01T13:00:00'
+                    followUpCode: '0006'
+                    followUpDate: '2019-08-02T14:00:00'
+                    loggedDate: '2019-08-01T12:00:00'
+                    statusNotes: 'Needs following up sooner'
+                    allocatedOfficerCode: 'SBS'
+                    statusCode: '0100'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse'
+components:
+  schemas:
+    CentralEnquiry:
+      properties:
+        enquiryNumber:
+          type: integer
+        centralDocLinks:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentLink'
+      required:
+        - enquiryNumber
+        - centralDocLinks
+    DocumentLink:
+      properties:
+        documentName:
+          type: string
+          maxLength: 1000
+        blobData:
+          type: string
+          description: Base64 encoded string represesnting the document content
+        documentNotes:
+          type: string
+          maxLength: 2000
+        documentDate:
+          type: string
+          description: Defaulted to now if not supplied
+      required:
+        - documentName
+        - blobData
+    BaseResponse:
+      properties:
+        key:
+          type: string
+          description: Key to uniquely identify
+        alternateKeys:
+          type: object
+          additionalProperties:
+            type: object
+          description: Additional key properties
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
+          description: An array of Errors
+        warnings:
+          type: array
+          items:
+            type: string
+          description: An array of warnings
+    Error:
+      properties:
+        error_description:
+          type: string
+    Job:
+      properties:
+        key:
+          type: integer
+          description: Job Number
+        externalJobReference:
+          type: string
+          maxLength: 50
+          description: External Job Reference
+        siteCode:
+          type: string
+          maxLength: 10
+          description: Site Code
+        plotNumber:
+          type: integer
+          description: Plot Number
+        centralAssetId:
+          type: string
+          maxLength: 20
+          description: Central Asset Id
+        featureId:
+          type: string
+          maxLength: 15
+          description: Feature Id
+        description:
+          type: string
+          maxLength: 2000
+          description: Description
+        location:
+          type: string
+          maxLength: 2000
+          description: Location
+        customerReference:
+          type: string
+          maxLength: 20
+          description: Customer Reference
+        customerCode:
+          type: string
+          maxLength: 4
+          description: Customer Code
+        contractCode:
+          type: string
+          maxLength: 6
+          description: Contract Code
+        contractAreaCode:
+          type: string
+          maxLength: 4
+          description: Contract Area Code
+        costCodeCode:
+          type: string
+          maxLength: 15
+          description: Cost Code Code
+        jobTypeCode:
+          type: string
+          maxLength: 4
+          description: Job Type Key
+        partialPayment:
+          type: boolean
+          description: Partial Payment (default is false)
+        priorityCode:
+          type: string
+          maxLength: 4
+          description: Priority Code
+        priceFactorCode:
+          type: string
+          maxLength: 4
+          description: Price Factor Code
+        entryDate:
+          type: string
+          format: date-time
+          description: Entry Date
+        estimatedStartDate:
+          type: string
+          format: date-time
+          description: Estimated Start Date
+        actualStartDate:
+          type: string
+          format: date-time
+          description: Actual Start Date
+        estimatedCompletionDate:
+          type: string
+          format: date-time
+          description: Estimated Completion Date
+        targetCompletionDate:
+          type: string
+          format: date-time
+          description: Target Completion Date
+        actualCompletionDate:
+          type: string
+          format: date-time
+          description: Actual Completion Date
+        liabilityDate:
+          type: string
+          format: date-time
+          description: Liability Date
+        easting:
+          type: number
+          description: Easting
+        northing:
+          type: number
+          description: Northing
+        altitude:
+          type: number
+          description: Altitude
+        externalOrderReference:
+          type: string
+          description: External Order Reference
+        surveyObservationStart:
+          type: number
+          description: Survey Observation Start
+        surveyObservationEnd:
+          type: number
+          description: Survey Observation End
+        currentStatusLog:
+          type: array
+          items:
+            $ref: '#/components/schemas/CurrentStatusLog'
+          description: Current Status Log
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/JobItems'
+          description: Items
+        xspCode:
+          type: string
+          maxLength: 6
+          description: XSP Code
+        trafficManagementCode:
+          type: string
+          maxLength: 4
+          description: Traffic Management Code
+        workstreamKey:
+          type: number
+          description: Workstream Key
+    JobItems:
+      properties:
+        number:
+          type: integer
+          multipleOf: 10
+          description: Item Number
+        code:
+          type: string
+          maxLength: 8
+          description: Sor Item Code
+        costCodeCode:
+          type: string
+          maxLength: 15
+          description: Cost Code Code
+        length:
+          type: number
+          minimum: 0
+          description: Length (defaults 0)
+        width:
+          type: number
+          minimum: 0
+          description: Width (defaults 0)
+        depth:
+          type: number
+          minimum: 0
+          description: Depth (defaults 0)
+        quantity:
+          type: number
+          minimum: 0
+          description: Quantity (defaults 0)
+        notes:
+          type: string
+          maxLength: 2000
+          description: Notes
+      required:
+        - itemNumber
+        - code
+    CurrentStatusLog:
+      properties:
+        number:
+          type: integer
+          description: Log Number
+        allocatedOfficerCode:
+          type: string
+          maxLength: 4
+          description: Allocated Officer Code
+        followUpCode:
+          type: string
+          maxLength: 4
+          description: Follow Up Code
+        followUpDate:
+          type: string
+          format: date-time
+          description: Follow Up Date
+        effectiveDate:
+          type: string
+          format: date-time
+          description: Effective Date
+        loggedDate:
+          type: string
+          format: date-time
+          description: Logged Date
+        statusNotes:
+          type: string
+          maxLength: 2000
+          description: Status Notes
+        statusCode:
+          type: string
+          maxLength: 4
+          description: Status Code
+    Payments:
+      properties:
+        Key:
+          type: integer
+          description: Payment Number
+        ContractCode:
+          type: string
+          maxLength: 6
+          description: Contract Code
+        ContractAreaCode:
+          type: string
+          maxLength: 4
+          description: Contract Area Code
+        Notes:
+          type: string
+          maxLength: 2000
+          description: Notes
+        PaymentDate:
+          type: string
+          description: Payment Date
+        FinancePeriodCode:
+          type: string
+          maxLength: 4
+          description: Finance Period Code
+        ExternalRef:
+          type: string
+          maxLength: 20
+          description: External Reference
+        InvoiceNumber:
+          type: string
+          maxLength: 20
+          description: Invoice Number
+        PaymentJobs:
+          type: array
+          items:
+            $ref: '#/components/schemas/PaymentJobs'
+          description: Payment Jobs
+      required:
+      - ContractCode
+      - FinancePeriodCode
+    PaymentJobs:
+      properties:
+        OrderJobNumber:
+          type: integer
+          description: Job Number
+        JobValue:
+          type: number
+          description: Job Value
+        JobClosed:
+          type: boolean
+          description: Job Closed Flag (default is true)
+      required:
+        - OrderJobNumber   
+    Feature:
+      properties:
+        featureId:
+          type: string
+          maxLength: 15
+          description: Feature Id may have to be unique for Feature creation depending on Feature System Settings
+        centralAssetId:
+          type: string
+          maxLength: 20
+          description: Required in update request if either featureId or combination of siteCode and plotNumber is not provided
+        siteCode:
+          type: string
+          maxLength: 10
+          description: Required for Feature creation
+        plotNumber:
+          type: number
+          description: Can be auto-generated for a new Feature
+        featureTypeCode:
+          type: string
+          maxLength: 4
+          description: Required for Feature creation
+        classificationCode:
+          type: string
+          maxLength: 4
+          description: Classification Code
+        location:
+          type: string
+          maxLength: 2000
+          description: Location
+        notes:
+          type: string
+          maxLength: 2000
+          description: Notes
+        startDate:
+          type: string
+          format: date-time
+          description: Defaulted to current date if not provided
+        dead:
+          type: boolean
+          description: Dead
+        extentOneEasting:
+          type: number
+          description: This should be as per coordinate system setting specified in Map System Settings
+        extentOneNorthing:
+          type: number
+          description: This should be as per coordinate system setting specified in Map System Settings
+        extentTwoEasting:
+          type: number
+          description: This should be as per coordinate system setting specified in Map System Settings
+        extentTwoNorthing:
+          type: number
+          description: Extent Two Northing
+        centroidEasting:
+          type: number
+          description: This should be as per coordinate system setting specified in Map System Settings
+        centroidNorthing:
+          type: number
+          description: This should be as per coordinate system setting specified in Map System Settings
+        geometry:
+          type: string
+          description: Geometry is a Well-known text string in WGS84 coordinate system
+        featureConditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/FeatureCondition'
+          description: The conditions
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/FeatureAttribute'
+          description: The feature attributes
+        measurements:
+          type: array
+          items:
+            $ref: '#/components/schemas/FeatureMeasurement'
+          description: The feature measurements
+        dates:
+          type: array
+          items:
+            $ref: '#/components/schemas/FeatureDate'
+          description: The feature dates
+    FeatureCondition:
+      properties:
+        conditionGradeCode:
+          type: string
+          maxLength: 4
+          description: Condition notes
+        conditionValue:
+          type: number
+          description: The condition value
+        conditionNotes:
+          type: string
+          maxLength: 2000
+          description: Condition notes
+        observationType:
+          $ref: '#/components/schemas/ObservationType'
+      required:
+        - observationType
+      description: At least one of conditionValue or conditionGradeCode should be provided.
+    ObservationType:
+      properties:
+        observeTypeCode:
+          type: string
+          maxLength: 6
+          description: Observation type code
+      required:
+        - observeTypeCode
+    FeatureAttribute:
+      properties:
+        attributeTypeCode:
+          type: string
+          maxLength: 4
+          description: Attribute Type Code
+        attributeValueCode:
+          type: string
+          maxLength: 4
+          description: Required for pick attribute type which is marked as mandatory
+        notes:
+          type: string
+          minimum: 2000
+          description: String Value
+      required:
+        - attributeTypeCode
+    FeatureMeasurement:
+      properties:
+        measurementTypeCode:
+          type: string
+          maxLength: 4
+          description: Measurement Type Code
+        quantity:
+          type: number
+          description: Numeric Value
+      required:
+        - measurementTypeCode
+    FeatureDate:
+      properties:
+        dateTypeCode:
+          type: string
+          maxLength: 4
+          description: Date Type Code
+        value:
+          type: string
+          format: date-time
+          description: Date Value
+        notes:
+          type: string
+          description: String Value
+      required:
+        - dateTypeCode
+    Defect:
+      properties:
+        defectTypeCode:
+          type: string
+          maxLength: 10
+          description: Defect Type Code
+        loggedDate:
+          type: string
+          format: date-time
+          description: Defect Logged Date
+        description:
+          type: string
+          maxLength: 2000
+          description: Description
+        location:
+          type: string
+          maxLength: 2000
+          description: Location
+        customerReference:
+          type: string
+          maxLength: 20
+          description: Customer Reference
+        priorityCode:
+          type: string
+          maxLength: 6
+          description: Priority Code
+        officerCode:
+          type: string
+          maxLength: 6
+          description: Logged in Officer Code
+        notes:
+          type: string
+          maxLength: 2000
+          description: Defect Notes
+        defectEasting:
+          type: number
+          description: Easting
+        defectNorthing:
+          type: number
+          description: Northing
+        xspCode:
+          type: string
+          maxLength: 6
+          description: XSP Code
+        organisationCode:
+          type: string
+          maxLength: 6
+          description: Organisation Code
+        assessmentTypeCode:
+          type: string
+          maxLength: 6
+          description: Assessment Type Code
+        feature:
+          $ref: '#/components/schemas/Feature'
+        job:
+          $ref: '#/components/schemas/Job'
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attribute'
+          description: The defect attributes
+      required:
+        - feature
+        - defectTypeCode
+        - officerCode
+        - loggedDate
+      description: >-
+        Either centralAssetId or a combination of siteCode and plotNumber and
+        officerCode and loggedDate and defectTypeCode is mandatory.
+    Attribute:
+      properties:
+        paramTypeCode:
+          type: string
+          maxLength: 4
+          description: Operation Type Code
+        valueCode:
+          type: string
+          maxLength: 4
+          description: code for Pick list Attribute
+        numericValue:
+          type: number
+          description: Numeric Value
+        textValue:
+          type: string
+          minimum: 2000
+          description: String Value
+        dateValue:
+          type: string
+          format: date-time
+          description: Date Value
+      required:
+        - paramTypeCode
+        - either valueCode or numericValue or dateValue or textValue
+  securitySchemes:
+    oAuth:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: /oauth/token
+          scopes: {}
+    basicAuth:
+      type: http
+      scheme: basic

@@ -1,0 +1,3669 @@
+Location Intelligence
+Infrastructure Asset Management
+
+
+
+
+Confirm
+                                  ®
+
+
+
+Reporting
+v22.00a.AM
+Information in this document is subject to change without notice and does not represent a commit-
+ment on the part of the vendor or its representatives. No part of this document may be reproduced
+or transmitted in any form or by any means, electronic or mechanical, including photocopying,
+without the written permission of Confirm.
+© 2021 Confirm. All rights reserved.
+Products named herein may be trademarks of their respective manufacturers and are hereby re-
+cognized. Trademarked names are used editorially, to the benefit of the trademark owner, with
+no intent to infringe on the trademark.
+
+
+Open Source Attribution Notice
+The Confirm suite of products contain the following open source software:
+• Feature Data Objects v 3.5.0, which is licensed under GNU Lesser General Public License,
+  Version 2.1, February 1999 with the unRAR restriction. The license can be downloaded from:
+  http://fdo.osgeo.org/licenceAndGovernance.html. The source code for this software is
+  available from http://fdo.osgeo.org/content/fdo-350-downloads
+• MrSID software (specifically the mrsid32.dll) is used under license and is Copyright © 1995-2002,
+  LizardTech, Inc., 1008 Western Ave., Suite 200, Seattle, WA 98104. All rights reserved. MrSID
+  is protected by U.S. Patent No. 5,710,835. Foreign patents are pending. Unauthorized use or
+  duplication prohibited.
+ Patented technology in the Software was developed in part through a project at the Los Alamos
+ National Laboratory, funded by the U.S. Government and managed by the University of California.
+ The U.S. Government has reserved rights in the technology, including a non-exclusive, nontrans-
+ ferable, irrevocable, paid-up license to practice or have practiced throughout the world, for or
+ on behalf of the United States, inventions covered by the patent, and has other rights under 35
+ U.S.C. § 200-212 and applicable implementing regulations.
+ For further information, contact Lizardtech.
+• NodaTime, version number 1.3.10, which is licensed under the Apache license, version number
+  2.0. The license can be downloaded from http://www.apache.org/licenses/LICENSE-2.0 . The
+  source code for this software is available from http://nodatime.org/.
+• Chromium Embedded Framework, version 3, which is licensed under the New BSD License.
+  The license can be downloaded from http://opensource.org/licenses/BSD-3-Clause. The source
+  code for this software is available from http://code.google.com/p/chromiumembedded/down-
+  loads/list.
+• Xilium.CefGlue, version 3, which is licensed under the MIT License (with portions licensed under
+  the New BSD License). The licenses can be downloaded from http://opensource.org/licenses/MIT
+  and http://opensource.org/licenses/BSD-3-Clause. The source code for this software is available
+  from http://xilium.bitbucket.org/cefglue/.
+• D3 Data Driven Documentation, version 3.4.1, which is licensed under the New BSD License.
+  The license can be downloaded from from https://github.com/mbostock/d3/blob/master/LICENSE.
+  The source code for this software is available from http://d3js.org/.
+• OpenLayers, version 2.12, which is licensed under the Modified BSD License. The license can
+  be downloaded from http://svn.openlayers.org/trunk/openlayers/license.txt. The source code for
+  this software is available from http://trac.osgeo.org/openlayers/browser.
+• OpenLayers, version 3, which is licensed under the BSD 2-Clause Licence. The license which
+  can be downloaded from https://github.com/openlayers/ol3/blob/master/LICENSE.md. The source
+  code for this software is available from https://github.com/openlayers/ol3.
+• Proj4js, version 1+, which is licensed under the Apache License, Version 2, January 2004. The
+  license can be downloaded from http://www.apache.org/licenses/LICENSE-2.0.html. The source
+  code for this software is available from http://trac.osgeo.org/proj4js/.
+• requireJS, version 2.1.2, which is licensed under the MIT License or the New BSD License. The
+  license can be downloaded from https://github.com/jrburke/requirejs/blob/master/LICENSE. The
+  source code for this software is available from http://requirejs.org/.
+• Apache Cordova, version 8.1.2, which is licensed under the Apache License, Version 2, January
+  2004. The license can be downloaded from http://www.apache.org/licenses/LICENSE-2.0.html.
+  The source code for this software is available from http://phonegap.com/download/.
+• Xilium.CefGlue, version 75.1, which is unlicensed. The source code for this software is available
+  from https://gitlab.com/xiliumhq/chromiumembedded/cefglue.
+• Chromium Embedded Framework, version 75.0, which is licensed according to the following
+  criteria:
+ Copyright (c) 2008-2014 Marshall A. Greenblatt. Portions Copyright (c) 2006-2009 Google Inc.
+ All rights reserved.
+ Redistribution and use in source and binary forms, with or without modification, are permitted
+ provided that the following conditions are met:
+ * Redistributions of source code must retain the above copyright notice, this list of conditions
+ and the following disclaimer.
+ * Redistributions in binary form must reproduce the above copyright notice, this list of conditions
+ and the following disclaimer in the documentation and/or other materials provided with the distri-
+ bution.
+ * Neither the name of Google Inc. nor the name Chromium Embedded Framework nor the names
+ of its contributors may be used to endorse or promote products derived from this software without
+ specific prior written permission.
+ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+ TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CON-
+ TRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY,
+ OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT
+ OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ POSSIBILITY OF SUCH DAMAGE.
+ The source code for this software is available from http://opensource.spotify.com/cefbuilds/in-
+ dex.html#
+
+
+October 28, 2021
+Contents
+
+   Reporting
+                                      Analysis
+        Data Queries              8   Templates              40
+               Applying                    Action button -
+               Qualifications     8        Edit Params       41
+               Creating                    Action button -
+               Charts            12        Edit Queries      42
+               Creating                    Action button -
+               Reports           15        Stages            43
+
+
+        Reports                  17
+               Creating a
+               Report
+               Template          17
+
+        The Dashboard            27
+               Dashboard         30
+               Data
+               Sources           31
+               Configuring
+               Attribute Types
+               for Dashboard
+               Widgets           32
+
+        Submit Analysis          35
+               Qualify
+               Button            36
+
+        Analysis Instances       37
+               View Button       38
+               Errors
+               Button            38
+
+        Import Survey Analysis
+        Data                     39
+               Qualify
+               buttons           39
+Reporting                    Schema Diagrams        93
+Lookups                 49        Site
+      Saved                       Register          93
+      Qualifications    49        Asset
+      Report                      Register          94
+      Templates         50        Asset Valuation
+      Import Report               and
+      Templates         50        Depreciation      95
+      Data                        Confirm
+      Sources           51        Strategic Asset
+      Report                      Management        96
+      Category          70        Stock
+      Follow Ups        71        Management        97
+      Non Working                 Risk
+      Days              71        Management        98
+      Scheduled                   Network
+      Reports           71        Manager -
+      Dashboard                   Network           99
+      Widgets           74        Network
+      Scheduled                   Manager -
+      Reports Export
+      Transformations   88
+      Reporting
+      System
+      Settings          89
+      Dashboard User
+      Settings          90
+      Dashboard
+      System
+      Settings          90
+
+Creating Reports -
+step-by-step            92
+Condition              Administration   120
+Data             100
+Network
+Manager - HDM4
+Interface        101
+Data
+Analyser         102
+Traffic
+Count            103
+Asset
+Maintenance      104
+Contract
+Preparation      105
+Finance and
+Budgets          106
+Condition
+Survey           107
+Customer
+Services -
+Enquiries        108
+Customer
+Services -
+Bookings         109
+Maintenance
+Management       110
+Works
+Management       111
+Performance
+Monitoring       112
+Payment
+Processing       113
+Street Works -
+Notices          114
+Street Works -
+Permits          115
+Street Works -
+Inspections &
+Statements       116
+Fixed Penalty
+Notices          117
+Reporting        118
+Reporting -
+Analysis         119
+System
+Reporting
+The Reporting folder contains the saved Data Queries and Reports, and
+the lookups required to create and store the data sources, data qualifications
+and Report templates.
+
+
+
+
+In this section
+Data Queries                                                               8
+Reports                                                                   17
+The Dashboard                                                             27
+Submit Analysis                                                           35
+Analysis Instances                                                        37
+Import Survey Analysis Data                                               39
+Analysis Templates                                                        40
+Reporting Lookups                                                         49
+Creating Reports - step-by-step                                           92
+Schema Diagrams                                                           93
+                                                                                           | Reporting |
+
+
+
+
+Data Queries
+Data Queries combine a Data Sources on page 51 with an optional Qualification, to extract data from
+Confirm.
+
+
+
+
+Saved Qualifica-    You may optionally select a Saved Qualification from the pick list. The Pick list
+tion:               references the Saved Qualification Lookup.
+                    Saved Qualifications on page 49
+                    Selecting a Qualification will automatically populate the Data Source field with the
+                    Data Source that the Qualification is linked to.
+
+Data Source:        Select a data source from the pick list. The pick list references the Data Source
+                    Lookup
+                    Data Sources on page 51
+
+
+Applying Qualifications
+
+
+
+
+Confirm                                                                                          8 of 120
+                                                                                                | Reporting |
+
+
+      Named Selection
+      Where the filter has a link (via the 'linked table' tab when opened from a Data Source) to the
+      Feature table, the query qualification column list will include a Named Selection item.
+      Double clicking on a Named Selection item in the Data Query Qualification column list will launch
+      the Named Selection Qualification filter:
+
+
+
+
+      Only the Code field is available. Enter a code or select from the pick list to select a Named Selection.
+      The pick list references the Named Selection lookup.
+      Features\Feature Lookups
+      You may apply a Qualification to any column listed in the lower portion of the form. To apply a
+      Qualification, double click on a column name.
+      Note: If this has been opened from one of the 'More' button filters, the top part of this form will not
+      be displayed.
+
+
+
+      Blue bullets - Linked columns
+      Blue bullets are used in the Data Query Qualification screen to show 'Linked' columns. These are
+      options which allow further filtering or selection. Double click on the column name to display a
+      selection window
+      Note: In some cases a further Data Query Qualification screen appears, allowing you to qualify
+      the table you have selected. You may enter a parameter, or simply click on OK to display all possible
+      values in the table.
+
+
+
+
+Confirm                                                                                               9 of 120
+                                                                                             | Reporting |
+      Select a value by clicking on it. You may select a block of values by SHIFT-clicking on the second
+      and subsequent rows. Use CTRL-click to select specific records. Click on 'OK' to enter the quali-
+      fication parameters against the column name in the Data Query Qualification form.
+
+
+      Green bullets - Unlinked columns
+      Green bullets in the Data Query Qualification screen are simple arithmetic or character based filter
+      options. These options are known as 'Unlinked' columns. Double click on a green bullet to display
+      the Qualifications window. The Qualifications window will vary according to the data type of the
+      selected column:
+
+
+      Qualifications on text fields:
+      Select the type of restriction to perform (i.e. Like, Not Like, Contains or Does Not Contain) and
+      enter a text string. Wildcard characters can be used where appropriate. Click on OK to enter the
+      Qualification against the column in the Data Query Qualification form.
+
+
+
+
+      Qualifications on Number fields
+      Select operators from the drop down field and enter values, either on both sides of 'and'; or on
+      one side only to create an open statement.
+
+
+
+
+      Pair:               The check box will only be available if columns have been paired in the Data
+                          Source.
+                          Where the selected column is paired, you may query based on an Effective
+                          Value rather than a Start or End Value. Tick the Pair tick box and enter the
+                          value in the adjacent field.
+
+      Click on OK to enter the Qualification against the column in the Data Query Qualification form.
+
+
+
+      Qualifications on Date fields
+      Select operators from the drop down field and enter values, either on both sides of 'and'; or on
+      one side only to create an open statement.
+
+
+
+
+Confirm                                                                                           10 of 120
+                                                                                            | Reporting |
+
+
+
+
+      Pair:               The check box will only be available if columns have been paired in the Data
+                          Source.
+                          Where the selected column is paired, you may query based on an Effective
+                          Value rather than a Start or End Value. Tick the Pair tick box and enter the
+                          value in the adjacent field.
+
+      Click on OK to enter the Qualification against the column in the Data Query Qualification form.
+
+
+
+      Query Results
+      Click on OK in the Data Query Qualification form to run the query and display the results:
+
+
+
+
+      Named Selection
+      The Data Query Preview screen will show a Named Selection button for a Data Source that has
+      a link (via the 'Linked Table' tab) to the Feature Table. Click on the Named Selection button to
+      save the currently displayed data as a Named Selection.
+
+
+
+      Saving Qualifications
+      The qualification imposed in the Data Query Qualification form may be saved by clicking on the
+      'Save Qualification' button in the Data Query Preview window. The Save Data Query Qualification
+      form is displayed. Enter a name for the Saved Qualification, and optional notes. Click on OK to
+      save the qualification. Saved Qualification may be viewed, edited and deleted in the Saved
+      Qualifications Lookup.
+
+
+
+      Expert
+      The Expert facility allows complex qualification of a query which is not possible with the standard
+      qualification options. An expression can be manually constructed and Columns and Functions can
+      be used. The expression must be valid before the Ok button can be pressed.
+
+
+
+
+Confirm                                                                                            11 of 120
+                                                                                                | Reporting |
+
+Creating Charts
+
+
+
+
+      Click on the Charting button in the Data Query Preview window to display the Chart Wizard:
+
+
+
+
+      Expression:         Select from the Drop-down list the column you want your chart grouped by.
+                          If the column you want is not in this list then click on the pick button and select
+                          it from the full column list. All the viewable columns selected in the Data
+                          Source are available
+
+      Axis Label:         Enter the Axis Label you want displayed on the Chart.
+
+      Expression:         Select from the Drop-down list the operation you want performed on each
+                          category to obtain a value, i.e. sum/count. If the operation you want is not in
+                          the list then click on the pick button and create the expression from the full
+                          list of functions.
+
+      Cumulative sum:     Check this to chart the cumulative sum.
+
+      Axis Label:         Enter the Axis Label you want displayed on the Chart.
+
+      Chart Type:         Select from:
+                          Bar (3D) - Compares Values (Y-axis) across Categories (X-axis). Three Di-
+                          mensional Option available.
+                          Column (3D) - Compares Values (X-axis) across Categories (Y-axis). Three
+                          Dimensional Option available.
+                          Line - Markers displayed at each Category Value.
+                          Pie - Displays the contribution of each Category Value to a total.
+
+      Title:              Enter the text that will be displyed as the Chart Title
+
+      Click on OK to display the selected data in the selected chart format.
+      The following Options are available from the Chart Form Toolbar:
+
+
+
+
+Confirm                                                                                              12 of 120
+                                                                                         | Reporting |
+
+      Chart Properties
+
+
+
+
+      The current values will be displayed in each field and may be edited to change the appearance
+      of the chart:
+      Chart Type:        You may change the chart type by selecting another chart type from the drop
+                         down list.
+
+      Title:             You may edit the chart Title
+
+      Legend:            You may change the Legend position by selection from the drop down list.
+
+      Spacing:           (not pie charts) You may change the Spacing between the categories.
+
+      Any updates made in the above fields can be previewed in the preview box on the left by clicking
+      on the Test button.
+
+
+
+
+Confirm                                                                                       13 of 120
+                                                                                            | Reporting |
+      The Axes tab will be available for editing where a bar, or Column chart has been selected. The
+      current values will be displayed in each field and may be edited to change the appearance of the
+      chart:
+      Axis:              Highlight the axis you want to update.
+
+      Label:             Modify the Axis Label
+
+      Scale:             Applicable for Value Axis only.
+                         Auto Scale Box: Checkbox ticked will scale the axis based on the minimum
+                         and maximum data value found. Checkbox un-ticked will enter default minimum
+                         and maximum value based on the current data query results. You may then
+                         amend either value to restrict the values being charted to a narrower range.
+
+      Divisions:         Applicable to Value Axis only.
+                         Number of Maximum Divisions (n) - Displays 'n' evenly spaced tick marks
+                         along the axis bar
+                         Display Axis Labels every (n) - will display the data value on every 'n'th tick
+                         mark
+
+      Line Styles:       Primary Axis Line - The format of the Main Axis Line. Select the visual line
+                         style from the drop-down list.
+                         Grid Line - The format of the line displayed at each tick mark division. Select
+                         the visual line style from the drop-down list.
+                         Origin Line - The format of the line displayed at the origin (0). Select the
+                         visual line style from the drop-down list.
+
+
+
+
+      The current values will be displayed in each field and may be edited to change the appearance
+      of the chart:
+      Text Type          Highlight the Text Type you want to update.
+
+      Font:              To change the font format of the Text Type, click on the Font Properties Box.
+                         The font palette window will open, select the combination required and click
+                         on the OK button in the Font window.
+
+Confirm                                                                                           14 of 120
+                                                                                            | Reporting |
+      Auto size:          Auto Size Box: Checkbox ticked will scale the text proportional to the chart
+
+      Alignment:          Aligns the Text Type. Valid Values are Left/Right/Centre/Justified.
+
+      Rotation:           Rotates the Text by the selected Angle and Direction.
+
+      Expression:         States how the data is displayed, Valid values are dependent on Text Type.
+                          E.g. Percent OR Value.
+
+      To save the changes, click on the OK button in the Chart Properties form. Otherwise, click on the
+      Cancel button.
+
+
+
+
+      To view/edit the properties of the chart, click on the Properties button.
+      There are three areas of Chart Properties: General, Axes and Text
+
+
+      Legend Button
+
+
+
+
+      Click on the Legend Button to display the Legend Properties dialog:
+
+
+
+
+      You may change the colour assigned to any value by clicking on its current Colour Box. The colour
+      palette window will open, click on a new colour and click on the OK button.
+      To save the changes, click on the OK button in the Legend Properties form. Otherwise, click on
+      the Cancel button.
+
+
+Creating Reports
+
+
+
+
+Confirm                                                                                          15 of 120
+                                                                                         | Reporting |
+      Use the Create Report button to design a report format for the data query results. See Creating
+      a Report Template on page 17.
+
+
+
+
+Confirm                                                                                       16 of 120
+                                                                                            | Reporting |
+
+
+
+Reports
+The Reports library stores previously created reports and may be used to create new Reports
+
+
+
+
+Report Template:     Select an existing Report from the pick list. The pick list references the Reports
+                     library.
+                     When an existing report is selected, the related Saved Qualification (if one is as-
+                     sociated with the Report), and the Data Source will be entered into the following
+                     fields. Existing Report may have further Qualifications imposed using the Qualific-
+                     ation pane below.
+                     Where a new Report Template is to be created, this field should be left blank.
+
+Saved Qualifica-     IF a Report Template is selected in the field above, the related Saved Qualification
+tions:               (if any) will be entered.
+                     If no Report Template is selected, then a Saved Qualification may be entered to
+                     select the data on which to base a new Report format. The pick list references
+                     the Saved Qualification Lookups.
+
+Data Source:         If a Report and / or a Saved Qualification are entered in the fields above, the re-
+                     lated Data Source will be automatically entered in this field.
+                     If no Data Source has been auto-entered then a Data Source may be entered to
+                     select the data on which to base a new Report format. The pick list references
+                     the Data Source Lookup.
+
+Where an existing Report Template is selected, you may qualify the data in the Qualification pane, then
+click on Ok to run the report and view the preview.
+Where no Report Template is entered, the Specify Report Sort dialog will be displayed when you click
+on 'OK', to begin creating a Report Template.
+
+
+Creating a Report Template
+
+
+
+
+Confirm                                                                                          17 of 120
+                                                                                           | Reporting |
+
+
+
+
+      Reports are created from the Create Report button in the Data Query Preview window, and from
+      the Report window where no Report Template is specified.
+      • To create a report from the Data Query Preview window, click on the Create Report button.
+      • To create a report from Report Qualification window, enter a Saved Qualification if required (in
+        which case the associated Data Source will be auto entered), or enter a Data Source. Click on
+        OK.
+      In either case the Specify Report Sort dialog will be displayed.
+
+
+      Specifying a Report Sort
+
+
+
+
+      Use the dialog to specify how data should be grouped, and a data sort for the columns that will
+      be sorted.
+      Column Name:        Each viewable column in the Data Query will be listed in the dialog. The
+                          columns may be selected by clicking on the relevant row. The columns may
+                          be moved up and down the list by clicking and dragging to move them up or
+                          down.
+
+      Sort:               All columns will default to (None). You may select Ascending or Descending
+                          by clicking on the required column and selecting from the drop-down.
+                          Note: Columns included in a Group, but not assigned a sort, will default to
+                          ascending
+
+      New Group:          You may group the data by the selected column by clicking the check box.
+                          Where data is grouped, all the columns that appear above the selected column
+                          in the list will also be checked as 'New Group'. You should therefore re-sort
+                          the grouping columns to the top of the list in the order in which you want the
+                          grouping to be carried out.
+
+      Page Break:         You may specify a page break by ticking the column at which the report will
+                          break onto a new page.
+                          Note: Page Break may only be selected where 'New Group' is ticked for the
+                          column
+
+      Renumber Page: Check this to re-start the page numbering from 1 each time this Group is en-
+                     countered in the report.
+
+
+Confirm                                                                                          18 of 120
+                                                                                                | Reporting |
+                           Note: Renumber Page may only be selected where 'New Group' is ticked for
+                           the column
+
+      In the above example, the data will be grouped first by Service Name, and within each group of
+      Service Name, will be grouped by Site Name. Within each Service and Site, the data will be dis-
+      played with the latest logged date first in the list, descending to the earliest logged date. The report
+      will break onto a new page for each new Service Name included in the report.
+      Click on OK to display the Report Template Design form
+
+
+      Re-displaying the Specify Report Sort dialog:
+
+
+
+
+      You may re-display the Specify Report Sort dialog by clicking on the list button in the Design Mode
+      window.
+
+
+
+      Designing the Report Template
+      The Report Template Design form is toggled with the Report preview form using the Design Mode
+      button:
+
+
+
+
+      The Report window is usually first displayed in Design mode, i.e. with the Design Mode button
+      active or 'pushed in'. To switch from Design mode to Preview Mode (or Preview Mode to Design
+      Mode), click on the Design Mode button.
+
+
+
+
+      The Report window in Design Mode allows the placement of Data Columns, text, expressions and
+      graphics into the white areas of the design window. Each of these placement areas is described
+      in the grey row underneath.
+
+
+Confirm                                                                                               19 of 120
+                                                                                             | Reporting |
+
+
+      Placement Areas:
+      Header:             Any object placed here will appear at the top of each page of the report.
+      Group n: Header: There will be as many groups shown in the design window as were selected
+                       in the Specify Report Sort window. The first (top) group in the Specify Report
+                       Sort window will be numbered 1, the next 2 and so on.
+                          Any object placed in the Group Header will appear in the report every time a
+                          new group of that level is begun.
+      Detail:             Any object placed in this area will form the body of the report, and will be
+                          displayed for each available record
+      Group n: Trailer:   Group Trailers correspond to Group Headers.
+                          Any object placed in the Group Trailer will appear in the report every time a
+                          new group of that level is ended.
+      Summary:            Any object placed in the Summary area will appear once at the end of the
+                          report.
+      Footer:             Any object placed in the Footer area will appear at the foot of each page.
+
+      You may increase, of decrease the space available between one placement row and another by
+      clicking and dragging the grey description bars.
+      You may hide placement areas, either because they contain no objects (so that you do not get
+      blank rows in the finished report), or because you wish to hide the objects contained in the
+      placement area in this Report Template. To hide placement areas move the grey description bar
+      up to close the placement area.
+      Objects are placed using the tool buttons in the report window. These are:
+
+
+
+      Data Columns
+
+
+
+
+      Click on the data columns button to display the Field Chooser:
+
+
+
+
+Confirm                                                                                           20 of 120
+                                                                                              | Reporting |
+
+
+
+
+      The Field Chooser will list every column marked as viewable in the Data Source. To place a column
+      in the Report, click and drag the column's name. The columns when placed in the design window
+      will display the data relating to the first record in the Query result.
+      Fields may be formatted by clicking on them in the Report window to display the 'handles'. They
+      may be moved and re-sized by dragging the object or the selection handles; and formatted using
+      the Object Properties dialog.
+
+
+
+      Text
+
+
+
+
+      Click on the text button and click and drag in the required placement area of the report design
+      template to define the text area. The Object Properties dialog will be displayed:
+
+
+
+
+      The proposed text is entered in the 'Text' field.
+      Transparent:         Check to set a transparent background in the area dragged to accommodate
+                           the text.
+      Colour:              If Transparent is not checked, you may select a background colour for the
+                           Text box, by clicking on the colour box and selecting a colour from the palette.
+
+
+Confirm                                                                                            21 of 120
+                                                                                             | Reporting |
+
+      Border:             The Text area may be bordered in any of the way listed in the drop-down
+                          menu.
+      Font:               Click on the font button to display the font dialog and set the font properties.
+      Alignment:          Text alignment is set by selection from the drop-down menu.
+      Autosize:           Check this to have the text box automatically wrap text and resize ahould the
+                          text extend beyond the box.
+                          Note: You may autosize the 'Detail' band so that this will also resize to accom-
+                          modate the resized text box.
+
+      Click on OK to place the text in the design window. Text may be formatted by clicking on it in the
+      Report window to display the 'handles'. It may be moved and re-sized, and formatted using the
+      Object Properties dialog.
+
+
+
+      Drawing Shapes
+      You may draw rectangles, lines or ovals by clicking on the relevant button, and clicking and
+      dragging in a placement area of the report window.
+      Shapes may be formatted by clicking on a shape in the Report window to display the 'handles'. It
+      may be moved and re-sized by dragging the object or the selection handles; and formatted using
+      the Object Properties dialog.
+
+
+
+      Graphics
+
+
+
+
+      Click on the Graphics button and click and drag in the required placement area of the report design
+      template to define the Graphics box. The Object Properties dialog will be displayed:
+
+
+
+
+      File Name:          Enter a path and filename for the graphic. Graphics may be Windows Metafiles
+                          (WMF), or Windows Bitmaps (BMP)
+      Border:             The graphic may be bordered in any of the way listed in the drop-down menu.
+
+      Click on OK to place the graphic in the design window. A graphic may be formatted by clicking on
+      it in the Report window to display the 'handles'. It may be moved and re-sized, and formatted using
+      the Object Properties dialog.
+
+
+
+      Alignment
+
+
+
+
+Confirm                                                                                           22 of 120
+                                                                                              | Reporting |
+
+
+      The Alignment tool will align and resize all the currently selected objects in the following ways:
+      Align Objects :     Select Left, Right, Top or Bottom, to align all the currently selected objects
+                          on left, right, top or bottom with the first one selected.
+      Align Horizontal    Select Horizontal or Vertical, to align all the currently selected objects with
+      /Vertical:          the horizontal or vertical axis of first object selected.
+      Size Height /Width Select Height or Width, to resize all the currently selected objects to the height
+                         or width of first object selected.
+      Space Horizontally Select Horizontally or Vertically, to apply the spacing between the first two
+      /Vertically        selected objects to the horizontal or vertical spacing between all the other
+                         objects currently selected.
+
+      Note: You may select more than one object by clicking on the first object, and then holding down
+      the shift key while clicking on the second and subsequent objects.
+
+
+
+      Send to Front / Back
+      You may change the order of a selected object by clicking on it with the right mouse button to
+      display the fly-out menu. Select from 'Bring to Front', or 'Send to Back'.
+
+
+
+      Expressions
+
+
+
+
+      Click on the Expressions button and click and drag in the required placement area of the report
+      design template to define the expression area. The Object Properties dialog will be displayed:
+
+
+
+
+      You may enter an expression, or click on the pick button to display the Expression dialog where
+      an expression may be built:
+
+
+
+
+Confirm                                                                                            23 of 120
+                                                                                               | Reporting |
+
+
+
+
+      Double click on Functions in the Function list, and Columns in the Columns list, to build up an
+      Expression in the Expression field. You may also directly edit the Expression, and add operators
+      from the buttons on the right hand side.
+      Click on Ok to return the Expression to the Expression field of the Object Properties dialog
+      Transparent:         Check to set a transparent background in the area dragged to accommodate
+                           the text.
+      Colour:              If Transparent is not checked, you may select a background colour for the
+                           Text, by clicking on the colour box and selecting a colour from the palette.
+      Border:              The Text area may be bordered in any of the way listed in the drop-down
+                           menu.
+      Font:                Click on the font button to display the font dialog and set the font properties.
+      Alignment:           Text alignment is set by selection from the drop-down menu.
+      Format:              Enter a format for the result of the expression. The illustrated example
+                           (#,##0.00) will return the result to two decimal places.
+
+
+
+
+      Object Properties
+
+
+
+
+      Select the object you wish to edit and click on the Object Properties button to display the Object
+      Properties dialog.
+      The Object Properties dialog will vary in appearance according to the object that has been selected.
+      So if text is selected, the Object Properties dialog will contain the fields relevant to text format.
+      Multiple objects (of the same type) may be selected by SHIFT+clicking on the second and sub-
+      sequent objects, and formatting applied to all selected objects at once.
+      Each mode of the Object Properties dialog is explained in the sections above relating to placing
+      Objects.
+      If no objects are selected, clicking on the Object Properties button will display the following dialog:
+
+
+Confirm                                                                                              24 of 120
+                                                                                               | Reporting |
+
+
+
+
+      Setting DataWindow Properties
+      The Datawindow Properties dialog sets the defaults for the datawindow and page orientation for
+      printing:
+      Colour:             Select a colour from the palette to set the window background colour.
+      Orientation:        Select the page orientation for the printed report. Choosing Landscape or
+                          Portrait will override the printer defaults for page orientation. Choose 'Default'
+                          to use the printer default.
+      Size:               Select the page size for the printed report. Choose 'Default to use the printer
+                          default.
+
+
+
+
+      Setting DataWindow Properties for the Band
+      Use the right-mouse button to click in a group band. This will display the object Properties dialog
+      for the band
+
+
+
+
+      Border:             The Text area may be bordered in any of the way listed in the drop-down
+                          menu.
+      Font:               Click on the font button to display the font dialog and set the font properties.
+      Alignment:          Text alignment is set by selection from the drop-down menu.
+      Autosize:           'Detail' Gourp band only:
+                          Check this to have the group band automatically resize to accommodate
+                          resized text boxes
+      Format:
+
+
+
+
+      Undo and Redo
+
+
+
+
+Confirm                                                                                             25 of 120
+                                                                                            | Reporting |
+
+      Click on the 'Undo' button to undo the last action (up to the last 10 actions).
+      Click on the 'Redo' button to repeal the 'undo' command (up to the last 10 'Undo' actions).
+
+
+
+      Previewing Reports
+
+
+
+      Click on the design mode button to switch to Preview mode
+      The preview mode displays the data resulting from the Data Source and saved Qualification, in
+      the format set out in the report Template design
+
+
+
+
+      The Report Name is shown on the Report Preview when there is no Saved Qualification against
+      it. If a Saved Qualification exists then the Qualification name will be shown on Report Preview in-
+      stead.
+      You may switch back and forth between design mode and preview mode until the report layout is
+      correct.
+      In Preview mode you may click on the following buttons:
+
+      •                                                                                           tosave
+          the Qualification used in the Data Query.
+
+      •                                                                                          tocreate
+          and save a Chart.
+      It is also possible to view report data on the map. The Viewing Data Sources on the Map section
+      provides more information on this.
+
+
+      Saving a Report Template
+
+
+
+
+      Saving may only be done in the Design mode view. To save the report template, click on the 'Save'
+      button. The Save Report Template Dialog is displayed.
+      Enter a name for the report Template, and optionally, explanatory notes. Click on OK to save the
+      template.
+      Note: Closing the report window will not prompt you to save your changes.
+
+Confirm                                                                                          26 of 120
+                                                                                         | Reporting |
+
+
+
+The Dashboard
+The Dashboard provides a graphic display of information from Confirm. This information is derived from
+Data Sources, which are transmitted to the Dashboard, using the Scheduled Reports functionality and
+the Task Processor, at user-defined intervals.
+Sample Dashboards:
+
+
+
+
+Confirm                                                                                       27 of 120
+          | Reporting |
+
+
+
+
+Confirm        28 of 120
+                                                                                             | Reporting |
+
+
+
+
+The data being displayed on the Dashboard can be viewed by clicking on the Category Text, on the
+Bar or data objects on the Map to drill down. The data will be displayed in either a grid format, or (if a
+Report Template has been linked to the Scheduled Report) in the specified Report format.
+When drilling down into the Dashboard the results can be viewed on the Map. The Viewing Data
+Sources on the Map section provides more information on this.
+The Dashboard has its own window in Confirm, and if a User has a Dashboard defined, it will launch
+automatically when Confirm is opened by that User. If the Dashboard is the top-most (active) window
+in Confirm then it will refresh at intervals defined by the 'Refresh Dashboard After' setting on Dashboard
+User Settings on page 90. If a different window is active then the Dashboard will not refresh unless
+the 'Refresh Dashboard while Inactive' setting is ticked on the Dashboard User Settings screen.
+                                                                                           TheDashboard
+button can be used to launch the Dashboard (if it has been closed).
+
+
+Widgets
+
+
+
+
+Confirm                                                                                            29 of 120
+                                                                                              | Reporting |
+
+
+
+
+The Dashboard is made up of sections, each containing a graph, counter, pie chart or map. These
+components of the Dashboard are known as Dashboard Widgets on page 74, and each one is user-
+configurable to show particular information (as defined by a Scheduled Report and Data Source), in a
+particular way (as defined by the display options selected for the Widget), in a particular position on the
+Dashboard (as defined in the Dashboard set-up).
+
+
+
+Dashboard
+
+
+      Overview
+      There are 4 steps required to configure a Dashboard to display data and each of these are required
+      before the next can be completed.
+      1. A Data Source is required to retrieve the information from Confirm.
+      2. A Scheduled Report is required to set which data source to use and to determine when and
+         how often the data should be updated.
+      3. One or more Dashboard Widgets to determine the Presentation Style to be used for the data.
+         Each widget will need a scheduled report.
+      4. Creating the Dashboard detailed below. Determines which widgets the dashboard is going
+         to show.
+
+
+
+      Creating the Dashboard
+      The dashboard screen is used to set how the grid will look based on the number of rows and
+      columns chosen. You can then add one or more widgets to be displayed and where in the grid
+      you wish each to appear. The 'Preview' button can be used to show how the grid will look to ensure
+      the layout of widgets will be shown on the dashboard as desired.
+
+
+
+
+Confirm                                                                                            30 of 120
+                                                                                           | Reporting |
+
+
+
+
+      Dashboard Name:          An unique name
+      Number of Rows:          The number of rows on the Dashboard. This may be subsequently
+                               amended providing you do not try to remove rows that have a Widget,
+                               or part of a Widget, in them
+      Number of Columns:       The number of columns on the Dashboard. This may be subsequently
+                               amended providing you do not try to remove columns that have a widget,
+                               or part of a Widget, in them
+      Data key:                Enter a data key to restrict the Access to this Dashboard
+
+      Widgets are added by selection in the 'Widget Name' field below. Each Widget may span a number
+      of rows and columns, but they may not overlap.
+      Dashboards may be subsequently edited to add, remove, or re-arrange Widgets.
+
+
+
+Data Sources
+      Data Sources and Qualifications provide the raw data for the Dashboard - so the required Data
+      Source must be created - with any qualifications that are required. The same data source may be
+      used in several different ways - both by qualifying it, and by changing the Widget Type and data
+      selection.
+
+
+      Configuring Data Sources to restrict by User/Action Officer
+      Where a Dashboard will need to restrict data to entities allocated to the logged-in User/Action
+      Officer the Data Source must include Login details in the following way:
+      1. The Data source must contain the column: action_officer.login_name.
+      2. A Linked Table must be established with the table: User Login, linking through the login_name.
+      3. The column Login Name should have 'Must be Qualified' checked.
+
+
+
+      Configuring Data Sources to Restrict by Data Key
+      Where a Dashboard is required to restrict data by Work Group - this may be done in the following
+      way:
+
+Confirm                                                                                         31 of 120
+                                                                                             | Reporting |
+
+      1. The Data Source must contain the appropriate data_key column, this might be: con-
+         tract_area.data_key for Jobs, or enquiry_subject.data_key for Enquiries.
+      2. The column Data Key must have the Column Role: Data Security Key set.
+      Please refer to the Data Sources on page 51 section for further details on creating Data Sources
+      and details on how to configure the Drill-down feature.
+
+
+
+Configuring Attribute Types for Dashboard Widgets
+      Feature Attribute Types are used to assign the colours and display orders to the Bars, Columns,
+      Maps and Counter Traffic Lights in the Widgets
+      Where the colour is to be assigned based on a Category Expression (for Column, Bar, and Map
+      presentation styles), or a Series Expression (Gauge, Column - Stacked, and Bar - Stacked
+      presentation styles), the Attribute Type must be 'Pick List' and the Attribute Values must carry the
+      same name as the values resulting from the Expression.
+      If no colours are specified for the data then a random colour will be selected when the Dashboard
+      window is opened. This colour will remain the same until the window is closed and reopened.
+      The following explains how the Attribute Types works for the different presentation styles:
+      For 'Bar' , 'Column' and 'Pie' the Category values are matched against the Attribute Value Descrip-
+      tions to determine a colour. e.g. for a bar graph of outstanding Enquiries by Subject, where you
+      want to use a different Colour for each Subject - the Category Expression would be Subject Name
+      and the Attribute would need to have Values which match the Description with the Subject Names.
+      Similarly, Display Order specified on the Attribute Value will be used to determine order to display
+      the bars. For example, Jobs Raised with Display Order as 10 would be displayed before Jobs
+      Committed with Display Order as 20.
+      For 'Bar - Stacked', 'Column - Stacked' , 'Gauge' , 'Line' and 'Stacked Area' presentation styles
+      the Series values are matched against the Attribute Value Descriptions to determine a colour. e.g.
+      for a stacked bar graph of outstanding Enquiries by Officer you could colour based on the Status
+      of the Enquiries. The Series Expression would be the Enquiry Status Code, then the Attribute
+      would need to have Values with Descriptions matching those codes. The display would then show
+      a bar for each Officer where the bar was split into coloured stripes depending on how many En-
+      quiries at each Status the Officer had.
+      Display Order can be used to define the order for Officer and the order of Enquiries in each Status.
+      In the below screenshot, Allan Christian will be displayed before David Hayes and Enquires with
+      Status as 'urgent assessment needed' will be stacked below 'closed pending response'.
+
+
+
+
+Confirm                                                                                           32 of 120
+                                                                                           | Reporting |
+
+
+
+
+      The presentation style 'Counter' will assign colours based on number ranges, and in this case the
+      Attribute Type must be 'Number', and each value must have a number range defined as well as
+      a colour. In this case a count of all Outstanding Enquiries can be set up to be green if there are
+      less than 100, amber up to 200, and red if more than 200.
+
+
+
+
+Confirm                                                                                         33 of 120
+                                                                                                | Reporting |
+
+
+
+
+      The 'Map' presentation style can assign colours based on values shown in the Category Expression.
+      Where the Category Expression will contain numeric values, specify a 'Number' Attribute Type.
+      For text or pick values, specify a 'Pick' Attribute Type. If the 'Use Pie Chart Icons for Clusters'
+      Widget option is set to 'No', the colour of any map clusters will be determined by that of the Attribute
+      Value with the highest Display Order contained within it.
+
+
+
+
+Confirm                                                                                               34 of 120
+                                                                                            | Reporting |
+
+
+
+Submit Analysis
+(Universal Analyser module)
+The Submit Analysis utility is used to submit data for analyses into Confirm with the ability to specify
+the analysis stage results for output.
+An Analysis Template must be in place in order to use the Submit Analysis uility.
+
+
+
+
+This is the top part of the Submit Analysis form and defines what Analysis is to be run, and what output,
+if any, to view afterward..
+Analysis Template: The Template that defines what data is to be analysed, how it will be analysed
+                   and what the Analysis output will be. The drop down list references the Analysis
+                   Templates library
+                     Note: When a Template is specified, the Data Query Qualification window will
+                     automatically open. This window is the same window outlined under the Qualify
+                     button below.
+
+Description:         The description of the Analysis you are about to run
+
+Output To View:      The Output Data to be previewed after the Analysis has finished running.
+
+Output as Report:    The Report Design the Output Data is to be previewed in
+
+Progress log:        Windows save as to pick or create
+
+This is the middle part of the Submit Analysis form and defines what the Governing Source for this
+Analysis will be. This will be entered automatically from the Analysis Template selected above and may
+not be edited.
+
+
+
+Confirm                                                                                           35 of 120
+                                                                                           | Reporting |
+The lower part of the Submit Analysis form lists the Parameter Types that have been associated with
+the Analysis Template entered above.
+Each Parameter Type will show the name it carries in this Analysis Template, and allow the entry or
+selection of a value. The type of value which may be entered is defined by the settings and values for
+the selected Parameter Type.
+
+
+Qualify Button
+      To open the Data Query Qualification form to specify any column qualifications for this current
+      Analysis, click on the Qualify button.
+
+
+
+
+      Column:             The Columns specified in the Governing Queries Data Source to be retrieved
+                          (SELECT part of the SQL Statement), plus a GIS and Expert Column.
+
+      Qualifications:     The retrieval criteria specified for the Column.
+
+
+
+
+Confirm                                                                                         36 of 120
+                                                                                           | Reporting |
+
+
+
+Analysis Instances
+(Universal Analyser module)
+The Analysis Instances form is used to view the stored analysis data-set results in Confirm in the Data
+Query Preview screen and to go on and produce the results in reports and/or Diagrams.
+A record in this table is created each time a user invokes an analysis.
+
+
+
+
+The top part of the Analysis Instances form contains the Analysis information such as the Name, the
+Template it was created from and who and when it was created.
+Description:                                        (50) A short description to uniquely identify the
+                                                    Analysis Instance
+
+Notes:                                              A long description of the Analysis Instance
+
+Analysis Template:                                  The Template that this Analysis was created from
+
+Created by:                                         The user who submitted the Analysis
+
+Created On:                                         The Date Time when the Analysis was run.
+
+The middle section of the Analysis Instances form lists the Parameter Values that were specified when
+the Analysis was invoked
+The bottom part of the Analysis Instances form is used to select the Data-Set stage results for viewing.
+Data Set:                                           The Data Set results to be viewed.
+
+
+Confirm                                                                                           37 of 120
+                                                                                             | Reporting |
+Report:                                              The Report Design the analysis results are to be
+                                                     previewed in
+
+
+View Button
+      To view the Data Set results defined in the Data Set field, click on the View button
+      These results will be displayed in the Data Source Preview screen.
+
+
+Errors Button
+      Click on the 'Errors' button to view the Errors and Warnings Analysis report which was generated
+      at the time the Analysis was submitted. If no Errors or Warnings were recorded the Report preview
+      will simply show: 'No Errors of Warnings recorded'
+      Where Warnings are recorded these will be shown prefixed by 'War-'.
+
+
+
+
+Confirm                                                                                           38 of 120
+                                                                                           | Reporting |
+
+
+
+Import Survey Analysis Data
+(Universal Analyser module)
+The Import Survey Analysis Data will copy the results of the universal analyser to the PMS tables for
+PANDEF and SKID calculations
+
+
+
+
+Survey Name:          Enter a name to be assigned to the Survey that will be created.
+
+Survey Type:          Select the appropriate Survey Type from the drop down list. The drop down list
+                      references the Survey Type Lookup.
+                      Network Manager\Survey Data Lookups
+
+External Ref:         A free text field for an external reference
+
+Notes:                An optional free text field.
+
+Section DS:           Select the Data Source containing the section data for the survey.
+
+Observation DS:       Select the Data Source containing the observation data for the survey.
+
+Note: Columns names in the selected data sources must match the header names as specified in the
+import specification for surveys.
+
+
+Qualify buttons
+      Use the qualify button to qualify each data source for the data to be retrieved and imported into
+      the new PMS Survey.
+
+
+
+
+Confirm                                                                                         39 of 120
+                                                                                            | Reporting |
+
+
+
+Analysis Templates
+(Universal Analyser module)
+The Analysis Template utility is used to define all aspects of the analysis. This includes the queries,
+algorithms and the output data sets.
+An Analysis Template has a single 'Governing' Data Source which is used to determine the scope of
+the Analysis. This would typically be Sections or Sections that occur on Surveys.
+
+
+
+
+The top part of the Analysis Template form defines the Analysis Templates Name, the Data Source
+which governs the analysis and any notes.
+Name:                A short description to uniquely identify the Analysis Template
+
+Governing Source: The Data Source that governs the analysis. Select from the pick list. The pick list
+                  references the Data Source Lookup
+
+Notes:               An optional field for a long description of the Analysis Template
+
+The bottom part of the Data Sources form is used to list the Table Columns specified in the Governing
+Source SQL Statement.
+Column:              The Columns specified in the SELECT part of the SQL Statement of this Analysis
+                     Templates Governing Source
+
+Constant:            Check to define the column in the Governing Source as a Constant. Uncheck if
+                     the Column is required for Qualifying in another area of the Analysis.
+                     Note: When the analysis runs it looks for the next unique combination of the
+                     columns that are ticked.
+
+
+
+
+Confirm                                                                                          40 of 120
+                                                                                               | Reporting |
+
+Action button - Edit Params
+      The Analysis Parameters form specifies additional parameter(s) that can be used in this analysis
+      template.
+      This allows for:
+      • Qualifications to be specified against these additional parameters
+      • The option to specify the value that the algorithm requires on submittal of the Analysis.
+      To display the Analysis Parameters form, select the Edit Params Option from the Analysis Templates
+      Action button drop-down list.
+
+
+
+
+      The Analysis Parameters form is divided into 3 parts:
+      The top part of the Analysis Parameters form displays the currently selected Template
+      The middle part of the Analysis Parameters form lists the Parameters defined for the current
+      Analysis Template.
+      The bottom part of the Analysis Parameters form is used to add new Analysis Parameters and to
+      view or update an existing Analysis Parameter, selected in the Analysis Parameter List.
+      Name:               (50) Enter the name the parameter takes on for this analysis.
+
+      Attribute:          Select an Attribute Type for this Analysis. The pick list references the Attribute
+                          Type Lookup.
+                          Asset Register\Feature Lookup
+
+      Default Value:      Select a Default Attribute Value that the analysis algorithm will take on, if no
+                          value is specified on submittal. The field is defined by the Attribute Type Values
+                          for the Attribute Type specified above.
+
+      Notes:              A free text field.
+
+
+
+Confirm                                                                                             41 of 120
+                                                                                           | Reporting |
+      To add a new Analysis Parameter, click on the Add Button
+      To remove a newly added Parameter, select the Analysis Parameter from the list and click on the
+      Remove Button. You may not remove Parameters after the record has been saved.
+
+
+Action button - Edit Queries
+      The Analysis Data Queries form allows one to specify the stored Data Sources used in this ana-
+      lysis template and how these Data Sources link to the governing source.
+      To display the Analysis Data Queries form select the Edit Queries option from the Analysis Tem-
+      plates Action button drop-down list.
+
+
+
+
+      The Analysis Data Queries form is divided into 3 parts:
+      The top part of the Analysis Data Queries form displays the currently selected Template
+      The middle part of the Analysis Data Queries form lists the Data Sources defined for the current
+      Analysis Template.
+      The bottom part of the Analysis Data Queries form is used to add new Data Sources, state how
+      they link to the Governing Source or Remove a Data Source.
+      Use the Data Source field to select a Data Source. The pick list references the Data Source
+      lookup.
+      To add a new Data Source, click on the Add Button.
+      To remove a Data Source, select the Data Source from the list and click on the Remove Button.
+      Use the Qualify Button to open the Expression Window to create, view or update the expression
+      which states how the selected Data Source, in the Data Query List, links to the Analysis Governing
+      Source:
+
+
+
+
+Confirm                                                                                         42 of 120
+                                                                                               | Reporting |
+
+
+
+
+      The Data Source Columns will be titled with its Column Name
+      The Governing Data Source Columns will be titled with its Column Name prefixed with 'Governing'.
+      Note: If you don't have any Pass Constants then the Analysis Query Qualify Expression screen
+      gives you the option to use 'column lists' which, for each column, will just list out all unique values
+      found in the Governing Query, separated by commas. The idea is that you will use these within
+      the 'In' function in the Qualification expression - for this example the expression should be as fol-
+      lows...
+      {Operational Area} = IN( {Governing List - Operational Area}) and {Road} = In({Governing List -
+      Road}) and {Section Function} = In({Governing List - Section Function})
+
+
+Action button - Stages
+      Analysis Stages are executed according to the defined sequence. All stages are executed for each
+      Analysis 'Pass', before any data is saved back to the database.
+      Each Analysis Stage has a Primary Analysis Data Query. This is analogous to the Qualifying Data
+      Source for the Analysis as a whole, but in this case the Analysis Algorithm will be executed for
+      each change in the Analysis Stage Constants
+      The Analysis Stages form allows one to specify and define:
+      • the different stages of the analysis
+      • the stages primary query
+      • the algorithm applied to the stage
+      • input requirements
+      • output
+      • output data to be saved
+      • the operative data that exists
+      • the values the algorithm will be populated with
+      To display the Analysis Stages form select the Stages option from the Analysis Templates Action
+      button drop-down list.
+
+
+
+
+Confirm                                                                                              43 of 120
+                                                                                           | Reporting |
+
+      Stages Action button- Map Input
+      Use the Analysis Stages Inputs form to view/define the Input Queries that are required for the
+      current Analysis Stage.
+
+
+
+
+      The Analysis Stage Inputs form is divided into 3 parts:
+      The top part of the Analysis Stage Inputs form defines what Data Queries are required in which
+      Algorithm Data Set for the current Analysis Stage.
+      Input Set:          The Algorithm Data Set this Input Data is required for. The Input Set is de-
+                          pendent on how the Algorithm has been structured, i.e. how many Data Sets
+                          have been specified.
+
+      Data Source:        The Data Query required for this Analysis Stage Algorithms Data Set.
+
+      The middle part of the Analysis Stage Inputs form the column links in the Input Data Query to the
+      current Analysis Stage Primary Query column. Each field carries an 'Expression' button, which
+      displays the Expression form to create, view or update the Primary Query column that links to this
+      current Stage Input Data Query column.
+
+
+
+
+      Note: The Primary Data Query Columns will be titled with their Column Name prefixed with
+      'Primary'
+      The Governing Data Query Columns will be titled with their Column Name prefixed with 'Governing'
+      Parameters defined in the Edit Params section will be titled with their Analysis Parameter Name
+      prefixed with 'Param'
+      The bottom part of the Analysis Stages Inputs form and is used to list the Parameters that this
+      Stages Algorithm Data Set requires, with their associated columns/values that will be populated
+      into the Algorithm when Analysis is run. Each field carries an 'Expression' button, which displays
+
+Confirm                                                                                         44 of 120
+                                                                                              | Reporting |
+      the Expression form to create, view or update the columns/ values that the algorithm will be pop-
+      ulated with.
+
+
+
+
+      Note: The Input Data Query Columns will be titled with their Column Name
+      Parameters defined in the Edit Params section will be titled with their Analysis Parameter Name
+      prefixed with 'Param'
+
+
+      Stages Action button - Operators
+      The Analysis Stage Operators form is used to define:
+      • The additional columns, not currently being outputted through the analysis, that require to be
+        outputted via the carry forward operation (where the algorithm allows the carry forward operation).
+      • The columns that require operations to be applied, i.e. mean, average
+      Open the Analysis Stage Operators form to add/view the Operators that are required for this
+      Analysis Stage by selecting the Operators Option from the Analysis Stages Action drop-down list.
+
+
+
+
+      The Analysis Stage Operators form is divided into 2 parts:
+      The top part of the Analysis Stage Operators form defines what Input Query contains the column
+      of interest, what output set the column will be stored in and what operation will be applied to the
+      column.
+      Input Set:          The Input Data Query of the current Stage that contains the column of interest.
+
+Confirm                                                                                            45 of 120
+                                                                                             | Reporting |
+      Output Set:         The Output Set that will contain the column data
+
+      Operator:           The operation that will be applied to the column
+
+      The bottom part of the Analysis Stage Operators form and is used to define the Column that is to
+      have the operation applied to. Each field carries an 'Expression' button, which displays the Expres-
+      sion form to create, view or update the Value Argument.
+
+
+
+
+      Note: The Input Data Query Columns will be titled with their Column Name
+      Parameters defined in the Edit Params section will be titled with their Analysis Parameter Name
+      prefixed with 'Param'.
+
+
+      Stages Action button- Map Output
+      The Analysis Stages Outputs form allows one to specify what is contained in the output data set
+      for the current Analysis Stage.
+      Open the Analysis Stage Outputs form to view/define the Output Format of the current Analysis
+      Stage by selecting the Map Output Option from the Analysis Stages Action drop-down list.
+
+
+
+
+Confirm                                                                                           46 of 120
+                                                                                             | Reporting |
+
+
+
+
+      The Analysis Stage Inputs form is divided into 2 parts:
+      The top part of the Analysis Stage Outputs form defines the type of output and how it will be stored
+      for the current Analysis Stage.
+      Output Set:         The type of Output data this Data Set contains
+
+      Name:               A name for this Output Data Set which is unique within the data source.
+
+      Save Data:          Determines whether the Data contained in this Output Set is saved to a unique
+                          Analysis Output Table.
+
+      The bottom part of the Analysis Stage Outputs form lists what columns will be outputted and the
+      format of this output data.
+      Expression:         The Output Column that will be stored under the Column Title.
+
+      Column:             User Defined Column Title that describes the Output Column
+
+      Data Type:          The Data Type format of the Output Column. You may type in a value or select
+                          from the drop down list which contains commonly used values.
+                          Note: If the output data is too big for the columns in this output table column
+                          then the Analysis Engine will truncate the output data to the specified length
+                          the table can hold and save as normal.
+
+      To add a new Output Column, click on the Add Button.
+      To remove an Output Column, click in the Columns Expression field that requires deleting and
+      click on the Remove Button
+      Each Expression field carries an 'Expression' button to create, view or update the output column
+      that will be stored under the defined Column Title.
+
+
+
+
+Confirm                                                                                           47 of 120
+                                                                                          | Reporting |
+
+
+
+
+      The columns that were as a result of the analysis will be titled with their Column Name
+      The Primary Data Query Columns that were ticked will be titled with their Column Name prefixed
+      with 'Primary -'
+      The Governing Data Query Columns that were ticked will be titled with their Column Name prefixed
+      with 'Governing -'
+      Parameters defined in the Edit Params section will be titled with their Analysis Parameter Name
+      prefixed with 'Param'
+      The Analysis Stage Operators will be titled with the Operator Type that was applied prefixed with
+      'Operator -' and its sequential operator record number.
+
+
+
+
+Confirm                                                                                         48 of 120
+                                                                                             | Reporting |
+
+
+
+Reporting Lookups
+The Reporting Lookups contain the stored Data Sources, Data Qualification and Report templates, as
+well as providing an utility for importing existing Powersoft reports.
+
+
+Saved Qualifications
+      Qualifications are saved from the Data Query Preview window, and the Report preview window,
+      after carrying out a query, and are stored in the Saved Qualifications Lookup, where they may be
+      viewed and managed:
+
+
+
+
+      Name:               The name which was assigned to the Qualification when it was saved is dis-
+                          played. This may be edited.
+
+      Data Source:        The Data Source from which the Qualification was saved is displayed. This
+                          may not be edited.
+
+      Notes:              An optional free text field
+
+      Data Security Key: This field is only visible to those users with rights to assign Data keys (I.e.
+                         whose User Security record has 'Assign Data key Manually' checked), and
+                         defines the User groups who may use this Saved Qualification
+                          System Administration\Security
+
+      The lower portion of the window displays the columns in the original Data Source, and the quali-
+      fications that are present in this Saved Qualification.
+      You may edit the qualification by double clicking a column name and applying, or re-applying a
+      qualification.
+      The record which will result form this Qualification in conjunction with its data Source may be
+      viewed by clicking on the 'View' button.
+
+
+Confirm                                                                                           49 of 120
+                                                                                             | Reporting |
+      Note: Using the View button will prompt you to save if you have made changes to the Qualification.
+      If you reject the option to save then the view will be based on the original Saved Qualification.
+
+
+Report Templates
+      Report Templates are saved from the Report (design) window and are stored in the Report Tem-
+      plates Lookup, where they may be viewed and managed:
+
+
+
+
+      Name:               The name which was assigned to the Report Template when it was saved is
+                          displayed. This may be edited.
+
+      Notes:              An optional free text field
+
+      Data Source:        The Data Source from which Report Template was saved is displayed. This
+                          may not be edited.
+
+      Data Security Key: This field is only visible to those users with rights to assign Data keys (i.e.
+                         whose User Security record has 'Assign Data key Manually' checked), and
+                         defines the User groups who may use this Report Template.
+                          System Administration\Security
+
+      To view the associated Data Source columns, apply a Qualification, and view the report in either
+      Preview, or design mode, click on the 'View' button.
+
+
+Import Report Templates
+      Reports, together with their data sources, may be imported through the Import Report Templates
+      utility:
+
+
+
+
+      Template File:      Enter the path to, and name of, the file to be imported. Only Powersoft report
+                          may be imported - these will be in .psr format.
+                          See 'Using existing Confirm reports' below for information on exporting Confirm
+                          reports in Powersoft format.
+
+      Data Source         Enter the name to be applied to the Data Source that will be created by the
+      Name:               import utility from the Powersoft file.
+
+
+Confirm                                                                                           50 of 120
+                                                                                              | Reporting |
+      Report Name:        Enter the name to be applied to the Report Template that will be created by
+                          the import utility from the Powersoft file.
+
+      Click on OK to carry out the import. There will be no preview, the data will simply be imported, and
+      a Data Source and a Report Template will be created in the names entered into the Report Template
+      Import form. These may be viewed in the Data Sources Lookup, and the Report Template window,
+      respectively.
+
+
+      Using existing Confirm reports
+      Existing reports in Confirm may be used to form the basis of further reports, by exporting the ori-
+      ginal report in Powersoft format, and then using the Import Report Templates utility to import the
+      report, and create a data source which may be amended for use in other Reports.
+
+
+      To export an existing Confirm Report
+      To export an existing Confirm report in Powersoft format:
+      1. Select the Report Template and complete the filter options to run the report (filter criteria are
+         not stored in the Data Source)
+      2. Run the report, and select the Save As button. The Windows 'Save As' dialog is displayed.
+      3. Select a folder, enter a file name, and select 'Powersoft Report' from the 'Save as Type' drop
+         down list.
+      4. Click on 'Save to save the file in .psr format to the selected location
+      Reports exported in this way may be directly re-imported using the Import Report Templates utility.
+      This will create a Data Source (and a Report), which may be viewed, and whose SQL may be
+      used as the basis for new reports.
+
+
+
+Data Sources
+      Data Sources are custom database queries that can be used within Confirm to:
+      • Generate Reports and Dashboards
+      • Provide customizable validation
+      • Viewing Data Sources on the Map on page 67
+      Note: Contractor Users are not able to Add or Update Data Sources, regardless of User Security.
+      Creating a Data Source requires knowledge of the database tables and table relationships within
+      Confirm. This information is available in the Confirm Data Dictionary and Schema.
+      Reports and Dashboard on page 30 are constructed from Data Sources which define the columns
+      to be used, the tables in Confirm which contain those columns, and the relationships between the
+      tables, as well as specifying any other factors restricting the choice of data. Confirm provides Data
+      Drill-Down on page 64 capability so related Entities can be opened from items in the report.
+      Data Sources that provide customizable validation allow Confirm to check processes such as
+      Payment Batches and Order committals against Administrator defined constraints and reject items
+      that fail to meet the criteria. These Data Sources require a more rigid format and need to contain
+      specific fields and tables to work correctly. These requirements can be found in documentation
+      for the data sources on the corresponding system settings screens.
+      The Data Sources screen allows the user to view and add Data Sources. To find Existing Data
+      Sources, use the 'find' button. To edit the columns of the Data Source click the Data Sources -
+      SQL on page 55 which will open the SQL editor. Once a Data Source has been configured, the
+      result can be viewed with the Action Button - View Data on page 61 Action button.
+
+
+Confirm                                                                                            51 of 120
+                                                                                            | Reporting |
+
+
+
+
+      Name               The name of the Data Source will be displayed. This may be edited.
+
+      Report Category    A Report Category on page 70 can be chosen to help with searching for
+                         Data Sources.
+
+      Notes              An optional free text field to describe the Data Source.
+
+      Data Key           This field is only visible to those users with rights to assign Data keys (i.e.
+                         whose User Security record has 'Assign Data key Manually' checked), and
+                         defines the User groups who may use this Data Source.
+                         System Administration\Security
+
+      Created            The date and time the Data Source was created, and the User who created
+                         it. This can be used to search for Data Sources.
+                         Note: Data Sources created in Confirm V12.00a.AM or earlier versions will
+                               show a Created date of 01/01/1900 and no User name.
+
+      Modified           The date and time the Data Source was last modified, and the User who
+                         modified it. This can be used to search for Data Sources.
+
+      The central pane in the form carries two tabs: Data Sources - Columns tab on page 52 and Data
+      Sources - Linked tables tab on page 54
+
+
+      Data Sources - Columns tab
+
+
+
+
+Confirm                                                                                           52 of 120
+                                                                                             | Reporting |
+
+
+
+
+      The Columns tab lists the fields (columns) in the database from which you are retrieving data.
+      These are the columns that will appear in your output when the Data Source is run. The columns
+      are defined using SQL, and you must use the Data Sources - SQL on page 55 to edit them.
+      The fields below the column list contain the information relating to the currently selected Column
+      Name:
+      Column Name:        The first part of this field is an appropriate readable name that will be used
+                          as the Column header on the report. It defaults to be the database column
+                          name taken from the SQL, but it may subsequently be edited by the user.
+                          Note: that if the SQL 'SELECT' statement is subsequently altered for this
+                          column or any preceding it, the column name is returned to the default name.
+                          You can avoid this by ensuring that additions to the 'SELECT' statement are
+                          always made to the end of the statement.
+                          The second part of the field contains the table and column name
+                          (table_name.column_name) as it appears in the SQL statement, using the
+                          Database Schema names for the tables and columns. This part of the field
+                          is not editable.
+
+      Data Type:          Defines the data type and may not be edited. Values are:
+                          CHAR()
+                          Contains AlphaNumeric characters. The number in the brackets specifies the
+                          number of characters that the field can hold.
+                          DECIMAL()
+                          Contains Numeric characters. The number in the brackets specifies the
+                          number of decimal places that the field contains.
+                          DATETIME
+                          Contains Date Values.
+
+
+
+Confirm                                                                                           53 of 120
+                                                                                              | Reporting |
+      Format:             A Format option may be selected from the drop down, where options are
+                          available (for numbers or dates for instance). This will define the appearance
+                          of the data in the finished report.
+
+      Display Width:      This field specifies the visible width (in text characters) of the column in the
+                          report result. A default entry is derived from the Column in the database. If
+                          the actual data retrieved is wider that the Display Width then it will be clipped
+                          on screen. This field only affects how the data is presented in the report, it
+                          has no effect on the actual sizing of data in the database.
+
+      Display Order:      A default entry is made which orders the columns in the order in which they
+                          appear in the pane. This order may be altered by changing the order number.
+                          The smaller the number the closer to the top/right the data in this column will
+                          appear in the finished report.
+
+      Location:           Specifies whether the currently selected column is paired with another column
+                          in the data source. Select from:
+                          'Whole' - The column contains all of the data (no pairing).
+                          'Start' - The column contains the start data of the combined columns (the
+                          'End' Column is specified in the 'With' field - see below).
+                          'End' - The column contains the end data of the combined columns (the 'Start'
+                          Column is specified in the 'With' field - see below)..
+
+      With:               If 'Start' or 'End' has been selected in the 'Location' field above, then the op-
+                          posite mode column is specified here. Select from the drop down list, which
+                          contains all the columns present in this Data Source.
+                          This pairing up of columns comes into effect when you are creating column
+                          qualifications.
+
+      Use in Queries:     Select from the drop down list:
+                          'View and Qualify' - the column will be displayed in the query preview/report
+                          and can have criteria (Qualifications) specified against it.
+                          'Qualify Only' - the column may have criteria (Qualifications) specified against
+                          it, but will no appear in a preview or report.
+                          'None' - the column will not be displayed and no ability to have criteria
+                          (Qualifications) specified against it.
+
+      Must be qualified: If this box is ticked then the query will not run unless this column has a quali-
+                         fication specified.
+
+
+      Data Sources - Linked tables tab
+      Tables may be linked to provide values for selection when qualifying against this column or to
+      provide Drill-down capability for appropriate columns when viewing the data on the report or Action
+      Button - View Data on page 61.
+      Linked Columns will appear marked on Qualification screens with a blue bullet.
+
+
+
+
+Confirm                                                                                            54 of 120
+                                                                                              | Reporting |
+
+
+
+
+      The Linked Tables tab displays the linked tables that have already been defined (by the SQL
+      statement for instance) and allows tables to be linked. Only tables that have their primary key
+      column specified in the SQL may be linked. The fields below the pane contain the information re-
+      lating to the currently selected Linked Table:
+      Linked Table:       Select from the Drop down list of all available Tables within Confirm.
+                          Note: You may pick any table in the list - but be aware that a link can only
+                          be successfully established through a common field, that is, a field which exists
+                          in the table you select, and in one of the tables/columns listed on the Columns
+                          tab.
+
+      Display Name:       As defined in the database. May be edited.
+
+      Display Order:      Enter a number to define the order in which linked columns will be displayed
+                          in the Data Query or Report Query. The lower the number, the nearer the top
+                          of the list the column will appear. This field must be entered each time a
+                          Linked Table is added
+
+      The lower portion of the form lists the Primary keys field(s). The associated drop down list(s) will
+      display all the fields present in the Data Source.
+      Select from the drop down list the field in the Data Source, which contains the same data as the
+      field(s) listed from the linked table, to establish the link. If the link cannot be made because the
+      required field is not present in the drop down, you may add it to Data Source by amending the
+      SQL statement to include it.
+
+
+      Data Sources - SQL
+
+
+      SQL Button
+      The SQL button is used to enter SQL for a new Data Source, and to view/edit the SQL for an ex-
+      isting Data Source.
+
+
+Confirm                                                                                            55 of 120
+                                                                                            | Reporting |
+
+
+      Data Source SQL
+      Data Sources are created from a Structured Query Language (SQL) statement, which determines
+      the columns that will be included. Simple scripts may be seen in the screen shots and these are
+      representative of the format that should be used.
+      The SQL Statement is broken up into three parts
+      • SELECT - Defines the Table Columns to retrieve from the database
+      • FROM - Defines the Tables that the Table Columns belong to
+      • WHERE - Defines how the Tables are linked, and applies any other selection parameters that
+        are required in the data source (as distinct from selection of data which will be made in the
+        Qualification)
+      There are several features in the software to assist with creating SQL statements based on Confirm
+      data.
+      • Schema Diagrams in the Reporting section of the Confirm Help show the tables and relationships
+        between them for each area of Confirm.
+      • The 'Copy SQL' option on the Edit menu allows the SQL underlying most Confirm screens and
+        reports to be copied to the clipboard.
+      • A 'Schema Report' is available in the Reporting folder of the Confirm Explorer menu.
+      Click on the SQL button on the Data Source screen to display the SQL window and begin enter-
+      ing/editing SQL.
+
+
+
+      To create a Data Source using the Wizard
+      The Wizard allows SQL to be quickly and easily written by double clicking on tables and columns
+      in a list to include them in the query. In the SQL window, click on the 'Wizard' button.
+      Where a SQL statement that was created using the Wizard is already entered in the SQL window,
+      the Data Source Wizard window is displayed showing the selections that were made the last time
+      the Wizard was used.
+      Note: Where a directly entered SQL data source exists, running the Wizard will overwrite the
+            original data source with the results of the Wizard selection. You will be warned on clicking
+            the Wizard button that this will happen if you continue, and you may exit the Wizard at that
+            point without compromising the existing Data Source.
+
+      Where the SQL window is blank the 'Select a Table' window is displayed first:
+
+
+
+
+Confirm                                                                                          56 of 120
+                                                                                               | Reporting |
+
+
+
+
+      The dialogue lists all the available tables in Confirm (all labelled with their asset specific names -
+      so if you are using Environmental you will see the Feature table labelled 'Feature', if you are using
+      Confirm Highways, you will see the Feature table labelled 'Street Section' as in the above example).
+      Select a table by clicking on it.
+      Click on OK to display the Data Source Wizard:
+
+
+
+
+      The Data Source Wizard displays all the tables related to the selected table as a tree. You may
+      select the related tables to be used by clicking in the tree. Each related table, as it is selected, is
+      displayed in the right-hand window of the Wizard. You may remove tables by clicking on a previously
+      selected table.
+
+
+Confirm                                                                                              57 of 120
+                                                                                               | Reporting |
+
+      Note: Where the 'Feature' table is selected, attributes (Measurements, Date Types and Text At-
+            tributes) may be selected and are all found in the 'Attributes' folder at the end of the list.
+
+      Click on 'OK' to return to the SQL window, where the statement derived from the selections will
+      be displayed.
+      The SQL statement may be further edited directly in the SQL window if required.
+
+
+
+      To create a Data Source by entering SQL directly
+
+
+
+
+      Enter the SQL statement into the window by typing, or pasting a previously copied statement.
+      You may break onto a new line in the window using CTRL+ENTER.
+      You may click on OK at any time to return to the Data Source Window, where you may use the
+      Action button to view the results of the SQL statement.
+      Note: You cannot return to the Data Source window if the SQL statement entered so far is not
+            valid. An error message will be displayed pinpointing the section of the statement that is
+            not valid.
+
+
+
+
+      Altering the SQL of a Data Source already in use
+      Altering the SQL of an existing Data Source may have an impact if it is in use by any of the following:
+      • Saved Qualifications
+      • Report Templates
+      • Dashboard Widgets
+      • Enquiry Alert Types (as the Message Data Source)
+      • Job Alert Types(as the Message Data Sources)
+      If this is the case, and the user makes changes to Data Source SQL which alter the order or data
+      type of the existing columns, the user will be warned about this and prompted to confirm which
+      column in the new SQL corresponds to each column in the original SQL.
+
+
+
+Confirm                                                                                              58 of 120
+                                                                                             | Reporting |
+
+      The user must specify a new column for each existing column, i.e. it is not permitted to remove a
+      column from a Data Source that is in use.
+      This information is then used to modify any Saved Qualifications, Report Templates and Dashboard
+      Widgets to work correctly with the new SQL.
+      Note: Changes that do not affect the order and data type of existing columns, such as adding
+            new columns on the end or altering the WHERE part of the SQL, can be made without this
+            happening.
+
+
+
+
+      Confirm Data Source functions
+      Data Source SQL can contain a number of special functions which are particular to Confirm. Each
+      of these is described below:
+
+      Function                    Description
+      EffectiveDate()             The current date (with no time component).
+                                  When a Data Source containing this is run interactively by a user,
+                                  they may specify a date to be used instead.
+                                  When a Data Source containing this is run by a Scheduled Report,
+                                  the scheduled run date is substituted rather than the current date.
+      EffectiveDateTime()         The current date and time.
+                                  When a Data Source containing this is run interactively by a user,
+                                  they may specify a date and time to be used instead.
+                                  When a Data Source containing this is run by a Scheduled Report,
+                                  the scheduled run date and time is substituted rather than the current
+                                  date.
+      DefaultDate()               A default date and time used in Confirm (1st January 1900).
+      CurrentConfirmUser()        The Login Name of the User currently logged in to Confirm.
+                                  Note this is the internal Login Name used to refer to Users in other
+                                  tables, not necessarily the same as the Username entered on the
+                                  Login Screen.
+      CurrentConfirmUser-         The User Id of the User currently logged in to Confirm.
+      Name()
+                                  Note this is the Username entered on the Login Screen.
+      CurrentConfirmUserFull-     The full name (i.e. First Name and Surname) of the User currently
+      Name()                      logged in to Confirm.
+      CurrentConfirmWork-         The Work Group Code for the User currently logged in to Confirm.
+      Group()
+      StartDistanceWithinPar-     Returns the distance along the Parent entity that the start of the Child
+      ent()                       entity is located. Parent must be a line geometry. Uses primary
+                                  measurement of the Parent to determine the length of the line, if
+                                  available. If there's no primary measurement then the actual length
+                                  of the line geometry is used. Data Source must have Parent and Child
+                                  Column Roles present.
+      EndDistanceWithinParent() Returns the distance along the Parent entity that the end of the Child
+                                entity is located. Parent must be a line geometry. Uses primary
+                                measurement of the Parent to determine the length of the line, if
+                                available. If there's no primary measurement then the actual length
+
+
+
+Confirm                                                                                           59 of 120
+                                                                                               | Reporting |
+
+      Function                      Description
+                                    of the line geometry is used.Data Source must have Parent and Child
+                                    Column Roles present.
+      ChildContainedInParent() Returns Y if the geometry of the Child entity is located wholly within
+                               the geometry of the Parent entity. Otherwise it returns N. Data Source
+                               must have Parent and Child Column Roles present.
+      ChildIntersectsParent()       Returns Y if the geometry of the Child entity is intersects the geometry
+                                    of the Parent entity. Otherwise it returns N. Data Source must have
+                                    Parent and Child Column Roles present.
+      GeometryMatchesParent() Returns Y if the geometry of the Child entity exactly matches the
+                              geometry of the Parent entity. Otherwise it returns N. Data Source
+                              must have Parent and Child Column Roles present.
+      DistanceFromParent()          Returns the shortest distance between the geometry of the Child
+                                    entity and the geometry of the Parent entity. Data Source must have
+                                    Parent and Child Column Roles present.
+
+      For example, the following SQL could be used to create a Data Source returning a list of all En-
+      quiries assigned to the currently logged in User's Action Officer:
+
+          SELECT
+           central_enquiry.enquiry_number,
+           central_enquiry.enquiry_desc,
+           enquiry_subject.subject_name,
+           enquiry_status.enq_status_name
+          FROM
+           central_enquiry,
+           enquiry_status,
+           enquiry_subject,
+           action_officer
+          WHERE
+           enquiry_subject.service_code = central_enquiry.service_code AND
+           enquiry_subject.subject_code = central_enquiry.subject_code AND
+           enquiry_status.enq_status_code = central_enquiry.enq_status_code AND
+           enquiry_status.enq_status_code = central_enquiry.enq_status_code AND
+           central_enquiry.officer_code = action_officer.officer_code AND
+           action_officer.login_name = CurrentConfirmUser()
+
+      Second example using the parent and child relationship between Features joined through Inventory.
+
+          SELECT
+            inventory_item.feature_key,
+            inventory_item.inv_link_feature,
+            inventory_feature.site_code,
+            inventory_feature.plot_number,
+            linked_feature.site_code,
+            linked_feature.plot_number,
+            ChildContainedInParent(),
+            ChildIntersectsParent()
+          FROM
+            inventory_item
+            JOIN feature as inventory_feature ON (inventory_item.feature_key = inventory_feature.fea-
+          ture_key)
+            JOIN feature as linked_feature ON (inventory_item.inv_link_feature = linked_feature .fea-
+          ture_key)
+
+
+
+
+Confirm                                                                                             60 of 120
+                                                                                              | Reporting |
+
+      Note: Oracle SQL for the second example does not require 'as' on the JOIN lines, use the below
+            instead.
+
+               JOIN feature inventory_feature ON (inventory_item.feature_key = inventory_feature.fea-
+               ture_key)
+               JOIN feature linked_feature ON (inventory_item.inv_link_feature = linked_feature .fea-
+               ture_key)
+
+      Note: For the spatial functions to work Linked Tables will need to be added for both the Inventory
+            Feature and the Linked Feature, also the Parent and Child column roles will need to be
+            configured. This is simpler if using Defect or Job as the child table, since the Linked Tables
+            can be derived automatically, however for Inventory joins this is a manual process.
+
+
+
+      Action Button - View Data
+      You may view the data (and qualify it) by clicking on the Action button, and selecting 'View Data'
+      in the drop down menu.
+      The Data Query Qualification form is displayed:
+
+
+
+
+      You may use the Data Query qualification form to apply a previously saved qualification, by selecting
+      from the Qualification field pick list.
+      You may also apply direct Qualifications by double clicking on the column you wish to qualify, and
+      entering the qualification parameter in the Qualifications dialog.
+      Click 'OK' to display the Data Query Preview.
+
+
+
+
+Confirm                                                                                            61 of 120
+                                                                                             | Reporting |
+      The Data Source Name is shown on the Data Source Preview when there is no Saved Qualification.
+      If a Saved Qualification exists then the Qualification name will be shown on Data Source Preview
+      instead.
+      See Data Queries on page 8 for more information on the Data Query Preview window
+
+
+      Validation Data Sources
+
+      A Validation Data Source is used to apply custom validation rules in addition to the standard
+      Confirm validation. The Data Source SQL can be written to query any table or combination of
+      tables and return appropriate validation messages, with the validation message text displayed to
+      the user also configurable within the Data Source.
+      Validation Data Sources are used in the following places:
+      • Validation messages when Features are updated using a 'Feature Discrepancy' Data Source
+        (See Feature Group).
+      • Validation of Features with the 'Asset Validation' module (See Batch Validate Features).
+      • Validation of creation and update of Jobs (See Job System Settings).
+      • Works Order Commit checks using a 'Works Order Discrepancy' Data Source (See Contract
+        Management System Settings).
+      The validation can use two types of Data Source. The simplest type is a ‘Message Data Source’
+      configured to return messages in a ‘Message Text’ column.
+      Alternatively a ‘Delegating Data Source’ can be configured which returns a list of Data Sources,
+      delegating the checking to them. This avoids the need for one complex Data Source doing a large
+      number of validation checks, and also can be used to limit which checks are carried out for a
+      Feature/Job.
+      See Data Sources for general information on configuring Data Sources.
+
+
+
+      Configuring a Message Data Source
+      A Data Source to be used as a ‘Message Data Source’ is configured as follows:
+      • It must have a character column called ‘Message Text’
+      • It may optionally have a character column called ‘IsError’ (note that this is ignored for Feature
+        Discrepancy Data Sources)
+      • It must have a Linked Table to Feature/Job/Order, so it can be retrieved for a particular record
+      A value of ‘Y’ in the IsError column indicates that a message is an error. Any other value means
+      the message is treated as a warning. In the absence of the column all messages are treated as
+      warnings.
+      The example below is intended as a Feature Validation Data Source to ensure that meaningful
+      Location information has been entered against Features. It will return an error for a Feature if the
+      Location is null, and a warning if it is not at least 20 characters long.
+
+          SELECT
+           feature.site_code,
+           feature.plot_number,
+           'Location must be populated' as message_text,
+           'Y' as IsError
+          FROM
+           feature
+          WHERE
+           feature.feature_location IS NULL
+          UNION
+          SELECT
+           feature.site_code,
+
+
+Confirm                                                                                           62 of 120
+                                                                                              | Reporting |
+
+           feature.plot_number,
+           'Warning - Location should be at least 20 characters long' as message_text,
+           'N' as IsError
+          FROM
+           feature
+          WHERE
+           LEN( feature.feature_location) < 20
+
+      Note: For Oracle databases use LENGTH instead of LEN
+
+      The example Works Order Discrepancy Data Source below checks the Order Jobs on a Works
+      Order and detects if any have a Cost Code set to 'CWAY1'. The IsError field is set to 'Y', thereby
+      signalling an error and preventing the Commit if this is the case.
+
+          SELECT
+            order_job.contract_code,
+            order_job.order_number,
+            order_job.site_code,
+            order_job.plot_number,
+            order_job.cost_code,
+            feature.feature_id,
+            order_job.job_number,
+           'Cost Code on '+CONVERT(VARCHAR,order_job.job_number)+' is CWAY1' as message_text,
+
+           'Y' as IsError
+          FROM
+           order_job, feature
+          WHERE
+           order_job.site_code = feature.site_code AND
+           order_job.plot_number = feature.plot_number AND
+           order_job.cost_code = 'CWAY1'
+
+
+
+
+      Configuring a Delegating Data Source
+      A Data Source to be used as a ‘Delegating Data Source’ is configured as follows:
+      • It must have a numeric column called ‘Data Source Key’
+      • It may optionally have a Linked Table to Feature/Job/Order, so it can be retrieved for a particular
+        record
+      When a Delegating Data Source is run, it returns a list of Data Source keys. Each of those Data
+      Sources is then run in turn and the resulting messages from all of them combined together.
+      The Data Sources returned will usually be Message Data Sources. However, it is possible for one
+      or more of them to be Delegating Data Source, delegating checking a stage further.
+      In the simple example below, the Data Source returns the Data Source keys of all Data Sources
+      configured in the system having ‘validate’ as part of their name.
+
+          SELECT
+           data_source.data_source_key,
+           data_source.data_source_name
+          FROM
+           data_source
+          WHERE
+           data_source.data_source_name LIKE '%validate%'
+
+      The more complex example Data Source below could be used as a Feature Validation Data Source
+      for a Road Section Feature Group.
+
+
+Confirm                                                                                            63 of 120
+                                                                                              | Reporting |
+
+      It would apply the checks in the 'Feature Validation - All Sections' Data Source to ALL Road Section
+      Features. For those Features with a length more than 1km, it would also apply the checks in
+      'Feature Validation - Long Sections' and for those with an ‘Urban or Rural’ attribute of ‘Urban’ it
+      will also apply those in 'Feature Validation - Urban Sections' .
+
+          SELECT
+            data_source.data_source_key,
+            data_source.data_source_name,
+            feature.site_code,
+            feature.plot_number,
+            feature.feature_type_code,
+            feat_measurement.feature_quantity,
+            feat_attrib_type.attrib_value_code
+          FROM
+            data_source,
+            feat_attrib_type,
+            feat_measurement,
+            feature
+          WHERE
+            feature.site_code = feat_measurement.site_code AND
+            feature.plot_number = feat_measurement.plot_number AND
+            feat_measurement.measurement_code = 'SELN' AND
+            feature.site_code = feat_attrib_type.site_code AND
+            feature.plot_number = feat_attrib_type.plot_number AND
+            feat_attrib_type.attrib_type_code = 'URBN' AND (
+            ( data_source.data_source_name = 'Feature Validation - All Sections') OR
+            ( data_source.data_source_name = 'Feature Validation - Long Sections' AND feat_measure-
+          ment.feature_quantity > 1000) OR
+            ( data_source.data_source_name = 'Feature Validation - Urban Sections' AND feat_at-
+          trib_type.attrib_value_code = 'U'))
+
+
+
+
+      Data Drill-Down
+
+      It is possible to open most Confirm Entities such as Street Works Notices, Enquiries or Jobs from
+      rows in a report. To enable this feature, the Data Source's Columns and Linked Tables must be
+      set correctly.
+      When a User then double clicks a row in the report or grid, Confirm will open the Select window
+      listing all Entity windows corresponding to linked tables for the row that was selected. The user
+      can select the Entity windows they wish to load then click OK. If there is only one linked table then
+      it will be opened directly without the Select window appearing.
+
+
+
+
+Confirm                                                                                            64 of 120
+                                                                                               | Reporting |
+
+
+      It is also possible to multi-select many rows in the Data Query Preview and open all the Entities
+      associated with all Linked Tables by right-clicking and selecting 'Drill-Down' from the pop-up menu.
+      To Drill-down to any particular Entity, it is necessary to add a Column to the Data Source that will
+      fetch the Primary Key for the appropriate Entity type (e.g. the Works Reference for Street Works
+      Notices), then a Linked Table should be added referencing the Entity table and the Linked Table
+      Primary Key set to be the Data Source Column.
+      If your Linked Tables and Primary Keys are set incorrectly then Confirm will fail to fetch the correct
+      data, or fetch no data at all, in which case the Drill-down feature will not work. Confirm will display
+      messages to the User if it cannot open Entity windows because of incorrectly configured Linked
+      Tables.
+      A list of commonly used Entities and their required Linked Table settings is shown below:
+      Confirm Entity            Linked Table              Window
+      Defects                   Defect                    Defects
+      Customer Enquiries        Enquiry Customer          Fast Entry Enquiry
+                                Enquiry Cust Link
+      Enquiries                 Enquiry                   Fast Entry Issue
+                                Central Enquiry
+      Jobs                      Job                       Job
+      Payment Requests          Payment Request           Request for Payment
+                                Header
+      Street Works Notices      Street Works              Street Works
+      Street Works Inspec-      Actual Inspection         Inspections
+      tions
+
+      Note: It is not possible to link to Entity windows that are not listed on the Confirm Explorer, for
+            example Street Works Designations. Only parent windows can be opened using the Drill-
+            down feature - child windows cannot be opened e.g. Inspection Item.
+
+
+
+
+      Example - Opening Street Works
+      After creating a Data Source, in this case called 'Street Works Report', a Column entitled Work
+      Header No has been added that references a field in the database containing the Street Works
+      Reference (sw_notice_header.work_header_no)
+
+
+
+
+Confirm                                                                                              65 of 120
+                                                                                            | Reporting |
+
+
+
+
+      The Data Source then links to the Street Works Notice screen via a Linked Table as follows:
+
+
+
+
+      In this Data Source, the Primary Key is shown as the column 'Work Header No' which references
+      the database field sw_notice_header.work_header_no. This field is the primary key which enables
+      Confirm to find the correct Notice and launch the Notice screen when a report is double-clicked
+      on. For your own custom Drill-down link to work you will need to identify a database field that
+      happens to hold the Primary Key for the Entity you want to Drill-down to. Once you have established
+      that, add a column for it to the Data Source and add a Linked Table referencing the appropriate
+
+
+Confirm                                                                                          66 of 120
+                                                                                           | Reporting |
+
+      Entity table and set its Primary Key set to be that Column. Refer to the Confirm Data Dictionary
+      and Schema for the Confirm database structure.
+      The following image shows a Report Template that has been run and a specific Street Works
+      Notice has been double clicked to open the Notice.
+
+
+
+
+      The following image shows the same as above, although in this example the User has double
+      clicked a Notice in the Data Source grid view to open the Notice.
+
+
+
+
+      Viewing Data Sources on the Map
+      There are buttons that can be used to display data source information on the Map as follows:
+
+
+      Select Features on Map
+      This button is displayed if the selected Data Source has Feature columns and a linked Feature
+      table. It behaves the same as the existing 'Feature Lookup' map button and includes the ability to
+      map new features on the map and view existing features.
+
+
+
+      Show Report Results on Map
+      This button is displayed when any of the following conditions are true on the Data Source:
+
+
+Confirm                                                                                         67 of 120
+                                                                                               | Reporting |
+
+      1. The Data Source has Easting and Northing columns. Clicking the button creates a Map Layer
+         based on the Easting's and Northing's in either MapInfo Tab format or an ESRI Shapefile format
+         and adds the layer to the map.
+      2. The Data Source has Feature columns and a Feature linked table. Clicking the button creates
+         a Map Layer by their Central Asset ID in either MapInfo Tab format or an ESRI Shapefile format
+         and adds the layer to the Map.
+      3. The Data Source has Feature, Distance and XSP Offset columns. Clicking the button performs
+         Dynamic Segmentation on the data and creates a Map Layer based on the results on the map
+         in either MapInfo Tab format or an ESRI Shapefile format and adds the layer to the map.
+      Note: The source geometry for Features comes from the mapping options on the Feature Group.
+            The Confirm Database Map Layer will be used if configured, else the configured Referential
+            Integrity layer will be used. If the Data Source has a link to the Feature table and Easting
+            and Northing columns then the values in the Easting and Northing will be used (if valid) in
+            preference to the Feature's geometry.
+
+      Note: As the ESRI Shapefile format only supports one geometry type, if the outputted geometries
+            are of more than one type then multiple shapefiles will be created, one for each geometry
+            type. These will have the same name as the originally selected file name except that
+            "_points", "_lines" and "_polygons" will be appended to the name of each file.
+
+      Note: The following roles for Dynamic Segmentation also have an effect on how data is viewed
+            on the map:
+
+      • A column whose Role is designated as 'XSP Position', as shown below, will determine which
+        side of the road data is displayed or offset.
+      • Chainage columns restrict the data to part of Feature on the Map:
+          1. A start column, defined by setting a column's Location to 'Start' and its Role as 'Distance'
+          2. An end column, defined by setting a column's Location to 'End' and its Role to 'Distance'
+          3. A link between the start and end column, by setting the With field of the start column to point
+             to the end column, and the With field of the end column to point to the start column
+
+
+
+
+Confirm                                                                                             68 of 120
+                                                                                            | Reporting |
+
+
+      Action Button - View Data
+      When the View Data action is selected, a Data Query Preview window will be displayed. Clicking
+      the View On Map button will display a prompt asking to select a file name and location for the new
+      map layer. This layer can be either MapInfo Tab format or an ESRI Shapefile format. The layer
+      will then be displayed on the map.
+      For ArcMap Mapping Link users only Dynamic Segmentation data can be viewed. Using ArcMap
+      tools Version 10.00c.AM or above there are no column restrictions, all data is transferred to the
+      map layer. For previous versions of the tools only columns with the following names were exported
+      to ArcMap:
+      • Feature Group
+      • Lane
+      • Treatment Type
+      • Ranking
+      • Estimated Cost
+      • Cost Code
+      • Funded Status
+      • Feature Type
+      • Measurement
+      • Inv Asset Id
+      • Observation Type
+      • Numeric Value
+
+
+
+      Data Source Examples
+      Survey Example
+
+
+          SELECT
+           central_site.site_name,
+           feature.site_code,
+           feature.plot_number,
+           feature.central_asset_id,
+           feature.feature_location,
+           feature.feature_start_date,
+           feature.feature_end_date,
+           survey.survey_type_key,
+           survey_type.survey_type_name,
+           survey.survey_number,
+           survey_feature.survey_feat_end,
+           survey_observation.xsp_code,
+           xsp.xsp_name,
+           xsp.xsp_lane_offset as xsp_position,
+           survey_observation.survey_obs_start as start_distance,
+           survey_observation.survey_obs_end as end_distance,
+           survey_observation.observe_type_key,
+           observe_type.observe_type_name,
+           survey_observation.survey_obs_value,
+           observe_parm_opt.obs_parm_opt_name
+
+          FROM
+            central_site, feature, survey_type, survey, survey_feature, xsp, observe_type, survey_obser-
+          vation, observe_parm_opt
+
+          WHERE
+           feature.site_code = central_site.site_code AND
+
+
+Confirm                                                                                          69 of 120
+                                                                                           | Reporting |
+
+           survey_type.survey_type_key = survey.survey_type_key AND
+           survey.survey_number = survey_feature.survey_number AND
+           feature.feature_key = survey_feature.feature_key AND
+           survey_observation.survey_feature_num = survey_feature.survey_feature_num AND
+           survey_observation.xsp_code = xsp.xsp_code AND
+           survey_observation.observe_type_key = observe_type.observe_type_key AND
+           survey_observation.obs_parm_code = observe_parm_opt.obs_parm_code AND
+           survey_observation.obs_parm_opt_code = observe_parm_opt.obs_parm_opt_code
+
+      Inventory Example
+
+
+          SELECT central_site.site_name,
+           feature.site_code,
+           feature.plot_number,
+           feature.feature_key,
+           feature.feature_id,
+           feature.central_asset_id,
+           feature.feature_location,
+           feature.feature_start_date,
+           feature.feature_end_date,
+           inventory_item.inv_start_date,
+           inventory_item.inv_end_date,
+           inventory_item.feature_type_code,
+           feature_type.feature_type_name,
+           xsp.xsp_name,
+           xsp.xsp_lane_offset as xsp_position,
+           inventory_item.inv_start_chainage as start_distance,
+           inventory_item.inv_end_chainage as end_distance,
+           inventory_item.inv_start_width,
+           inventory_item.inv_end_width
+
+          FROM
+           central_site, feature, xsp, feature_type, inventory_item
+
+          WHERE
+           feature.site_code = central_site.site_code AND
+           inventory_item.feature_key = feature.feature_key AND
+           inventory_item.xsp_code = xsp.xsp_code AND
+           inventory_item.feature_type_code = feature_type.feature_type_code
+
+      Note: After copying the SQL to the new Data Sources you will need to manually add the column
+            roles in the set order as per the instructions in the first section of this page.
+
+
+
+Report Category
+      The Report Category lookup can be used to categorise the library of Data Sources according to
+      the nature of the data they return, their purpose, or in any way desired. These Report Categories
+      can then be used when searching for Data Sources.
+      Note: There is a 'Default' Report Category automatically created by the system and used as the
+            default for any new Data Sources created. It is not possible to delete this record, although
+            its name can be changed.
+
+
+
+
+Confirm                                                                                         70 of 120
+                                                                                             | Reporting |
+
+Follow Ups
+      The Follow Up library contains a list of time-scales which will be used to calculate dates for the
+      progression and completion of various items in Confirm e.g. Jobs, Street Works and Enquiries.
+      Confirm, by default contains one Follow Up 'D1 - One Day', which is used in the Routine Mainten-
+      ance Priority, and in System Settings where a Follow Up is required.
+      Follow Up Code:     Up to 4 alphanumeric characters.
+
+      Name:               Up to 30 characters.
+
+      Number of           Up to 4 numbers.
+      Months:
+                          Supply the number of calendar months to calculate the date. This will take
+                          into account where the literal date would be incorrect i.e. a one month follow
+                          up from 30th January would become 28th February and not 30th February.
+                          Note: If the Follow Up is in use by a Condition Survey Inspection Type then
+                          it will not be possible to alter the months, days or hours fields.
+                          Condition Survey\Condition Survey
+
+      Number of Days: Up to 4 numbers.
+                          Number of days will be counted sequentially, including weekends and Non
+                          Working Days, unless 'Working Days' is checked
+
+      Number of Hours: Up to 2 numbers, to 2 decimal places.
+                          Minutes are represented as decimal fractions of an hour. So 30 minutes should
+                          be entered as 0.50.
+                          Hours will be counted sequentially through 24 hours per day, unless the start
+                          and end times for the working day have been set in the General System
+                          Settings.
+
+      Working Days:       Check this to show that the 'Number of Days' excludes weekends and dates
+                          entered in the Non Working Days lookup.
+                          This field is disabled if a 'Number of Months' is supplied.
+
+
+Non Working Days
+      The Non Working Days lookup lists the dates that should be excluded from a follow up calculation
+      based on Working days. Weekends are automatically excluded from 'Working Days'.
+      To complete the Non Working Days form:
+      Non Working         Enter the date.
+      Date:
+
+      Name:               Up to 30 characters
+
+
+Scheduled Reports
+      (Data Miner - Scheduled Reports)
+      The Scheduled Reports is used to specify where the report should be sent using Email or FTP. It
+      uses the Scheduled Tasks Screen to schedule reports .
+
+
+Confirm                                                                                           71 of 120
+                                                                                             | Reporting |
+      (Dashboard module)
+      A cut-down Scheduled reports functionality is provided with the Dashboard module in order to
+      make data available to the Dashboard at user-configured intervals. Where the Scheduled Reports
+      module is not also present, the Scheduled Reports lookup contains no recipient information - the
+      only option being to output data to the Database.
+
+
+
+
+      The Scheduled Reports library contains the details of all the reports that have been scheduled in
+      this way. The following must be in place before a report can be scheduled:
+      • A suitable Data Source needs to be configured.
+      • If reports are to be distributed by email, at least one Contact must be configured with a valid
+        email address.
+      Asset Maintenance\Maintenance Lookups
+      • An appropriate Follow Up must be created in the Follow Ups Lookup.
+      Code:               Up to six characters.
+
+      Name:               Up to 50 characters. Each Scheduled Report must have an unique Name.
+
+      Saved Qualifica-    You may optionally select a Saved Qualification. The pick list references the
+      tion:               Saved Qualifications Lookup
+
+      Report Template: You may optionally select a Report Template. The pick list references the
+                       Report Templates Lookup.
+
+      Follow Up:          Select a Follow Up to define the length of time before the report should run
+                          again.
+
+
+Confirm                                                                                           72 of 120
+                                                                                                 | Reporting |
+      Next Run Time:      This field must be populated with the date and time for the first run. After that
+                          it will automatically append the Follow Up time to define the next due Sched-
+                          uled Report.
+
+      Last Run Start /   These fields show the Start and Finish time of the last run of this Scheduled
+      Finish / Duration: Report, and the Duration of that run. This allows slow running Reports to be
+                         easily identified.
+                          Note: These fields will be reset whenever changes are made to the Data
+                                Source on which the Scheduled Report is based.
+
+      Process Backlog: This field controls the behaviour of the Task Processor when it finds that a
+                       Scheduled Report is due to be run and that several runs have been missed
+                       (for example because the Task Processor has been inactive for some time).
+                          If Process Backlog is ticked, each missing intermediate run will be carried out
+                          in turn. Otherwise, the Scheduled Report will only be run once.
+                          Note: Process Backlog should not be ticked for Scheduled Reports used
+                                purely to populate a Dashboard. In this case only the data from the
+                                latest run is relevant. Processing the backlog unnecessarily, especially
+                                for a Report set to run frequently, can have a detrimental impact on
+                                performance.
+
+      Output to Data-     (Dashboard Module)
+      base:
+                          Check this to indicate that this Scheduled Report is to be available in the
+                          database for use by the Dashboard.
+
+      User Alias:         The report will be run under this User's login, and the data retrieved will be
+                          limited by their Work Group rights.
+
+      Recipient:          Select a Contact to whom the report will be sent. The pick list references the
+                          Contact Lookup
+                          Asset Maintenance\Maintenance Lookups
+
+      Email Address:      Automatically populated from the Contact details and may not be edited.
+                          Note: Where an email address needs to be added or edited, this must be
+                                done in the Contact Lookup. The Contact may then be re-selected
+                                in the Recipient field to populate the email address.
+
+      Transmission        Select from:
+      Type:
+                          Email: will send the report to the Recipient via email provided they have a
+                          valid email address.
+                          File: will create the report in a file, which will be stored in the location provided
+                          in the Export Directory.
+
+      File Format:        Select an appropriate file format from the drop down list. See File Format -
+                          Map Layers below for further details.
+                          Note: This does not append the file extension onto the Export File Name.
+
+      Export Directory:   This field is only available if 'File' is chosen as the 'Transmission Type'. Use
+                          the pick button to browse for the required location.
+                          Note: The location selected in this field must be a valid and accessible loc-
+                                ation for the server running Confirm Task Processor.
+
+Confirm                                                                                                73 of 120
+                                                                                                 | Reporting |
+      Export File Name: Enter a file name, or use the Expression window to formulate a file name.
+                        The file name will be used for file transmission.
+                          Note: If a file already exists in the Export Directory with this name, the new
+                                file will overwrite the existing one. If the overwrite fails for existing file
+                                in use or any other reason, agent supervisor will be notified via email.
+
+      XSL Transforma- This field is only available if XML -XSL has been chosen as the 'File Format'.
+      tion:           Select from the drop down list to apply an XSL Stylesheet. The drop down
+                      list references the Scheduled Reports Export Transformations Lookup, and
+                      displays only those XML Transformations using the same Data Source as
+                      that specified for this Scheduled Report.
+
+
+
+      File Format - Map Layers
+      Where a Map Layer file format is selected the appropriate geometry will be included for each record
+      in the results in the same way as if the Show Report Results on Map button were clicked when
+      viewing the results of the Data Source or Report interactively.
+      Map Layer formats generate more than one file, all of which will be included in the Email or Files
+      generated. The companion file names will be the same as that specified on the Export File Name
+      with the file extension changed as appropriate.
+      Note: Only the MapInfo TAB file Map Layer format is currently available for use with Scheduled
+            Reporting.
+
+
+
+Dashboard Widgets
+      A Dashboard Widget is a Dashboard component that specifies the Scheduled Report (and therefore
+      Data Source and Qualification) that will be used, and defines the presentation of the data.
+
+
+
+
+Confirm                                                                                                74 of 120
+                                                                                            | Reporting |
+      Widgets are placed in a grid to make up the Dashboard, and Widgets may be moved and replaced
+      by others at any time.
+
+
+
+
+      Name                The name entered here will appear in the title bar of the Widget in the Dash-
+                          board along with the last time that the Widget was refreshed.
+                          This may be disabled for a particular Widget if desired using the Show Title
+                          Option.
+
+      Presentation Style Select an appropriate Presentation Style according to how data should be
+                         displayed.
+                          The available Presentation Styles are listed and described in the table below,
+                          and each one is explained in detail on a separate page.
+                          It is possible to change the Presentation Style of an existing Dashboard
+                          Widget. Howeverif a user has a Dashboard open in the Confirm web interface
+                          when this change is made, the change will not reflect automatically. The user
+                          will need to reload the page (F5) or switch Dashboard in order to see it.
+
+      Scheduled Report Select from the pick list. The pick list references the Scheduled Reports
+                       lookup.
+
+      Filter Expression   This is a conditional expression used to filter a Scheduled Report and should
+                          be evaluated to either True or False.
+                          For example, create a single Scheduled Report of all Enquiries, but then filter
+                          it on different Dashboard Widgets based on different regions like North, South,
+                          East and West.
+
+
+
+
+Confirm                                                                                           75 of 120
+                                                                                             | Reporting |
+                         Sample expression -
+
+                          {Area} = 'North'
+
+                         Note: A Dashboard Widget can also be configured to filter data according
+                               to the current User. Please refer to page Dashboard Data Sources
+                               for more information on how to do this.
+
+      Category Expres- Defines data according to categories used in Bar and Column Presentation
+      sion             Styles. The category expression must evaluate to a string. In the examples
+                       above the category expression of Budget Code contains values of 'CWAY1',
+                       'FOOTWAY1', etc.
+      Series Expression Defines data according to series, which are used to split categories in Stacked
+                        Widgets (Bar - Stacked and Column Stacked) and Gauge Presentation Styles.
+                        The series expression must be a string. In the examples above the series
+                        expression of Cost Code Name contains values of 'HW Carriageway Surface
+                        Repairs', 'HW Footway Repairs', etc.
+
+      Value Expression This expression returns the numerical values assigned to the chart or counter
+                       for each row on the Data Source. This must be a number. In the example
+                       above the values are determined not by count, but the Commit Value of the
+                       returned rows.
+                         Note: For Heat Maps the resulting value can be between 0 and 100 which
+                               represents a weighting, where 100 is 'hot' and 0 is 'cold'.
+                                 It is also possible to set the weighting by using a value range from a
+                                 Condition or Attribute type by supplying an expression. For example:
+                                 if(Survey Obs Value >= 9, 100, if(Survey Obs Value >= 7, 60, if(Survey
+                                 Obs Value >= 4, 25, if(Survey Obs Value >= 0, 10, 1))))
+
+      Alert Expression   If the Widget ever needs to alert the User based on its contents then an ap-
+                         propriate expression should be entered here. The expression will be evaluated
+                         for each row of data retrieved, and if the list of results contains new items
+                         then an alert will be triggered.
+                         For example if an Alert Expression of "{Enquiry Number}" is entered for a
+                         Customer Services Dashboard Widget showing newly raised Enquiries, then
+                         each time the Dashboard refreshes and finds a new Enquiry, it will alert the
+                         User. Changing the expression to "If( {Subject Name} = 'Emergency', String(
+                         {Enquiry Number}), '')" will restrict this so the User is only alerted about the
+                         arrival of a new Enquiry of this particular Subject, even though the Widget
+                         may show others.
+                         If a Dashboard alert is triggered then:
+                         • If the Dashboard is open and currently active, nothing will happen other
+                           than the display being refreshed.
+                         • If the Dashboard is open, but another Confirm window is active, the Confirm
+                           toolbar will update the Dashboard icon to show a warning symbol
+
+
+                           Clicking the icon or selecting the Dashboard removes the warning symbol.
+                         • If Confirm is not the currently active application, Confirm will flash on the
+                           Windows Taskbar and when the User clicks it, Confirm will open with the
+                           Dashboard at the front.
+
+
+Confirm                                                                                           76 of 120
+                                                                                              | Reporting |
+                          Note: In order for this functionality to be effective, the Dashboard must be
+                          open in Confirm, and the Dashboard User Settings on page 90 'Refresh
+                          Dashboard while Inactive' must be ticked.
+
+      Classify by Attrib- Colours can be defined from the chosen Attribute Type. This will assign the
+      ute Type            colour and display order to the Categories, Series, or number ranges in a
+                          Counter presentation style or the colour and display order for a Map
+                          presentation style.
+                          Please refer to the Configuring Attribute Types for Dashboard Widgets
+                          on page 32 page for further details.
+
+      Data Key            To control access to the Widget, and the ability to add this Widget to a
+                          Dashboard.
+
+
+
+      Options
+      The lower portion of the form allows the definition of options for the Widget. The available Options
+      will vary depending on the Presentation Style selected.
+
+
+
+      Presentation Styles
+      The available Presentation Styles are listed and described in the table below, and each one is
+      explained in detail on a separate page.
+      Bar                              To represent each of the Category expression results as a col-
+                                       oured horizontal or vertical bar.
+      Column
+                                       See Dashboard Widget - Bar / Column for details.
+
+      Bar - Stacked                    To represent each of the Category expression results as a hori-
+                                       zontal or vertical bar. The bar is subdivided by reference to Series
+      Column -                         Expression results.
+      Stacked
+                                       See Dashboard Widget - Bar Stacked / Column Stacked for
+                                       details.
+      Counter                          To count or sum the records based on the Value expression.
+                                       See Dashboard Widget - Counter for details.
+
+      Gauge                            Represents the data as arcs of a circle showing the proportion
+                                       of a defined Maximum Value for each Category.
+                                       See Dashboard Widget - Gauge for details.
+
+
+      Heat Map                         Visualise point data on a map, with Value expression values
+                                       represented as colours. Points close together contribute to the
+                                       display so that areas where points are concentrated appear
+                                       'hotter' than areas with few points.
+                                       See Dashboard Widget - Heat Map for details.
+
+
+      Line                             Shows a line or number of lines, for example to visualise a trend
+                                       in data over time.
+                                       See Dashboard Widget - Line for details.
+
+
+
+Confirm                                                                                            77 of 120
+                                                                                              | Reporting |
+
+      Map                             Visualise point data on a map, with each point coloured based
+                                      on the Value expression.
+                                      See Dashboard Widget - Map for details.
+
+
+
+
+      Pie                             Shows a filled circle divided into slices, with each slice represent-
+                                      ing a category and sized according to the proportion of the total
+                                      represented by that category.
+                                      See Dashboard Widget - Pie for details.
+
+
+      Stacked Area                    Used for displaying multiple data series which contribute to an
+                                      overall total, for example to visualise a trend in such data over
+                                      time.
+                                      See Dashboard Widget - Stacked Area for details.
+
+
+
+      Dashboard Widget - Bar / Column
+
+
+
+
+      A Bar Widget represents each of the Category expression results as a coloured horizontal bar.
+      A Column Widget works the same way, except that the bars run vertically.
+
+
+
+      Options
+      Show Title         Select 'Yes' to display the Widget name as a Title of the Dashboard.
+      Show Data Values Select 'Yes' to display the numerical Data Values in the Chart.
+                         Note: Value will only be displayed if the width of the Bar is wide enough to
+                               fit the value. Width of the Bar will set according to value specified for
+                               Minimum Size setting.
+
+      Show Axis          Select 'Yes' to display an Axis on the Bottom of the Widget, or 'No' to hide
+                         the Axis.
+                         Note: If set to 'Yes', then Equal Size and Minimum Width settings are ig-
+                               nored.
+
+
+
+
+Confirm                                                                                            78 of 120
+                                                                                             | Reporting |
+
+      Show Category     Select 'Yes' to display the Category labels on the bar, column charts, Line or
+      Text              Stacked Area charts, or select 'No' to hide them.
+      Equal Size        Select 'Yes' to set the size of the values on Bar, Column, Bar - Stacked and
+                        Column - Stacked widgets equally.
+                        For example:
+
+
+
+
+                        Note: This setting can only take effect if Axis Type is set to 'Value' and Show
+                              Axis is set to 'No'. If this setting is set to 'Yes' then the Minimum Value
+                              setting will be ignored.
+
+      Minimum Value (In Select an option from drop down to give small values a minimum width on
+      %)                Bar, Column, Bar - Stacked, Column - Stacked and Pie widgets.
+                        For example, with a minimum width of 10%:
+
+
+
+
+                        Note: This setting can only take effect if Axis Type is set to 'Value', Show
+                              Axis is set to 'No', and Equal Size is set to 'No'.
+
+
+
+
+      Dashboard Widget - Bar Stacked / Column Stacked
+
+
+
+
+Confirm                                                                                           79 of 120
+                                                                                            | Reporting |
+
+
+
+
+      A Stacked Bar Widget represents each of the Category expression results as a coloured horizontal
+      bar. The bar is subdivided by reference to Series expression results.
+      A Stacked Column Widget works the same way, except that the bars run vertically.
+
+
+
+      Options
+      Legend Position    You may select 'None' to omit a legend, or select where it will appear within
+                         the Widget (Top or Bottom).
+      Show Title         Select 'Yes' to display the Widget name as a Title of the Dashboard.
+      Show Data Values Select 'Yes' to display the numerical Data Values in the Chart.
+                         Note: Value will only be displayed if the width of the Bar is wide enough to
+                               fit the value. Width of the Bar will set according to value specified for
+                               Minimum Size setting.
+
+      Axis Type          Select from:
+                         'Value' - To size the bar or column relative to the total value and represent
+                         the series as scaled portions of the stacked bar or column.
+                         'Percent' - To show the stacked bar or column across the full width of the
+                         Widget, and to represent the Series values as percentages of that width.
+                         Note: If set to 'Percent', then Equal Size and Minimum Width settings are
+                               ignored.
+
+      Show Axis          Select 'Yes' to display an Axis on the Bottom of the Widget, or 'No' to hide
+                         the Axis.
+                         Note: If set to 'Yes', then Equal Size and Minimum Width settings are ig-
+                               nored.
+
+      Show Category      Select 'Yes' to display the Category labels on the bar, column charts, Line or
+      Text               Stacked Area charts, or select 'No' to hide them.
+      Equal Size         Select 'Yes' to set the size of the values on Bar, Column, Bar - Stacked and
+                         Column - Stacked widgets equally.
+                         For example:
+
+
+
+
+Confirm                                                                                          80 of 120
+                                                                                             | Reporting |
+
+
+
+
+                        Note: This setting can only take effect if Axis Type is set to 'Value' and Show
+                              Axis is set to 'No'. If this setting is set to 'Yes' then the Minimum Value
+                              setting will be ignored.
+
+      Minimum Value (In Select an option from drop down to give small values a minimum width on
+      %)                Bar, Column, Bar - Stacked, Column - Stacked and Pie widgets.
+                        For example, with a minimum width of 10%:
+
+
+
+
+                        Note: This setting can only take effect if Axis Type is set to 'Value', Show
+                              Axis is set to 'No', and Equal Size is set to 'No'.
+
+
+
+
+      Dashboard Widget - Counter
+
+
+
+
+      A Counter Widget counts or sums records based on the Value expression.
+
+
+Confirm                                                                                           81 of 120
+                                                                                          | Reporting |
+
+
+      Options
+      Legend Position    You may select 'None' to omit a legend, or select where it will appear within
+                         the Widget (Top or Bottom).
+
+
+
+      Dashboard Widget - Gauge
+
+
+
+
+      A Gauge Widget represents the data as arcs of a circle showing the proportion of a defined Max-
+      imum Value for each Category.
+      A separate Gauge will be displayed within the Widget for each Category. The Series expression
+      may be used to sub-divide the arc and/or to determine the display colour.
+
+
+
+      Options
+      Legend Position    You may select 'None' to omit a legend, or select where it will appear within
+                         the Widget (Top or Bottom).
+      Show Title         Select 'Yes' to display the Widget name as a Title of the Dashboard.
+      Axis Type          Select whether the value in the centre of each Gauge should be the absolute
+                         value or the percentage of the Maximum Value.
+      Show Category      Select 'Yes' to display the Category labels underneath each Gauge.
+      Text
+      Maximum Value      Select the Maximum Value for the data to be shown, for example if displaying
+                         percentage data, select 100.
+      Display Style      Select from one of the following display styles.
+                         Dial:
+
+
+
+
+                         Speedometer:
+
+
+
+
+Confirm                                                                                         82 of 120
+                                                                                           | Reporting |
+
+
+
+
+                          Semi-Circle:
+
+
+
+
+                          Voltmeter:
+
+
+
+
+      Dashboard Widget - Heat Map
+
+
+
+
+      A Heat Map Widget visualises data on a map, with Value expression values represented as colours.
+      Points close together contribute to the display so that areas where points are concentrated appear
+      'hotter' than areas with few points.
+      Note: Requires the associated Scheduled Report to contain a Data Source that retrieves Eastings
+            and Northings.
+
+
+
+
+      Options
+      Show Legend         Select whether to display a Legend on the Widget.
+
+
+Confirm                                                                                         83 of 120
+                                                                                        | Reporting |
+
+      Show Title       Select 'Yes' to display the Widget name as a Title of the Dashboard.
+      Radius           Sets the radius of the individual data items that appear on the Heat Map
+                       widget, which affects whether items overlap to appear 'hotter' on the map.
+                       A smaller radius will provide a more granular heat map and is better for heat
+                       maps with dense areas of data. A large radius is better for looking at heat
+                       maps with sparse data.
+      Opacity          Set the opacity of data shown on Heat Map widgets. This will affect whether
+                       the background map is visible through the heat map data. The opacity has a
+                       cumulative affect, meaning that areas of high density data will be more opaque
+                       than areas of low density data. Setting the opacity to 1 will cause the heat
+                       map data to be completely opaque, but setting the opacity to 0 will make the
+                       data completely transparent.
+      Colour Scheme    Select from one of the following colour schemes for Heat Map widgets.
+
+
+
+
+      Dashboard Widget - Line
+
+
+
+
+Confirm                                                                                       84 of 120
+                                                                                              | Reporting |
+
+
+
+
+      A Line Widget shows a line or number of lines, for example to visualise a trend in data over time.
+      The Category expression is used to define the horizontal axis. Multiple lines will be shown according
+      to the Series expression.
+
+
+
+      Options
+      Legend Position     You may select 'None' to omit a legend, or select where it will appear within
+                          the Widget (Top or Bottom).
+      Show Title          Select 'Yes' to display the Widget name as a Title of the Dashboard.
+      Show Axis           Select 'Yes' to display an Axis on the bottom of the Widget, or 'No' to hide the
+                          Axis.
+      Show Category       Select 'Yes' to display the Category labels on the bar, column charts, Line or
+      Text                Stacked Area charts, or select 'No' to hide them.
+
+
+
+      Dashboard Widget - Map
+
+
+
+
+Confirm                                                                                            85 of 120
+                                                                                                | Reporting |
+
+
+
+
+      A Map Widget visualises data as points on a map, coloured based on the Value expression.
+      Note: Requires the associated Scheduled Report to contain a Data Source that retrieves Eastings
+            and Northings. Only point data can be shown on the map at this time.
+
+
+
+
+      Options
+      Show Legend        Select whether to display a Legend on the Widget.
+      Show Title         Select 'Yes' to display the Widget name as a Title of the Dashboard.
+      Use Pie Chart      For Map widgets, set this option to 'Yes' to show any clustered data as a pie
+      Icons for Clusters chart icon, where the icon is divided into coloured sections representing the
+                         content of the cluster.:-
+
+
+
+                         Setting this option to 'No' will display a cluster icon coloured only by the Attrib-
+                         ute Value with the highest Display Order. See Configuring Attribute Types
+                         for Dashboard Widgets on page 32 for more details:-
+
+
+
+
+Confirm                                                                                              86 of 120
+                                                                                            | Reporting |
+
+
+
+
+      Dashboard Widget - Pie
+
+
+
+
+      A Pie Widget shows a filled circle divided into slices, with each slice representing a category and
+      sized according to the proportion of the total represented by that category.
+
+
+
+      Options
+      Legend Position     You may select 'None' to omit a legend, or select where it will appear within
+                          the Widget (Top or Bottom).
+      Show Title          Select 'Yes' to display the Widget name as a Title of the Dashboard.
+      Show Data Values Select 'Yes' to display the numerical data values in the Chart.
+                          Note: A value will only be displayed if the width is enough for the value to
+                                fit. Width of the Bar will set according to value specified for Minimum
+                                Size setting.
+
+      Minimum Value (In Select an option to give small values a minimum width, to avoid them being
+      %)                displayed so small as to be indistinguishable.
+                          For example, with a minimum width of 10%:
+
+
+
+
+Confirm                                                                                          87 of 120
+                                                                                             | Reporting |
+
+                          Note: This setting can only take effect if Axis Type is set to 'Value', Show
+                                Axis is set to 'No', and Equal Size is set to 'No'.
+
+      Data Value Type     Select whether to display data values as Value or Percent.
+      Mode                Select whether the Widget will display data in a Pie or Donut style.
+
+
+
+      Dashboard Widget - Stacked Area
+
+
+
+
+      A Stacked Area Widget is used for displaying multiple data series which contribute to an overall
+      total, for example to visualise a trend in such data over time.
+      The Category expression is used to define the horizontal axis. The area shown will be sub-divided
+      according to the Series expression.
+
+
+
+      Options
+      Legend Position     You may select 'None' to omit a legend, or select where it will appear within
+                          the Widget (Top or Bottom).
+      Show Title          Select 'Yes' to display the Widget name as a Title of the Dashboard.
+      Show Axis           Select 'Yes' to display an Axis on the bottom of the Widget, or 'No' to hide the
+                          Axis.
+      Show Category       Select 'Yes' to display the Category labels on the bar, column charts, Line or
+      Text                Stacked Area charts, or select 'No' to hide them.
+      Mode                Select from the following two options:
+                          • Stacked - to display the height as absolute value, in order to see how the
+                            total value changes, as well as the value represented by each Series.
+                          • Expanded - to expand the height to the same level at each point, to more
+                            clearly see how the percentage represented by each Series changes.
+
+
+
+
+Scheduled Reports Export Transformations
+      (Data Miner - Scheduled Reports)
+      The Scheduled Reports Export Transformations Lookup stores XML Stylesheet information for
+      use in the Scheduled Reports Lookup.
+
+
+Confirm                                                                                           88 of 120
+                                                                                              | Reporting |
+
+
+
+
+      Sequence:           This field will be automatically populated with the next available number in
+                          the sequence. Enter a number to recall an existing transformation.
+
+      Description:        A free text field, which may be used to describe the Style sheet.
+
+      Stylesheet:         Enter the directory and file name for the Stylesheet. You may use the pick
+                          button to browse for the file.
+                          Note: The Stylesheet selected in this field must be accessible to the server
+                          running Confirm Task Processor.
+
+      Data Source:        Select a relevant Data Source to use. This Data Source must be the same
+                          as the one specified for the Scheduled Reports that will use this Transforma-
+                          tion. The pick list references the Data Source lookup.
+
+
+Reporting System Settings
+      The remote file access functionality for the Scheduled Reporting Agent can be configured from
+      this screen.
+      When a scheduled report is saved to file via the agent an executable, for example an FTP manager,
+      can be automatically launched and a blocker file created.
+
+
+
+
+      Remote File Ac- Check to enable the remote file access functionality
+      cess:
+
+      Full Path to Ex-    Enter the path and name of the executable to be automatically started when
+      ecutable:           a scheduled report is saved to file
+
+      Full Path to        Enter the full path and name of the blocker file to be automatically started
+      Blocker File:       when a scheduled report is saved to file
+
+
+
+
+Confirm                                                                                            89 of 120
+                                                                                             | Reporting |
+
+Dashboard User Settings
+      Each Dashboard that a user creates in the Dashboard window is automatically added to the
+      Dashboard User Settings. The currently highlighted Dashboard is the one that will appear by default
+      when Confirm is launched. The selection may be cleared using the Clear button to prevent the
+      Dashboard from launching with Confirm. Clicking the 'Dashboard' button on the toolbar will then
+      launch the Dashboard User Settings for selection of the Dashboard to be launched.
+
+
+
+
+      Refresh Dash-       The interval, in minutes, after which the Dashboard will refresh the information
+      board After:        it displays from the Scheduled Report results linked to the Widgets on the
+                          Dashboard.
+                          Note: The Scheduled Reports on page 71 will update in accordance with
+                          the follow-ups assigned to them. For the Dashboard refresh to provide
+                          meaningful updates, one would usually set the Dashboard to refresh at least
+                          as often as the most frequent Scheduled report.
+
+      Refresh Dash-      If this box is ticked then the User's Dashboard will continue to refresh at the
+      board while inact- specified interval even if it is not the top-most (active) window in Confirm.
+      ive:
+
+
+Dashboard System Settings
+      Confirm uses a Cascading Style Sheet (CSS) to define the overall appearance of the Dashboard
+      (fonts, borders, background). You may optionally use a custom CSS to change the Dashboard
+      appearance by specifying its location in the Dashboard System Settings screen.
+
+
+
+
+Confirm                                                                                           90 of 120
+                                                                                             | Reporting |
+
+
+
+
+      If no Dashboard CSS File is specified, Confirm uses the file 'dashboard.css' in the Confirm install
+      folder. This file can be used as a starting point to create a custom CSS, but should not be modified
+      itself, as any changes will be overwritten the next time a new Confirm version is installed.
+      Note: It is possible to right click on an existing Dashboard and select 'View Source' to see the
+            HTML behind it, to assist with creating a CSS.
+
+
+
+
+Confirm                                                                                           91 of 120
+                                                                                             | Reporting |
+
+
+
+Creating Reports - step-by-step
+1. Data Sources - All reports use a data Source to specify the Data that will be included in the Report.
+   Sub-set of data may be defined by a subsequent Qualification of the data - but all tables (or columns)
+   which supply the required data must be present in the Data Source. Data Sources are created and
+   stored in the Data Source Lookup.
+1. Data Qualifications - You may optionally qualify the data extracted with a Data Source, and save the
+   Qualification for use with that Data Source. Saved Qualifications are stored in the Saved Qualification
+   Lookup and associated with the Data Source for which they were created.
+1. Report Template - Finally, the Data Source and (optionally) the Saved Qualification are put together
+   with a Report Template which governs what the report will look like, what other elements (text and
+   graphics) will be included, and defines any calculations that are to be carried out (a count of records
+   for instance, or a sum of measurements). See "Creating a Report Template on page 17" for inform-
+   ation on creating and formatting the Report Template. Report Templates may be saved and saved
+   Report Templates are stored in the Report Template lookup
+
+
+Using Confirm Reports
+You may also use existing report Data Sources and Report Templates.
+
+
+
+Creating Charts
+Create charts from either the Data Query Preview window, or the Report preview window using the
+Charts button:
+
+
+
+
+Confirm                                                                                           92 of 120
+                                                                                        | Reporting |
+
+
+
+Schema Diagrams
+This section contains database schema diagrams for all areas of the Confirm database to assist in
+creating Data Sources and Reports.
+
+
+Site Register
+
+
+
+
+Confirm                                                                                      93 of 120
+                 | Reporting |
+
+Asset Register
+
+
+
+
+Confirm               94 of 120
+                                   | Reporting |
+
+Asset Valuation and Depreciation
+
+
+
+
+Confirm                                 95 of 120
+                                     | Reporting |
+
+Confirm Strategic Asset Management
+
+
+
+
+Confirm                                   96 of 120
+                   | Reporting |
+
+Stock Management
+
+
+
+
+Confirm                 97 of 120
+                  | Reporting |
+
+Risk Management
+
+
+
+
+Confirm                98 of 120
+                            | Reporting |
+
+Network Manager - Network
+
+
+
+
+Confirm                          99 of 120
+                                                                                        | Reporting |
+
+Network Manager - Condition Data
+
+
+
+
+      Note: In the above image the table for survey_observation has few columns truncated at the end.
+            These column names run from 'obs_value_001', 'obs_value_002' until 'obs_value_100'.
+
+
+
+
+Confirm                                                                                     100 of 120
+                                   | Reporting |
+
+Network Manager - HDM4 Interface
+
+
+
+
+Confirm                                101 of 120
+                | Reporting |
+
+Data Analyser
+
+
+
+
+Confirm             102 of 120
+                | Reporting |
+
+Traffic Count
+
+
+
+
+Confirm             103 of 120
+                    | Reporting |
+
+Asset Maintenance
+
+
+
+
+Confirm                 104 of 120
+                       | Reporting |
+
+Contract Preparation
+
+
+
+
+Confirm                    105 of 120
+                      | Reporting |
+
+Finance and Budgets
+
+
+
+
+Confirm                   106 of 120
+                   | Reporting |
+
+Condition Survey
+
+
+
+
+Confirm                107 of 120
+                                | Reporting |
+
+Customer Services - Enquiries
+
+
+
+
+Confirm                             108 of 120
+                               | Reporting |
+
+Customer Services - Bookings
+
+
+
+
+Confirm                            109 of 120
+                         | Reporting |
+
+Maintenance Management
+
+
+
+
+Confirm                      110 of 120
+                   | Reporting |
+
+Works Management
+
+
+
+
+Confirm                111 of 120
+                         | Reporting |
+
+Performance Monitoring
+
+
+
+
+Confirm                      112 of 120
+                     | Reporting |
+
+Payment Processing
+
+
+
+
+Confirm                  113 of 120
+                         | Reporting |
+
+Street Works - Notices
+
+
+
+
+Confirm                      114 of 120
+                         | Reporting |
+
+Street Works - Permits
+
+
+
+
+Confirm                      115 of 120
+                                          | Reporting |
+
+Street Works - Inspections & Statements
+
+
+
+
+Confirm                                       116 of 120
+                        | Reporting |
+
+Fixed Penalty Notices
+
+
+
+
+Confirm                     117 of 120
+            | Reporting |
+
+Reporting
+
+
+
+
+Confirm         118 of 120
+                       | Reporting |
+
+Reporting - Analysis
+
+
+
+
+Confirm                    119 of 120
+System Administration
+
