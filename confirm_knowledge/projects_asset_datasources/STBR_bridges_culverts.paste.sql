@@ -20,10 +20,10 @@ SELECT
     meas.m_s004_length,
     meas.m_s007_no_construction_spans,
     meas.m_stca_avg_critical_headroom,
-    attr.a_s017_signed_weight_restr,
-    attr.a_s017_signed_weight_restr_text,
+    attr.a_s017_signed_weight_res,
+    attr.a_s017_signed_weight_res_text,
     attr.a_s018_abnormal_load_route,
-    attr.a_s018_abnormal_load_route_text
+    attr.a_s018_abnormal_load_rte_text
 FROM feature
     JOIN feature_type          ON feature_type.feature_type_code = feature.feature_type_code
     LEFT JOIN site             ON site.site_code = feature.site_code
@@ -42,10 +42,10 @@ FROM feature
     ) meas ON meas.site_code = feature.site_code AND meas.plot_number = feature.plot_number
     LEFT JOIN (
         SELECT a.site_code, a.plot_number,
-               MAX(CASE WHEN a.attrib_type_code = 'S017' THEN av.attrib_value_name END) AS a_s017_signed_weight_restr,
-               MAX(CASE WHEN a.attrib_type_code = 'S017' THEN a.feat_attrib_notes END)  AS a_s017_signed_weight_restr_text,
+               MAX(CASE WHEN a.attrib_type_code = 'S017' THEN av.attrib_value_name END) AS a_s017_signed_weight_res,
+               MAX(CASE WHEN a.attrib_type_code = 'S017' THEN a.feat_attrib_notes END)  AS a_s017_signed_weight_res_text,
                MAX(CASE WHEN a.attrib_type_code = 'S018' THEN av.attrib_value_name END) AS a_s018_abnormal_load_route,
-               MAX(CASE WHEN a.attrib_type_code = 'S018' THEN a.feat_attrib_notes END)  AS a_s018_abnormal_load_route_text
+               MAX(CASE WHEN a.attrib_type_code = 'S018' THEN a.feat_attrib_notes END)  AS a_s018_abnormal_load_rte_text
         FROM feat_attrib_type a
             LEFT JOIN attribute_value av ON av.attrib_type_code = a.attrib_type_code AND av.attrib_value_code = a.attrib_value_code
         WHERE a.attrib_type_code IN ('S017', 'S018')
